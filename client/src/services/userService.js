@@ -1,7 +1,7 @@
 import axios from "axios"; 
 
 
-const URL = 'http://localhost:3000/musenion';  
+const URL = 'http://localhost:3000/cookinando';  
 
 //READ-metodo get
 export const getUsers = async () => {
