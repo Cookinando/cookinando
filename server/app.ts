@@ -22,7 +22,7 @@ const startServer = async () => {
 
     await userModel.sync({ alter: true });
     await postModel.sync({ alter: true });
-    console.log("The table for the meme model was just (re)created!💕");
+    console.log("✅ Database synced successfully.");
   } catch (error) {
     console.error("❌ Unable to connect to Database", error);
     throw error;
