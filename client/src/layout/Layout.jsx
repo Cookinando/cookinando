@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import { Footer } from "../components/Footer.jsx";
+import { Navbar } from "../components/Navbar.jsx";
 import backgroundImage from '../assets/images/fondo_layout.png'; 
 
 const Layout = () => {

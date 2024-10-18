@@ -1,1 +1,7 @@
-// Home page
+export const Home = () => {
+    return (
+      <>
+        
+      </>
+    );
+  };
