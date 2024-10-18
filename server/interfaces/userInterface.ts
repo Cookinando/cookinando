@@ -1,6 +1,11 @@
 import { Optional, Model } from "sequelize";
+import { Request } from "express";
 
-interface UserAttributes {
+export interface AuthRequest extends Request {
+  user?: UserAttributes;
+}
+
+export interface UserAttributes {
     id: number;
     username: string;
     password: string;
@@ -20,3 +25,4 @@ interface UserAttributes {
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
   }
+  

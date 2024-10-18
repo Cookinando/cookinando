@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import User from "../models/userModel";
+import { AuthRequest } from "../interfaces/userInterface";
 
 export const getUsers = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -34,18 +35,30 @@ export const getUser = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export const createUser = async (req: Request, res: Response): Promise<void> => {
+export const createUser = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
-    const { username, password, email, isAdmin } = req.body;
-    const lastUser = await User.findOne({ order: [["id", "DESC"]] });
-    const newId = lastUser ? lastUser.id + 1 : 1;
+    const { username, password, email } = req.body;
+    let { isAdmin } = req.body;
+
+    // Si isAdmin no se proporciona en el cuerpo de la solicitud, por defecto es false
+    if (isAdmin === undefined) {
+      isAdmin = false;
+    } else {
+      // Si isAdmin es true, asegura que el usuario autenticado también sea admin
+      const authUser = req.user;
+      if (isAdmin && !authUser?.isAdmin) {
+        res.status(403).json({ error: "Access denied. Only admins can create other admins." });
+        return;
+      }
+    }
+
     const newUser = await User.create({
-      id: newId,
       username,
       password,
       email,
       isAdmin,
     });
+
     res.status(201).json(newUser);
   } catch (error) {
     if (error instanceof Error) {
