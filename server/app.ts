@@ -16,7 +16,7 @@ const startServer = async () => {
     await db.authenticate();
     console.log("👍Connection has been established successfully.");
 
-    await userModel.sync({ alter: true });
+    await userModel.sync({ alter: false });
     console.log("✅ Database synced successfully.");
   } catch (error) {
     console.error("❌ Unable to connect to Database", error);
