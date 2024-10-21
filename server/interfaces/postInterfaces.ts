@@ -7,7 +7,7 @@ export interface IPost {
     imageUrl?: string;
     createdAt?: Date;
     updatedAt?: Date;
-    authorId: number;
+    // authorId: number;
 }
 
 // Campos opcionales (como ID que se genera automáticamente)

@@ -1,7 +1,7 @@
 import { DataTypes, ForeignKey, Model } from 'sequelize';
 import db from '../database/db';
 import { IPost, PostCreationAttributes } from '../interfaces/postInterfaces';
-import User from './userModel';
+// import User from './userModel';
 
 class Post extends Model<IPost, PostCreationAttributes> {
   public readonly id!: number;
@@ -10,7 +10,7 @@ class Post extends Model<IPost, PostCreationAttributes> {
   public imageUrl?: string;
   public readonly createdAt!: Date;
   public updatedAt!: Date;
-  public readonly authorId!: ForeignKey<number>; // Relación con User
+  // public readonly authorId!: ForeignKey<number>; // Relación con User
 }
 
 // Inicializar el modelo
@@ -43,10 +43,10 @@ Post.init(
       allowNull: false,
       defaultValue: DataTypes.NOW,
     },
-    authorId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
+    // authorId: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: false,
+    // },
   },
   {
       sequelize: db,
@@ -57,6 +57,6 @@ Post.init(
 );
 
 // Relación con User
-Post.belongsTo(User, { foreignKey: 'authorId', as: 'author' });
+// Post.belongsTo(User, { foreignKey: 'authorId', as: 'author' });
 
 export default Post;
