@@ -93,36 +93,3 @@ export const Navbar = () => {
     </nav>
   );
 };
-
-// export const Navbar = () => {
-//   const { isAuthenticated, logout } = useAuth();
-//   const navigate = useNavigate();
-
-//   const handleNavigation = (path) => {
-//       navigate(path);
-//   };
-//     return (
-//         <nav class= "flex justify-between lg:px-8" aria-label="Global">
-//         <div class= 'w-48 h-48'>
-//           <img src={logo} alt='logo'/> 
-//         </div>
-//         <ul class="flex space-x-6 mt-10">
-//           <li class= "text-[#BEBDA7]">
-//             Sobre Nosotros
-//           </li>
-//           <li class= "text-[#BEBDA7]">
-//            Recetas
-//           </li>
-//           <li class= "text-[#BEBDA7]">
-//             Contacto
-//           </li>
-//           <li class= "text-[#BEBDA7]">
-//             Iniciar Sesión
-//           </li>
-//           <li class= "text-[#BEBDA7]">
-//            Registrarse
-//           </li>
-//         </ul>
-//       </nav>
-//     );
-//   };
