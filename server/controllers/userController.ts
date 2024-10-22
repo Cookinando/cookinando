@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import User from "../models/userModel";
 import { AuthRequest } from "../interfaces/userInterface";
+import bcrypt from "bcrypt";
 
 export const getUsers = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -40,11 +41,9 @@ export const createUser = async (req: AuthRequest, res: Response): Promise<void>
     const { username, password, email } = req.body;
     let { isAdmin } = req.body;
 
-    // Si isAdmin no se proporciona en el cuerpo de la solicitud, por defecto es false
     if (isAdmin === undefined) {
       isAdmin = false;
     } else {
-      // Si isAdmin es true, asegura que el usuario autenticado también sea admin
       const authUser = req.user;
       if (isAdmin && !authUser?.isAdmin) {
         res.status(403).json({ error: "Access denied. Only admins can create other admins." });
@@ -52,9 +51,13 @@ export const createUser = async (req: AuthRequest, res: Response): Promise<void>
       }
     }
 
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const lastUser = await User.findOne({ order: [["id", "DESC"]] });
+    const newId = lastUser ? lastUser.id + 1 : 1;
     const newUser = await User.create({
+      id: newId,
       username,
-      password,
+      password: hashedPassword,
       email,
       isAdmin,
     });

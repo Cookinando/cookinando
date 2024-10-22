@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { Request, Response } from "express";
 import User from "../models/userModel";
-import bcrypt from "bcrypt"; // Asegúrate de que tienes bcrypt instalado
+import bcrypt from "bcrypt";
 
 export const loginUser = async (req: Request, res: Response): Promise<void> => {
   const { username, password } = req.body;
@@ -13,9 +13,9 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    // Suponiendo que estás usando bcrypt para encriptar las contraseñas
-    const key = await User.findOne({ where: { password } });
-    if (!key) {
+    // Verificar la contraseña encriptada
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
       res.status(401).json({ message: "Invalid credentials" });
       return;
     }
