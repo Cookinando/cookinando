@@ -7,18 +7,18 @@ const Home = () => {
   return (
     <div 
       style={{
-        backgroundImage: 'url(./assets/fondo.png)', // Asegúrate de que la ruta sea correcta
-        backgroundSize: 'cover', // O 'contain' dependiendo de cómo quieres que se vea
+        backgroundImage: 'url(./assets/fondo.png)', 
+        backgroundSize: 'cover', 
         backgroundPosition: 'center',
-        height: '100vh', // Asegúrate de que cubra toda la altura de la vista
-        color: '#fff' // Cambia el color del texto si es necesario
+        height: '100vh', 
+        color: '#white' 
       }}
     >
       <section>
-        <h1>Bienvenido a nuestra empresa</h1>
-        <p>Aquí puedes encontrar información sobre nosotros.</p>
-        <img src="./assets/logo.png" alt="Logo" />
-      </section>
+        <h1>Bienvenido </h1>
+        <img src="./assets/logo1.svg" alt="Logo" />
+        <p>¡Explora el mundo a través de la gastronomía y disfruta cocinando con nosotros!</p>
+      </section> 
 
       <section>
         <h2>Recetas</h2>
