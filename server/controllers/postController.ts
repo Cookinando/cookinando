@@ -9,10 +9,12 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
     //   res.status(401).json({ message: 'Unauthorized' });
     //   return;
     // }
-    const { title, content, imageUrl } = req.body;
+    const { title, numPeople, ingredients, instructions, imageUrl } = req.body;
     const newPost = await Post.create({
       title,
-      content,
+      numPeople,
+      ingredients,
+      instructions,
       imageUrl
     //   authorId: userId, // Aquí vinculamos el post al usuario logueado
     });
@@ -66,9 +68,9 @@ export const getPostById = async (req: Request, res: Response): Promise<void> =>
 export const updatePost = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
-    const { title, content, imageUrl } = req.body;
+    const { title, numPeople, ingredients, instructions, imageUrl } = req.body;
     const updatedPost = await Post.update(
-      { title, content, imageUrl },
+      { title, numPeople, ingredients, instructions, imageUrl },
       { where: { id } }
     );
     if (!updatedPost) {
