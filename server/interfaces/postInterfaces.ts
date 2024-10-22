@@ -3,7 +3,9 @@ import { Optional } from "sequelize";
 export interface IPost {
     id?: number;
     title: string;
-    content: string;
+    numPeople: number;
+    ingredients: string;
+    instructions: string;
     imageUrl?: string;
     createdAt?: Date;
     updatedAt?: Date;

@@ -6,7 +6,9 @@ import { IPost, PostCreationAttributes } from '../interfaces/postInterfaces';
 class Post extends Model<IPost, PostCreationAttributes> {
   public readonly id!: number;
   public title!: string;
-  public content!: string;
+  public numPeople!: number;
+  public ingredients!: string;
+  public instructions!: string;
   public imageUrl?: string;
   public readonly createdAt!: Date;
   public updatedAt!: Date;
@@ -25,7 +27,15 @@ Post.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    content: {
+    numPeople: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    ingredients: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    instructions: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
