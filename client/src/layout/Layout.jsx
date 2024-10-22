@@ -6,7 +6,7 @@ import backgroundImage from '../assets/images/fondo_layout.png';
 const Layout = () => {
   return (
     <div
-      className="bg-cover bg-center min-h-screen"
+      className="bg-cover bg-center min-h-screen font-ABeeZee"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       <Navbar /> {}
