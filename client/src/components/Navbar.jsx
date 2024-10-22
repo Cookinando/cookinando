@@ -1,73 +1,97 @@
 import logo from '../assets/images/cookinando_logo.png';
-import React, { createContext, useContext, useState, useNavigate } from 'react'; 
+// import React, { createContext, useContext } from 'react'; 
+import  { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 
 export const Navbar = () => {
-  const { isAuthenticated, logout } = useAuth();
+  const auth = useAuth();
+  const isAuthenticated = auth ? auth.isAuthenticated : false;
+
   const navigate = useNavigate();
   const location = useLocation();
+
   const handleNavigation = (path) => {
       navigate(path);
   };
 
   return (
-    <nav className="navbar">
-        <ul>
+    <nav class= " navbar flex justify-between lg:px-8" aria-label="Global">
+         <div class= 'w-48 h-48'>
+                        <img src={logo} alt='logo'/> 
+                    </div>
+        <ul class="flex space-x-6 mt-10">
             {!isAuthenticated && (
                 <>
                     {/* Página Principal sin logar*/}
                     {location.pathname === "/" && (
                         <>
-                            <li><button onClick={() => handleNavigation("/login")}>Iniciar sesión</button></li>
-                            <li><button onClick={() => handleNavigation("/signup")}>Registrase</button></li>
+                            <li class= "text-[#BEBDA7]"><a onClick={() => handleNavigation("/login")}>Iniciar sesión</a></li>
+                            <li class= "text-[#BEBDA7]"><a onClick={() => handleNavigation("/signup")}>Registrase</a></li>
                         </>
                     )}
 
-                    {/* Página de Login: mostrar Inicio y Sign Up */}
+                    {/* Página de Login*/}
                     {location.pathname === "/login" && (
                         <>
-                            <li><button onClick={() => handleNavigation("/")}>Inicio</button></li>
-                            <li><button onClick={() => handleNavigation("/signup")}>Sign Up</button></li>
+                            <li class= "text-[#BEBDA7]"><a onClick={() => handleNavigation("/")}>Inicio</a></li>
+                            <li class= "text-[#BEBDA7]"><a onClick={() => handleNavigation("/signup")}>Registrarse</a></li>
                         </>
                     )}
 
-                    {/* Página de Sign Up: mostrar Inicio y Login */}
+                    {/* Página de Sign Up*/}
                     {location.pathname === "/signup" && (
                         <>
-                            <li><button onClick={() => handleNavigation("/")}>Inicio</button></li>
-                            <li><button onClick={() => handleNavigation("/login")}>Login</button></li>
+                            <li class= "text-[#BEBDA7]"><a onClick={() => handleNavigation("/")}>Inicio</a></li>
+                            <li class= "text-[#BEBDA7]"><a onClick={() => handleNavigation("/login")}>Inciar sesión</a></li>
                         </>
                     )}
                 </>
             )}
 
-            {/* Si estás autenticado */}
             {isAuthenticated && (
                 <>
-                    {/* Página Principal y de Recetas: mostrar Sobre Nosotros, Recetas, Contacto y Logout */}
-                    {(location.pathname === "/" || location.pathname.includes("/recetas")) && (
+                    {/* Página Principal con login*/}
+                    {(location.pathname === "/") && (
                         <>
-                            <li><button onClick={() => handleNavigation("/about")}>Sobre Nosotros</button></li>
-                            <li><button onClick={() => handleNavigation("/recetas")}>Recetas</button></li>
-                            <li><button onClick={() => handleNavigation("/contact")}>Contacto</button></li>
-                            <li><button onClick={logout}>Cerrar Sesión</button></li>
+                            <li class= "text-[#BEBDA7]"><a onClick={() => handleNavigation("/about")}>Sobre Nosotros</a></li>
+                            <li class= "text-[#BEBDA7]"><a onClick={() => handleNavigation("/contact")}>Contacto</a></li>
+                            <li class= "text-[#BEBDA7]"><a onClick={() => handleNavigation("/login")}>Cerrar Sesión</a></li>
                         </>
                     )}
 
-                    {/* Página de Contacto: mostrar Sobre Nosotros, Recetas y Logout */}
+                    {/* Página de ReceiptDetail*/}
+                    {location.pathname.startsWith("/recetas/") && (
+                        <>
+                            <li class= "text-[#BEBDA7]"><a onClick={() => handleNavigation("/")}>Recetas</a></li>
+                            <li class= "text-[#BEBDA7]"><a onClick={() => handleNavigation("/about")}>Sobre Nosotros</a></li>
+                            <li class= "text-[#BEBDA7]"><a onClick={() => handleNavigation("/contact")}>Contacto</a></li>
+                            <li class= "text-[#BEBDA7]"><a onClick={() => handleNavigation("/login")}>Cerrar Sesión</a></li>
+                        </>
+                    )} 
+
+                    {/* Páginade About*/}
+                    {location.pathname === "/about" && (
+                        <>
+                            <li class= "text-[#BEBDA7]"><a onClick={() => handleNavigation("/")}>Recetas</a></li>
+                            <li class= "text-[#BEBDA7]"><a onClick={() => handleNavigation("/contact")}>Contacto</a></li>
+                            <li class= "text-[#BEBDA7]"><a onClick={() => handleNavigation("/login")}>Cerrar Sesión</a></li>
+                        </>
+                    )}
+
+                    {/* Página de Contacto*/}
                     {location.pathname === "/contact" && (
                         <>
-                            <li><button onClick={() => handleNavigation("/about")}>Sobre Nosotros</button></li>
-                            <li><button onClick={() => handleNavigation("/recetas")}>Recetas</button></li>
-                            <li><button onClick={logout}>Cerrar Sesión</button></li>
+                            <li class= "text-[#BEBDA7]"><a onClick={() => handleNavigation("/")}>Recetas</a></li> 
+                            <li class= "text-[#BEBDA7]"><a onClick={() => handleNavigation("/about")}>Sobre Nosotros</a></li>
+                            <li class= "text-[#BEBDA7]"><a onClick={() => handleNavigation("/login")}>Cerrar Sesión</a></li>
                         </>
                     )}
                 </>
             )}
-        </ul>
+        </ul> 
     </nav>
-);
+  );
 };
 
 // export const Navbar = () => {

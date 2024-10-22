@@ -1,8 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../layout/Layout";
 import { Home } from "../pages/Home.jsx";
-import { Footer } from "../components/Footer.jsx";
-import { Navbar } from "../components/Navbar.jsx";
+import { Login } from "../pages/Login.jsx";
+import { SignUp } from "../pages/SignUp.jsx";
+import { RecipeDetail } from "../pages/RecipeDetail.jsx";
+import { About } from "../pages/About.jsx";
+import { Contact } from "../pages/Contact.jsx";
 
 export const router = createBrowserRouter([{
     
@@ -14,20 +17,20 @@ export const router = createBrowserRouter([{
             element: <Home/>
         },
             {
-                path:'nav',
-                element: <Navbar/>
-            },
-            {
-                path:'footer',
-                element: <Footer/>
-            },
-            {
                 path:'login',
                 element: <Login/>
             },
             {
                 path:'signup',
-                element: <SingUp/>
+                element: <SignUp/>
+            },
+            {
+                path: 'recetas/:id',
+                element: <RecipeDetail />
+            },
+            {
+                path:'about',
+                element: <About/>
             },
             {
                 path:'contact',
