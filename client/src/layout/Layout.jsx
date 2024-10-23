@@ -6,12 +6,14 @@ import backgroundImage from '../assets/images/fondoBlog.webp';
 const Layout = () => {
   return (
     <div
-      className="bg-cover bg-center min-h-screen font-ABeeZee"
+      className="grid grid-rows-[auto_1fr_auto] min-h-screen bg-cover bg-center font-ABeeZee"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
-      <Navbar /> {}
-        <Outlet />
-      <Footer /> {}
+        <Navbar />
+          <div>
+            <Outlet />
+          </div>
+        <Footer />
       </div>
   );
 };
