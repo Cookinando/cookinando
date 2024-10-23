@@ -1,20 +1,103 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { getPostById } from '../services/postService';
+import { useAuth } from '../context/AuthContext';
 
 const RecipeDetail = () => {
+  const auth = useAuth();
+  const isAuthenticated = auth ? auth.isAuthenticated : true;
+
+  const { id } = useParams();
+  const [post, setPost] = useState(null);
+
+  // Post de prueba para mostrar el detalle, lo quitaremos cuando tengamos el backend completo
+  const postTest = {
+    title: 'Noodles con gambas',
+    numPeople: 4,
+    ingredients: [
+      '250 grs. gambas, peladas y sin cabeza',
+      '2 c/s aceite',
+      '2 huevos L batidos',
+      '2 c/c curry de Madras, en polvo',
+      '1 cebolla (100 grs.), cortada a rodajas',
+      '1 pimiento largo italiano, cortado a tiras',
+      '100 grs. semillas de soja (o tirabeques)',
+      '3 calabacines (para noodles vegetarianos) ó 400 grs. noodles (de huevo o de arroz)',
+      '4 cebolletas, cortadas en aritos',
+      '2 c/s sésamo tostado'
+    ],
+    instructions: [
+      'Mezclar todos los ingredientes de la salsa. Utilizar 2 cucharadas de ésta para marinar las gambas. Reservar.',
+      'Si utilizáis la versión vegetariana, preparar los ¨spaguettis¨ de calabacín con la máquina o cortando finas lonchas y después tiras finas. Reservar.',
+      'Calentar 1 cucharadita de aceite en una sartén y preparar una tortilla, que trocearemos mientras la hagamos. Reservar.',
+      'Verter otra cucharadita de aceite en la misma sartén y freír las gambas 2-3 minutos, justo hasta que cambien de color. Reservar.',
+      'Verter el resto del aceite y echar el curry, cocinar 30 segundos hasta que desprenda olor.',
+      'Incorporar la cebolla, el pimiento, la soja o tirabeques y cocinar 2 minutos.',
+      'Agregar los calabacines (*) y el resto de la salsa. Remover y cocinar 2 minutos más.',
+      'Añadir la tortilla y las gambas. Probar y rectificar de sal.',
+      'Servir con las cebolletas y el sésamo.'
+    ],
+    imageUrl: 'https://s3-alpha-sig.figma.com/img/09e3/e9e7/b1d825f6d65d8b5e61cf4da2fb5115c8?Expires=1730678400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=XneqXCSqJvGJvH1EI1BZW7ZB2cFU5q1-dqWTRgzj2HZnzMdTN7FPsSA1WBTIEyZOa8VYg7B6KqNjIal0rXV6Fk9RyhagQzYa9oCl87dJ9zLWq~mZl9kkOkOMVADpxdWSYWwYPWbdIhUMm70PPJzyHDxh9Ui9cx-HABRSr3rOiOShhtHTAyKfkPehwystrl6LKOTA8Cgf4JyGgJx8NNhnaIEgvg0PWtXBn1MICM0Al09ByzW~1vpIYN2TZu2yWKxoIuEPenmHH8aipsMyRHN~cDAftiujE9OmtK5UJT6xne~ftBNeiM53JNaJLkC667iFLj0VleH~qyZCvL6s6xBdtg__',
+  }
+
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      console.log('You are not authenticated. Redirecting to login...');
+      return;
+    }
+    const fetchPost = async () => {
+      try {
+        const data = await getPostById(id);
+        setPost(data);
+      } catch (error) {
+        console.error('Error fetching post:', error);
+      }
+    };
+    fetchPost();
+  }, [id]);
+
+  if (!post) {
+    <div>Cargando...</div>;
+    return setPost(postTest); // Mostrar el post de prueba si no se encuentra el post real, lo quitaremos cuando tengamos el backend completo
+  }
+
   return (
     <>
-      <h2>{title}</h2>
-      <div>
-        <img src={imageUrl} alt={title} />
-      </div>
-      <div>
-        <h3>Ingredientes ({numPeople}):</h3>
-        <p>{ingredients}</p>
-        <h3>Preparación:</h3>
-        <p>{instructions}</p>
-      </div>
+    {
+      isAuthenticated ?
+        <>
+          <h2 className='text-light-dark font-semibold text-7xl text-center my-6 max-md:text-6xl'>{post.title}</h2>
+          <div className='bg-light text-dark w-5/6 mx-auto mt-80 pb-16 flex flex-col gap-8'>
+            <div className='text-light -mt-64 mr-0 max-w-full h-[450px] self-end'>
+              <img src={post.imageUrl} alt={post.title} className='object-cover object-center shadow-lg w-full h-full' />
+            </div>
+            <div className='px-52 mx-auto max-lg:px-20'>
+              <h3 className='text-4xl my-8 max-md:text-3xl'>Ingredientes ({post.numPeople} personas):</h3>
+              <ul className='list-disc px-4'>
+                {
+                  post.ingredients.map((ingredient, index) => (
+                    <li key={index}>{ingredient}</li>
+                  ))
+                }
+              </ul>
+              <h3 className='text-4xl my-8 max-md:text-3xl'>Preparación:</h3>
+              <ol className='list-decimal px-4'>
+                {
+                  post.instructions.map((instruction, index) => (
+                    <li key={index} className=''>{instruction}</li>
+                  ))
+                }
+              </ol>
+            </div>
+          </div>
+        </>
+      : <div className='bg-light text-dark w-5/6 mx-auto p-4 text-xl text-center'>
+          <p>Debes <Link to='/login' className='font-bold hover:underline' >iniciar sesión</Link> o <Link to='/signup' className='font-bold hover:underline' >registrarte</Link> para poder ver este contenido</p>
+        </div>
+    }
     </>
   )
 }
 
-export default RecipeDetail
+export default RecipeDetail;
