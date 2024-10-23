@@ -25,7 +25,7 @@ export const router = createBrowserRouter([{
                 element: <SignUp/>
             },
             {
-                path: 'recetas/:id',
+                path: 'recipe/:id',
                 element: <RecipeDetail />
             },
             {

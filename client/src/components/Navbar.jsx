@@ -60,7 +60,7 @@ export const Navbar = () => {
                     )}
 
                     {/* Página de ReceiptDetail*/}
-                    {location.pathname.startsWith("/recetas/") && (
+                    {location.pathname.startsWith("/recipe/") && (
                         <>
                             <li className= "text-light"><a onClick={() => handleNavigation("/")}>Recetas</a></li>
                             <li className= "text-light"><a onClick={() => handleNavigation("/about")}>Sobre Nosotros</a></li>
