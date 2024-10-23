@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext';
 
 export const Navbar = () => {
   const auth = useAuth();
-  const isAuthenticated = auth ? auth.isAuthenticated : false;
+  const isAuthenticated = auth ? auth.isAuthenticated : true;
 
   const navigate = useNavigate();
   const location = useLocation();
