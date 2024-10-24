@@ -1,6 +1,7 @@
 import logo from '../assets/images/cookinando_logo.png';
 import  { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import profile from '../assets/images/icon_profile.svg';
 
 
 export const Navbar = () => {
@@ -25,24 +26,24 @@ export const Navbar = () => {
                     {/* Página Principal sin logar*/}
                     {location.pathname === "/" && (
                         <>
-                            <li className= "text-light"><a onClick={() => handleNavigation("/login")}>Iniciar sesión</a></li>
-                            <li className= "text-light"><a onClick={() => handleNavigation("/signup")}>Registrase</a></li>
+                            <li className= "text-light pointer-events-auto"><a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/login")}>Iniciar sesión</a></li>
+                            <li className= "text-light pointer-events-auto"><a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/signup")}>Registrase</a></li>
                         </>
                     )}
 
                     {/* Página de Login*/}
                     {location.pathname === "/login" && (
                         <>
-                            <li className= "text-light"><a onClick={() => handleNavigation("/")}>Inicio</a></li>
-                            <li className= "text-light"><a onClick={() => handleNavigation("/signup")}>Registrarse</a></li>
+                            <li className= "text-light pointer-events-auto"><a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/")}>Recetas</a></li>
+                            <li className= "text-light pointer-events-auto"><a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/signup")}>Registrarse</a></li>
                         </>
                     )}
 
                     {/* Página de Sign Up*/}
                     {location.pathname === "/signup" && (
                         <>
-                            <li className= "text-light"><a onClick={() => handleNavigation("/")}>Inicio</a></li>
-                            <li className= "text-light"><a onClick={() => handleNavigation("/login")}>Inciar sesión</a></li>
+                            <li className= "text-light pointer-events-auto"><a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/")}>Recetas</a></li>
+                            <li className= "text-light pointer-events-auto"><a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/login")}>Inciar sesión</a></li>
                         </>
                     )}
                 </>
@@ -53,37 +54,25 @@ export const Navbar = () => {
                     {/* Página Principal con login*/}
                     {(location.pathname === "/") && (
                         <>
-                            <li className= "text-light"><a onClick={() => handleNavigation("/about")}>Sobre Nosotros</a></li>
-                            <li className= "text-light"><a onClick={() => handleNavigation("/contact")}>Contacto</a></li>
-                            <li className= "text-light"><a onClick={() => handleNavigation("/login")}>Cerrar Sesión</a></li>
+                            <li className= "text-light pointer-events-auto"><a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/login")}>Cerrar Sesión</a></li>
+                            <li className= "pointer-events-auto"> <a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/profile")}> <img className= "h-5" src={profile} alt="Profile icon" /></a></li>
                         </>
                     )}
 
                     {/* Página de ReceiptDetail*/}
                     {location.pathname.startsWith("/recipe/") && (
                         <>
-                            <li className= "text-light"><a onClick={() => handleNavigation("/")}>Recetas</a></li>
-                            <li className= "text-light"><a onClick={() => handleNavigation("/about")}>Sobre Nosotros</a></li>
-                            <li className= "text-light"><a onClick={() => handleNavigation("/contact")}>Contacto</a></li>
-                            <li className= "text-light"><a onClick={() => handleNavigation("/login")}>Cerrar Sesión</a></li>
+                            <li className= "text-light pointer-events-auto"><a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/")}>Recetas</a></li>
+                            <li className= "text-light pointer-events-auto"><a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/login")}>Cerrar Sesión</a></li>
+                            <li className="pointer-events-auto"><a onClick={() => handleNavigation("/profile")}> <img className= "h-5" src={profile} alt="Profile icon" /></a></li>
                         </>
                     )} 
 
-                    {/* Páginade About*/}
-                    {location.pathname === "/about" && (
+                    {/* Página de Profile*/}
+                    {location.pathname === "/profile" && (
                         <>
-                            <li className= "text-light"><a onClick={() => handleNavigation("/")}>Recetas</a></li>
-                            <li className= "text-light"><a onClick={() => handleNavigation("/contact")}>Contacto</a></li>
-                            <li className= "text-light"><a onClick={() => handleNavigation("/login")}>Cerrar Sesión</a></li>
-                        </>
-                    )}
-
-                    {/* Página de Contacto*/}
-                    {location.pathname === "/contact" && (
-                        <>
-                            <li className= "text-light"><a onClick={() => handleNavigation("/")}>Recetas</a></li> 
-                            <li className= "text-light"><a onClick={() => handleNavigation("/about")}>Sobre Nosotros</a></li>
-                            <li className= "text-light"><a onClick={() => handleNavigation("/login")}>Cerrar Sesión</a></li>
+                            <li className= "text-light pointer-events-auto"><a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/")}>Recetas</a></li>
+                            <li className= "text-light pointer-events-auto"><a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/login")}>Cerrar Sesión</a></li>
                         </>
                     )}
                 </>
