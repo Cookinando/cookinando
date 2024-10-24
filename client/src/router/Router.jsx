@@ -6,6 +6,8 @@ import { SignUp } from "../pages/SignUp.jsx";
 import RecipeDetail from "../pages/RecipeDetail.jsx";
 import { About } from "../pages/About.jsx";
 import { Contact } from "../pages/Contact.jsx";
+import Profile from "../pages/Profile.jsx";
+import EditProfile from "../pages/EditProfile.jsx";
 
 export const router = createBrowserRouter([{
     
@@ -35,6 +37,14 @@ export const router = createBrowserRouter([{
             {
                 path:'contact',
                 element: <Contact/>
+            },
+            {
+                path: 'profile',
+                element: <Profile />
+            },
+            {
+              path: "/edit-profile",
+              element: <EditProfile />,
             }      
     ]
 
