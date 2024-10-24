@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { getPostById } from '../services/postService';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import { getPostById, deletePost } from '../services/postService';
 import { useAuth } from '../context/AuthContext';
+import Button from '../components/Button';
 
 const RecipeDetail = () => {
   const auth = useAuth();
   const isAuthenticated = auth ? auth.isAuthenticated : true;
+  const isAdmin = auth ? auth.isAdmin : true;
 
   const { id } = useParams();
   const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   // Post de prueba para mostrar el detalle, lo quitaremos cuando tengamos el backend completo
   const postTest = {
@@ -52,23 +56,44 @@ const RecipeDetail = () => {
         setPost(data);
       } catch (error) {
         console.error('Error fetching post:', error);
+        setPost(postTest); // Mostrar el post de prueba si no se encuentra el post real, lo quitaremos cuando tengamos el backend completo
+      } finally {
+        setLoading(false);
       }
     };
     fetchPost();
-  }, [id]);
+  }, [id, isAuthenticated]);
+
+  if (loading) {
+    return <div className='text-light'>Cargando...</div>;
+  }
 
   if (!post) {
-    <div>Cargando...</div>;
-    return setPost(postTest); // Mostrar el post de prueba si no se encuentra el post real, lo quitaremos cuando tengamos el backend completo
+    return <div>No se encontró la receta.</div>;
   }
+
+  const handleEditButton = () => {
+    navigate(`/recipe/${id}/edit`);
+  };
+
+  const handleDeleteButton = async () => {
+    try {
+      confirm('¿Estas seguro de que quieres eliminar esta receta?') &&
+      (await deletePost(id),
+      console.log('Post deleted successfully'),
+      navigate('/'))
+    } catch (error) {
+      console.error('Error deleting post:', error);
+    }
+  };
 
   return (
     <>
     {
       isAuthenticated ?
-        <>
+        <div className='w-5/6 mx-auto'>
           <h2 className='text-light-dark font-semibold text-7xl text-center my-6 max-md:text-6xl'>{post.title}</h2>
-          <div className='bg-light text-dark w-5/6 mx-auto mt-80 pb-16 flex flex-col gap-8'>
+          <div className='bg-light text-dark mt-80 pb-16 flex flex-col gap-8'>
             <div className='text-light -mt-64 mr-0 max-w-full h-[450px] self-end'>
               <img src={post.imageUrl} alt={post.title} className='object-cover object-center shadow-lg w-full h-full' />
             </div>
@@ -91,7 +116,15 @@ const RecipeDetail = () => {
               </ol>
             </div>
           </div>
-        </>
+          {
+            isAdmin && (
+              <div className='flex justify-between py-12 gap-48 max-md:gap-4 max-lg:gap-24'>
+            <Button text='Editar Receta' type='button' handleClick={handleEditButton} />
+            <Button text='Eliminar Receta' type='button' handleClick={handleDeleteButton} />
+          </div>
+            )
+          }
+        </div>
       : <div className='bg-light text-dark w-5/6 mx-auto p-4 text-xl text-center'>
           <p>Debes <Link to='/login' className='font-bold hover:underline' >iniciar sesión</Link> o <Link to='/signup' className='font-bold hover:underline' >registrarte</Link> para poder ver este contenido</p>
         </div>

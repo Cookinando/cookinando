@@ -6,7 +6,7 @@ import backgroundImage from '../assets/images/fondoBlog.webp';
 const Layout = () => {
   return (
     <div
-      className="bg-cover bg-center min-h-screen font-ABeeZee"
+      className="bg-cover bg-center bg-fixed min-h-screen font-ABeeZee"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       <Navbar /> {}
