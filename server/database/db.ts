@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize";
-import { DB_HOST, DB_DEV_NAME, DB_PASSWORD, DB_USER, DB_TEST_NAME } from "../utils/config";
+import { DB_HOST, DB_DEV_NAME, DB_PASSWORD, DB_USER, DB_TEST_NAME, NODE_ENV } from "../utils/config";
 
-const isTest: boolean = process.env.NODE_ENV === 'test';
+const isTest: boolean = NODE_ENV === 'test';
 const dbName: string = isTest ? DB_TEST_NAME! : DB_DEV_NAME!;
 
 const db = new Sequelize(dbName, DB_USER!, DB_PASSWORD, {
