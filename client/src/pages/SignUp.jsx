@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import Button from '../components/Button';
 
 
 
@@ -22,7 +23,7 @@ export const SignUp = () => {
         <div>
             <label htmlFor="username" className="text-sm text-2xl leading-6">Nombre de usuario:</label>
             <div className="mt-2">
-              <input type="text" {...register('email',{required:true})} className="w-[20rem] h-[3.25rem] px-4 text-black bg-primarylight"></input>
+              <input type="text" {...register('username',{required:true})} className="w-[20rem] h-[3.25rem] px-4 text-black bg-primarylight"></input>
               {errors.name?.type === 'required' && <p>Es necesario ingresar un nombre de ususario</p>}
             </div>
           </div>
@@ -36,12 +37,12 @@ export const SignUp = () => {
           <div>
             <label htmlFor="password" className="text-sm text-2xl leading-6">Contraseña:</label>
             <div className="mt-2">
-              <input type="text" {...register('password',{required:true})} className="w-[20rem] h-[3.25rem] px-4 text-black bg-primarylight"></input>
+              <input type="password" {...register('password',{required:true})} className="w-[20rem] h-[3.25rem] px-4 text-black bg-primarylight mb-4"></input>
               {errors.tags?.type === 'required' && <p>Es necesario ingresar una contraseña</p>}
             </div>
           </div>
           <div>
-            <input type="submit" value="Enviar" className="flex w-[20rem] h-[3.25rem] mt-12 justify-center bg-light-dark px-3 py-1.5 leading-6 text-dark shadow-sm hover:bg-light"/>
+            <Button type="submit" handleSubmit="handleSubmit" text="Enviar" />
           </div>
         </form>
       </div>

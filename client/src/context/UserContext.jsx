@@ -10,7 +10,7 @@ export const UserProvider = ({ children }) => {
       const userData = {
         username: "testuser",
         email: "testuser@example.com",
-        isAdmin: false, // o false, según el usuario
+        isAdmin: true, // o false, según el usuario
       };
       setUser(userData);
     };
