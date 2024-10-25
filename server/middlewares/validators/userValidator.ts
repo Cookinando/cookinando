@@ -1,16 +1,16 @@
-import { body, param } from 'express-validator';    
+import { body, param, ValidationChain } from 'express-validator';    
     
-export const validateLogIn = [
+export const validateLogIn: ValidationChain[] = [
 
     param('id')
         .isInt().withMessage('🚨El ID debe ser un número entero🚨')
         .notEmpty().withMessage('🚨El ID es obligatorio🚨')
         .custom(async (value) => {
-            const usuario = await Usuario.findById(value); // Busca el usuario por ID
+            const usuario = await Usuario.findById(value);
             if (!usuario) {
                 throw new Error('🚨El ID no existe en la base de datos🚨');
             }
-            return true; // Si el usuar2io existe, se retorna true
+            return true;
         }),
 
     body('username')
@@ -39,7 +39,7 @@ export const validateLogIn = [
         .isBoolean().withMessage('🚨El campo isAdmin debe ser un verdadero o falso🚨')
   ];
 
-export const validateSignUp = [
+export const validateSignUp: ValidationChain[] = [
 
     body('username')
         .notEmpty().withMessage('🚨El nombre es obligatorio🚨')
@@ -66,16 +66,16 @@ export const validateSignUp = [
          .isBoolean().withMessage('🚨El campo isAdmin debe ser un verdadero o falso🚨')
   ];
 
-export const validateUpdateProfile = [
+export const validateUpdateProfile: ValidationChain[] = [
     param('id')
         .isInt().withMessage('🚨El ID debe ser un número entero🚨')
         .notEmpty().withMessage('🚨El ID es obligatorio🚨')
         .custom(async (value) => {
-            const usuario = await Usuario.findById(value); // Busca el usuario por ID
+            const usuario = await Usuario.findById(value);
             if (!usuario) {
                 throw new Error('🚨El ID no existe en la base de datos🚨');
             }
-            return true; // Si el usuario existe, se retorna true
+            return true;
         }),
 
     body('username')
@@ -88,7 +88,7 @@ export const validateUpdateProfile = [
     .isEmail().withMessage('🚨El email debe ser un correo válido🚨')
     .normalizeEmail()
     .custom(async (value, { req }) => {
-        const user = await User.findOne({ where: { email: value, id: { [Op.ne]: req.params.id } } });
+        const user = await user.findOne({ where: { email: value, id: { [Op.ne]: req.params.id } } });
         if (user) {
           return Promise.reject('🚨El correo electrónico ya está en uso🚨');
         }
