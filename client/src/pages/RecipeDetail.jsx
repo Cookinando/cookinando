@@ -48,7 +48,6 @@ const RecipeDetail = () => {
   useEffect(() => {
     if (!isAuthenticated) {
       console.log('You are not authenticated. Redirecting to login...');
-      return;
     }
     const fetchPost = async () => {
       try {

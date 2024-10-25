@@ -3,6 +3,7 @@ import db from "./database/db";
 import userRouter from "./routes/userRoutes";
 import postRouter from "./routes/postRoutes";
 import cors from 'cors';
+import authRouter from "./routes/authRouter";
 
 export const app: Application = express();
 const PORT = process.env.PORT || 8000;
@@ -10,7 +11,7 @@ const PORT = process.env.PORT || 8000;
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/users", userRouter);
+app.use("/api/users", userRouter, authRouter);
 app.use("/api/posts", postRouter);
 
 const startServer = async () => {
