@@ -1,11 +1,11 @@
-import express, { Application } from "express";
+import express from "express";
 import db from "./database/db";
 import userRouter from "./routes/userRoutes";
 import postRouter from "./routes/postRoutes";
 import cors from 'cors';
 import authRouter from "./routes/authRouter";
 
-export const app: Application = express();
+export const app = express();
 const PORT = process.env.PORT || 8000;
 
 app.use(cors());
