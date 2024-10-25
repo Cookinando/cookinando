@@ -39,9 +39,7 @@ const ContactForm = () => {
       setErrors(validationErrors);
     } else {
       console.log(formData);
-      // Aquí puedes manejar el envío de los datos del formulario
-      setErrors({}); // Limpiar errores
-      // Resetear formulario si es necesario
+      setErrors({}); 
       setFormData({
         name: '',
         email: '',
@@ -58,10 +56,10 @@ const ContactForm = () => {
         placeholder="Tu nombre" 
         value={formData.name}
         onChange={handleChange}
-        className={`p-2 border border-gray-300 rounded text-[#C1A881] ${errors.name ? 'border-red-500' : ''}`}
+        className={`p-2 border border-gray-300 rounded text-[#C1A881] ${errors.name ? 'border-[#C1A881]' : ''}`}
         required 
       />
-      {errors.name && <span className="text-red-500">{errors.name}</span>} {/* Mensaje de error para nombre */}
+      {errors.name && <span className="text-white-500">{errors.name}</span>}
 
       <input 
         type="email" 
@@ -69,20 +67,20 @@ const ContactForm = () => {
         placeholder="Tu correo" 
         value={formData.email}
         onChange={handleChange}
-        className={`p-2 border border-gray-300 rounded text-[#C1A881] ${errors.email ? 'border-red-500' : ''}`}
+        className={`p-2 border border-gray-300 rounded text-[#C1A881] ${errors.email ? 'border-[#C1A881]' : ''}`}
         required 
       />
-      {errors.email && <span className="text-red-500">{errors.email}</span>} {/* Mensaje de error para email */}
+      {errors.email && <span className="text-red-500">{errors.email}</span>}
 
       <textarea 
         name="message"
         placeholder="Tu mensaje" 
         value={formData.message}
         onChange={handleChange}
-        className={`p-2 border border-gray-300 rounded text-[#C1A881] ${errors.message ? 'border-red-500' : ''}`}
+        className={`p-2 border border-gray-300 rounded text-[#C1A881] ${errors.message ? 'border-[#C1A881]' : ''}`}
         required 
       />
-      {errors.message && <span className="text-red-500">{errors.message}</span>} {/* Mensaje de error para mensaje */}
+      {errors.message && <span className="text-red-500">{errors.message}</span>} 
 
       <button 
         type="submit" 
