@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { getUsers, getUser, editUser, deleteUser, createUser } from "../controllers/userController";
 import { authenticateToken, isAdmin, canCreateAdmin } from "../middlewares/authMiddleware";
+
 const userRouter = Router();
 
 userRouter.get("/", getUsers);

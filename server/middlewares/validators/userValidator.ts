@@ -1,42 +1,37 @@
 import { body, param, ValidationChain } from 'express-validator';    
+import { Op } from 'sequelize';
+import User from '../../models/userModel';
     
 export const validateLogIn: ValidationChain[] = [
 
-    param('id')
-        .isInt().withMessage('🚨El ID debe ser un número entero🚨')
-        .notEmpty().withMessage('🚨El ID es obligatorio🚨')
-        .custom(async (value) => {
-            const usuario = await Usuario.findById(value);
-            if (!usuario) {
-                throw new Error('🚨El ID no existe en la base de datos🚨');
+    body('username')
+        .notEmpty().withMessage('🚨El nombre de usuario es obligatorio🚨')
+        .isString().withMessage('🚨El nombre de usuario debe ser un texto🚨')
+        .custom(async (value: string) => {
+            const userName = await User.findOne({ where: { username: value } });
+            if (!userName) {
+                throw new Error('🚨El usuario no existe🚨');
             }
             return true;
         }),
-
-    body('username')
-        .notEmpty().withMessage('🚨El nombre es obligatorio🚨')
-        .isString().withMessage('🚨El nombre debe ser un texto🚨'),
 
     body('password')
         .notEmpty().withMessage('🚨La contraseña es obligatoria🚨')
         .isString().withMessage('🚨La contraseña debe ser un texto🚨'),
         //falta añadir la comparación entre contrseñas con bcrypt
 
-    body('email')
-        .notEmpty().withMessage('🚨El email es obligatorios🚨')
-        .isString().withMessage('🚨Los tags deben ser un texto🚨')
-        .isEmail().withMessage('🚨El email debe ser un correo válido🚨')
-        .normalizeEmail()
-        .custom(async (value) => {
-            const user = await User.findOne({ where: { email: value } });
-            if (!user) {
-                throw new Error('🚨El usuario no existe🚨');
-            }
-            return true;
-        }),
-
-    body('isAdmin')
-        .isBoolean().withMessage('🚨El campo isAdmin debe ser un verdadero o falso🚨')
+    // body('email')
+    //     .notEmpty().withMessage('🚨El email es obligatorios🚨')
+    //     .isString().withMessage('🚨Los tags deben ser un texto🚨')
+    //     .isEmail().withMessage('🚨El email debe ser un correo válido🚨')
+    //     .normalizeEmail()
+    //     .custom(async (value: string) => {
+    //         const userEmail = await User.findOne({ where: { email: value } });
+    //         if (!userEmail) {
+    //             throw new Error('🚨El usuario no existe🚨');
+    //         }
+    //         return true;
+    //     }),
   ];
 
 export const validateSignUp: ValidationChain[] = [
@@ -62,44 +57,54 @@ export const validateSignUp: ValidationChain[] = [
                 }
                 return true;
             }),
-    body('isAdmin')
-         .isBoolean().withMessage('🚨El campo isAdmin debe ser un verdadero o falso🚨')
   ];
 
 export const validateUpdateProfile: ValidationChain[] = [
-    param('id')
-        .isInt().withMessage('🚨El ID debe ser un número entero🚨')
-        .notEmpty().withMessage('🚨El ID es obligatorio🚨')
-        .custom(async (value) => {
-            const usuario = await Usuario.findById(value);
-            if (!usuario) {
-                throw new Error('🚨El ID no existe en la base de datos🚨');
-            }
-            return true;
-        }),
 
     body('username')
         .notEmpty().withMessage('🚨El nombre es obligatorio🚨')
-        .isString().withMessage('🚨El nombre debe ser un texto🚨'),
+        .isString().withMessage('🚨El nombre debe ser un texto🚨')
+        .custom(async (value, { req }) => {
+            const userId = req.params?.id;
+                if (!userId) {
+                    throw new Error('🚨El ID del usuario no existe🚨');
+                }
+    
+            const updateUserName = await User.findOne({ 
+                where: { 
+                    username: value, 
+                    id: { [Op.ne]: userId } } });
+    
+            if (updateUserName) {
+                return Promise.reject('🚨Este nombre de usuario ya está en uso🚨');
+            }
+                return true; // es una buena práctica devolver true si no hay errores
+            }),
 
     body('email')
-    .notEmpty().withMessage('🚨El email es obligatorio🚨')
-    .isString().withMessage('🚨Los tags deben ser un texto🚨')
-    .isEmail().withMessage('🚨El email debe ser un correo válido🚨')
-    .normalizeEmail()
-    .custom(async (value, { req }) => {
-        const user = await user.findOne({ where: { email: value, id: { [Op.ne]: req.params.id } } });
-        if (user) {
-          return Promise.reject('🚨El correo electrónico ya está en uso🚨');
-        }
-        }),
+        .notEmpty().withMessage('🚨El email es obligatorio🚨')
+        .isString().withMessage('🚨El email debe ser un texto🚨')
+        .isEmail().withMessage('🚨El email debe ser un correo válido🚨')
+        .normalizeEmail()
+        .custom(async (value, { req }) => {
+            const userId = req.params?.id;
+                if (!userId) {
+                    throw new Error('🚨El ID del usuario no existe🚨');
+                }
 
-        body('password')
+            const updatedEmail = await User.findOne({ 
+                where: { 
+                    email: value, 
+                    id: { [Op.ne]: userId } } });
+
+            if (updatedEmail) {
+                return Promise.reject('🚨El correo electrónico ya está en uso🚨');
+            }
+                return true; // es una buena práctica devolver true si no hay errores
+            }),
+
+    body('password')
             .notEmpty().withMessage('🚨La contraseña es obligatoria🚨')
             .isString().withMessage('🚨La contraseña debe ser un texto🚨')
             .isLength({ min: 8 }).withMessage('🚨La contraseña debe tener al menos 8 caracteres🚨'),
-            //falta añadir la comparación entre contrseñas con bcrypt
-
-        body('isAdmin')
-        .isBoolean().withMessage('🚨El campo isAdmin debe ser un verdadero o falso🚨')
   ];
