@@ -2,12 +2,14 @@ import jwt from "jsonwebtoken";
 import { Request, Response } from "express";
 import User from "../models/userModel";
 import bcrypt from "bcrypt";
+import { TOKEN_SECRET } from "../utils/config";
+
 
 export const loginUser = async (req: Request, res: Response): Promise<void> => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
   try {
-    const user = await User.findOne({ where: { username } });
+    const user = await User.findOne({ where: { email } });
     if (!user) {
       res.status(401).json({ message: "Invalid credentials" });
       return;
@@ -21,8 +23,8 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
     }
 
     const token = jwt.sign(
-      { id: user.id, username: user.username, isAdmin: user.isAdmin },
-      process.env.TOKEN_SECRET as string,
+      { id: user.id, username: user.username, role: user.role },
+      TOKEN_SECRET as string,
       { expiresIn: "1h" } // El token expira en 1 hora
     );
 
