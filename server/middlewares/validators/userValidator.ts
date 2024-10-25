@@ -9,7 +9,6 @@ export const validateLogIn = [
     body('password')
         .notEmpty().withMessage('🚨La contraseña es obligatoria🚨')
         .isString().withMessage('🚨La contraseña debe ser un texto🚨'),
-        //falta añadir la comparación entre contrseñas con bcrypt
 
     body('email')
         .notEmpty().withMessage('🚨El email es obligatorios🚨')
@@ -21,7 +20,7 @@ export const validateLogIn = [
             if (!userEmail) {
                 throw new Error('🚨El usuario no existe🚨');
             }
-            return true; // es una buena práctica devolver true si no hay errores
+            return true; 
         }),
     (req: Request, res: Response, next: NextFunction) => validate(req, res, next)
   ];
