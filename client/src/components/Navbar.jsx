@@ -39,8 +39,8 @@ export const Navbar = () => {
             {/* Menú */}
             <ul
                 className={`${
-                    menuOpen ? 'block bg-dark w-scree mt-0 fixed inset-0 flex flex-col justify-center items-center z-50' : 'hidden'
-                } lg:flex lg:space-x-6 mt-10 flex flex-col lg:flex-row space-y-4 lg:space-y-0`}
+                    menuOpen ? 'block bg-dark w-scree fixed inset-0 flex flex-col justify-center items-center z-50' : 'hidden'
+                } lg:flex lg:space-x-6 lg:mt-10 flex flex-col lg:flex-row space-y-4 lg:space-y-0`}
             >
                 {!isAuthenticated && (
                     <>
