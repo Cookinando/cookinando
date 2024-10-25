@@ -92,11 +92,15 @@ const RecipeDetail = () => {
       isAuthenticated ?
         <div className='w-5/6 mx-auto'>
           <h2 className='text-light-dark font-semibold text-7xl text-center my-6 max-md:text-6xl'>{post.title}</h2>
-          <div className='bg-light text-dark mt-80 pb-16 flex flex-col gap-8'>
-            <div className='text-light -mt-64 mr-0 max-w-full h-[450px] self-end'>
-              <img src={post.imageUrl} alt={post.title} className='object-cover object-center shadow-lg w-full h-full' />
-            </div>
-            <div className='px-52 mx-auto max-lg:px-20'>
+          <div className={`bg-light text-dark ${ post.imageUrl ? 'mt-80' : 'mt-20'} pb-16 flex flex-col gap-8`}>
+              {
+                post.imageUrl && (
+                  <div className='text-light -mt-64 mr-0 max-w-full h-[450px] self-end'>
+                    <img src={post.imageUrl} alt={post.title} className='object-cover object-center shadow-lg w-full h-full' />
+                  </div>
+                )
+              }
+            <div className='px-52 mx-auto mt-10 max-lg:px-20'>
               <h3 className='text-4xl my-8 max-md:text-3xl'>Ingredientes ({post.numPeople} personas):</h3>
               <ul className='list-disc px-4'>
                 {
