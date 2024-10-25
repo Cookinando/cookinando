@@ -1,5 +1,17 @@
-import express, { Router } from "express";
+import { Router } from "express";
+import { getUsers, getUser, editUser, deleteUser, createUser } from "../controllers/userController";
+import { authenticateToken, isAdmin, canCreateAdmin } from "../middlewares/authMiddleware";
+const userRouter = Router();
 
-const userRouter: Router = express.Router();
-// Routes posts
+userRouter.get("/", getUsers);
+
+userRouter.get("/:id", getUser);
+
+userRouter.post("/", createUser);
+userRouter.post("/admin", authenticateToken, isAdmin, canCreateAdmin, createUser);
+
+userRouter.put("/:id", editUser);
+
+userRouter.delete("/:id", deleteUser);
+
 export default userRouter;
