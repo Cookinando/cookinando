@@ -1,4 +1,5 @@
 // Home.jsx
+
 import React from 'react';
 import ContactForm from '../components/ContactForm'; 
 import logo from '/Users/magalylazarte/cookinando/client/src/assets/images/cookindando_logo2.png';
