@@ -10,7 +10,7 @@ import closeIcon from '../assets/images/close_icon.svg';
 export const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false); 
     const auth = useAuth();
-    const isAuthenticated = auth ? auth.isAuthenticated : false;
+    const isAuthenticated = auth;
     const navigate = useNavigate();
     const location = useLocation();
 
