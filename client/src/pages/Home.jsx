@@ -13,7 +13,7 @@ import guiso from '/Users/magalylazarte/cookinando/client/src/assets/guiso.png';
 
 const Home = () => {
   return (
-    <div className="bg-[url('/Users/magalylazarte/cookinando/client/src/assets/fondo.png')] bg-cover bg-center min-h-screen text-white">
+    <div className="bg-cover bg-center min-h-screen text-white">
       <section className="p-10">
         <h1 className="text-4xl font-bold"></h1>
         <div className="flex justify-center items-center w-full h-500">
