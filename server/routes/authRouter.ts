@@ -9,3 +9,4 @@ const authRouter = Router();
 authRouter.post("/login", validateLogIn, validate, loginUser);
 
 export default authRouter;
+
