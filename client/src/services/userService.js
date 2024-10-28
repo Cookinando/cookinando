@@ -1,7 +1,7 @@
 import axios from "axios"; 
 
 
-const URL = 'http://localhost:3000/cookinando';  
+const URL = 'http://localhost:8000/api/users';  
 
 //READ-metodo get
 export const getUsers = async () => {
