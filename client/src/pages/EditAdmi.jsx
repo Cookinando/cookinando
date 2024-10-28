@@ -55,4 +55,3 @@ const EditAdmi = () => {
 };
 
 export default EditAdmi;
-
