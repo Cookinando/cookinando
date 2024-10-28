@@ -1,14 +1,13 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
-
-
+import  { signUpNewUser } from '../services/authService.js'
 
 export const SignUp = () => {
   const {register, formState:{errors},handleSubmit} = useForm();
   const navigate = useNavigate();
   const onSubmit = (data) =>{    
-    signup({...data})
+    signUpNewUser({...data})
     navigate("/") 
   }
 
