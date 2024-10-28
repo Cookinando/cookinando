@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 const EditAdmi = () => {
-  
   const [usuarios, setUsuarios] = useState([
     { nombre: 'Laura Vega Re', isAdmin: false },
     { nombre: 'Magaly Lazarte', isAdmin: false },
@@ -22,11 +21,11 @@ const EditAdmi = () => {
         <h1 className="text-[#C1A881] text-4xl font-bold text-center">Gestión de Usuarios - Administradores</h1>
         <div className="grid grid-cols-1 gap-10 mt-10">
           <div className="p-6 rounded-lg">
-            <h2 className="text-2xl font-semibold mb-4 text-center"></h2>
-            <ul className="space-y-2">
+            <ul className="space-y-4">
               {usuarios.map((usuario, index) => (
-                <li key={index} className="flex items-center justify-center text-lg">
-                  <span className="text-xl mr-40">{usuario.nombre}</span> 
+                <li key={index} className="flex items-center gap-x-4 text-lg justify-center">
+                  <span className="text-xl">{usuario.nombre}</span> 
+
                   <input 
                     type="checkbox" 
                     checked={usuario.isAdmin} 
@@ -34,6 +33,7 @@ const EditAdmi = () => {
                     onChange={() => toggleAdmin(index)}
                     id={`checkbox-${index}`} 
                   />
+                  
                   <label 
                     htmlFor={`checkbox-${index}`} 
                     className={`cursor-pointer w-6 h-6 flex items-center justify-center border-2 border-gray-300 rounded ${
