@@ -1,10 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
-import Layout from "../layout/Layout";
+import Layout from "../layout/Layout.jsx";
 import { Home } from "../pages/Home.jsx";
 import { Login } from "../pages/Login.jsx";
 import { SignUp } from "../pages/SignUp.jsx";
-import { RecipeDetail } from "../pages/RecipeDetail.jsx";
-import  EditAdmi  from "../pages/EditAdmi.jsx";
+import RecipeDetail from "../pages/RecipeDetail.jsx";
+import Profile from "../pages/Profile.jsx";
+import EditProfile from "../pages/EditProfile.jsx";
 
 export const router = createBrowserRouter([{
     
@@ -24,16 +25,17 @@ export const router = createBrowserRouter([{
                 element: <SignUp/>
             },
             {
-                path: 'recetas/:id',
+                path: 'recipe/:id',
                 element: <RecipeDetail />
             },
-            
-            
-            { 
-                path:'editadmi',
-                element: <EditAdmi/>
-             }
-           
+            {
+                path: 'profile',
+                element: <Profile />
+            },
+            {
+              path: "/editprofile",
+              element: <EditProfile />,
+            }      
     ]
 
 }])

@@ -1,22 +1,24 @@
 import { Request, Response } from "express";
 import Post from "../models/postModel";
+import { joinItems, splitItems } from "../utils/recipeUtils";
+import { AuthRequest } from "../interfaces/userInterface";
 
-export const createPost = async (req: Request, res: Response): Promise<void> => {
+export const createPost = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
-    // const userId = req.user?.id; // El ID del usuario extraído del token JWT
+    const userId = req.user!.id; // El ID del usuario extraído del token JWT
 
-    // if (!userId) {
-    //   res.status(401).json({ message: 'Unauthorized' });
-    //   return;
-    // }
+    if (!userId) {
+      res.status(401).json({ message: 'Unauthorized' });
+      return;
+    }
     const { title, numPeople, ingredients, instructions, imageUrl } = req.body;
     const newPost = await Post.create({
       title,
       numPeople,
-      ingredients,
-      instructions,
-      imageUrl
-    //   authorId: userId, // Aquí vinculamos el post al usuario logueado
+      ingredients: joinItems(ingredients),
+      instructions: joinItems(instructions),
+      imageUrl,
+      authorId: userId, // Aquí vinculamos el post al usuario logueado
     });
     console.log("✅ Post created successfully");
     res.status(201).json(newPost);
@@ -29,7 +31,6 @@ export const createPost = async (req: Request, res: Response): Promise<void> => 
     }
   }
 };
-
 export const getAllPosts = async (req: Request, res: Response): Promise<void> => {
   try {
     const allPosts = await Post.findAll();
@@ -45,7 +46,7 @@ export const getAllPosts = async (req: Request, res: Response): Promise<void> =>
   }
 };
 
-export const getPostById = async (req: Request, res: Response): Promise<void> => {
+export const getPostById = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
     const post = await Post.findByPk(id);
@@ -53,8 +54,14 @@ export const getPostById = async (req: Request, res: Response): Promise<void> =>
       res.status(404).json({ message: "❌ Post not found" });
       return;
     }
+    const ingredientsList = splitItems(post.ingredients);
+    const instructionsList = splitItems(post.instructions);
     console.log("✅ Post retrieved successfully");
-    res.status(200).json(post);
+    res.status(200).json({
+      ...post.toJSON(),
+      ingredients: ingredientsList,
+      instructions: instructionsList,
+    });
   } catch (error) {
     if (error instanceof Error) {
       res.status(500).json({
@@ -65,13 +72,18 @@ export const getPostById = async (req: Request, res: Response): Promise<void> =>
   }
 };
 
-export const updatePost = async (req: Request, res: Response): Promise<void> => {
+export const updatePost = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
     const { title, numPeople, ingredients, instructions, imageUrl } = req.body;
-    const updatedPost = await Post.update(
-      { title, numPeople, ingredients, instructions, imageUrl },
-      { where: { id } }
+    const updatedPost = await Post.update({
+      title,
+      numPeople,
+      ingredients: joinItems(ingredients),
+      instructions: joinItems(instructions),
+      imageUrl,
+    },
+      { where: { id, authorId: req.user!.id } }
     );
     if (!updatedPost) {
       res.status(404).json({ message: "❌ Post not found" });
@@ -89,10 +101,10 @@ export const updatePost = async (req: Request, res: Response): Promise<void> => 
   }
 };
 
-export const deletePost = async (req: Request, res: Response): Promise<void> => {
+export const deletePost = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
-    const deletedPost = await Post.destroy({ where: { id } });
+    const deletedPost = await Post.destroy({ where: { id, authorId: req.user!.id } });
     if (!deletedPost) {
       res.status(404).json({ message: "❌ Post not found" });
       return;
