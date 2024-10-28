@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 const EditAdmi = () => {
   
   const [usuarios, setUsuarios] = useState([
-    { nombre: 'Usuario 1', isAdmin: false },
-    { nombre: 'Usuario 2', isAdmin: true },
-    { nombre: 'Usuario 3', isAdmin: false },
+    { nombre: 'Laura Vega Re', isAdmin: false },
+    { nombre: 'Magaly Lazarte', isAdmin: false },
+    { nombre: 'Lorena Acosta', isAdmin: true },
   ]);
 
   
@@ -24,13 +24,10 @@ const EditAdmi = () => {
         <h1 className="text-4xl font-bold text-center">Gestión de Usuarios</h1>
         <div className="flex justify-center items-center w-full h-[300px] my-6">
         </div>
-        <p className="mt-2 text-center text-[#C1A881]">
-          ¡Explora el mundo a través de la gastronomía y disfruta cocinando con nosotros!
-        </p>
-
+      
         <div className="grid grid-cols-2 gap-10 mt-10">
           <div className="bg-gray-800 bg-opacity-70 p-6 rounded-lg">
-            <h2 className="text-2xl font-semibold mb-4">Lista de Usuarios</h2>
+            <h2 className="text-2xl font-semibold mb-4">administradores</h2>
             <ul className="space-y-2">
               {usuarios.map((usuario, index) => (
                 <li key={index} className="text-lg">{usuario.nombre}</li>

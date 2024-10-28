@@ -4,9 +4,7 @@ import { Home } from "../pages/Home.jsx";
 import { Login } from "../pages/Login.jsx";
 import { SignUp } from "../pages/SignUp.jsx";
 import { RecipeDetail } from "../pages/RecipeDetail.jsx";
-import { About } from "../pages/About.jsx";
-import { Contact } from "../pages/Contact.jsx";
-import { EditAdmi } from "../pages/EditAdmi.jsx";
+import  EditAdmi  from "../pages/EditAdmi.jsx";
 
 export const router = createBrowserRouter([{
     
@@ -29,14 +27,12 @@ export const router = createBrowserRouter([{
                 path: 'recetas/:id',
                 element: <RecipeDetail />
             },
-            {
-                path:'about',
-                element: <About/>
-            },
-            {
-                path:'contact',
-                element: <Contact/>
-            }
+            
+            
+            { 
+                path:'editadmi',
+                element: <EditAdmi/>
+             }
            
     ]
 
