@@ -27,7 +27,7 @@ User.init(
     },
     role: {
       type: new DataTypes.STRING(20),
-      allowNull: false,
+      allowNull: true,
     },
   },
   {
