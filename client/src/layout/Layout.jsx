@@ -6,7 +6,7 @@ import backgroundImage from '../assets/images/fondo_layout.svg';
 const Layout = () => {
   return (
     <div
-      className="grid grid-rows-[auto_1fr_auto] min-h-screen bg-cover bg-center bg-fixed font-ABeeZee"
+      className="grid grid-rows-[auto_1fr_auto] min-h-screen bg-cover bg-center bg-fixed"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
         <Navbar />
