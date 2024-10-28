@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
-import { UserContext } from '../context/UserContext';
+import { AuthContext } from '../context/AuthContext.jsx';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 
 const Profile = () => {
-  const { user } = useContext(UserContext);
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleEditClick = () => {
