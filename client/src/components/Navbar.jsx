@@ -20,7 +20,7 @@ export const Navbar = () => {
     };
 
     const toggleMenu = () => setMenuOpen(!menuOpen);
-    console.log(menuOpen);
+   
     return (
         <nav className={`navbar flex justify-between lg:flex-row lg:px-8 items-start ${menuOpen ? 'bg-transparent fixed inset-0' : ''}`} aria-label="Global">
             <div className={`lg:w-48 lg:h-48 w-32 h-32 ${menuOpen ? 'hidden' : 'block'}`}>
