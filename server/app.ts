@@ -5,6 +5,7 @@ import postRouter from "./routes/postRoutes";
 import cors from 'cors';
 import authRouter from "./routes/authRoutes";
 
+
 export const app = express();
 const PORT = process.env.PORT || 8000;
 
@@ -19,7 +20,7 @@ const startServer = async () => {
     await db.authenticate();
     console.log("👍Connection has been established successfully.");
 
-    await userModel.sync({ alter: true });
+    await db.sync({ alter: true });
     console.log("✅ Database synced successfully.");
   } catch (error) {
     console.error("❌ Unable to connect to Database", error);
