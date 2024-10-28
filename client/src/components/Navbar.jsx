@@ -47,7 +47,7 @@ export const Navbar = () => {
                         {/* Página Principal sin logar*/}
                         {location.pathname === "/" && (
                             <>
-                                 <li className= "pointer-events-auto w-screen flex justify-center lg:hidden"> <a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/")}> <img className= "h-5" src={closeIcon} alt="Profile icon" /></a></li>
+                                <li className= "pointer-events-auto w-screen flex justify-center lg:hidden"> <a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/")}> <img className= "h-5" src={closeIcon} alt="Profile icon" /></a></li>
                                 <li className= "text-light pointer-events-auto"><a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/login")}>Iniciar sesión</a></li>
                                 <li className= "text-light pointer-events-auto"><a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/signup")}>Registrase</a></li>
                             </>
