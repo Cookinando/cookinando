@@ -29,14 +29,6 @@ export const router = createBrowserRouter([{
                 element: <RecipeDetail />
             },
             {
-                path:'about',
-                element: <About/>
-            },
-            {
-                path:'contact',
-                element: <Contact/>
-            },
-            {
                 path: 'profile',
                 element: <Profile />
             },
