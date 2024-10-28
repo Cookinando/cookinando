@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { UserContext } from '../context/UserContext';
+import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 
 const EditProfile = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(AuthContext);
   const { register, formState:{errors}, handleSubmit } = useForm({
     defaultValues: {
       username: user?.username,
