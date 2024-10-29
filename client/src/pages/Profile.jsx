@@ -21,7 +21,7 @@ const Profile = () => {
 
   return (
     <div className="flex min-h-full flex-col justify-center items-center lg:px-8 bg-primary">
-      {user?.isAdmin ? (
+      {user?.role === 'admin' ? (
         <div>
           <div className="sm:mx-auto sm:w-full sm:max-w-sm mb-8">
             <h2 className="mt-10 text-center text-4xl text-light-dark">¡Hola {user?.username}!</h2>
