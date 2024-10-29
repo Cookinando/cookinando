@@ -2,14 +2,14 @@
 
 import React from 'react';
 import ContactForm from '../components/ContactForm'; 
-import logo from '/Users/magalylazarte/cookinando/client/src/assets/images/cookindando_logo2.png';
-import img from '/Users/magalylazarte/cookinando/client/src/assets/images/img1home.png';
-import ensalada from '/Users/magalylazarte/cookinando/client/src/assets/ensalada.png';
-import noodles from '/Users/magalylazarte/cookinando/client/src/assets/Noodles.png';
-import raviolis from '/Users/magalylazarte/cookinando/client/src/assets/raviolis.png';
-import costillascerdo from '/Users/magalylazarte/cookinando/client/src/assets/costillascerdo.png';
-import costillas from '/Users/magalylazarte/cookinando/client/src/assets/costillas.png';
-import guiso from '/Users/magalylazarte/cookinando/client/src/assets/guiso.png';
+import logo from '../assets/images/cookindando_logo2.png';
+import img from '../assets/images/img1home.png';
+import ensalada from '../assets/ensalada.png';
+import noodles from '../assets/noodles.png';
+import raviolis from '../assets/raviolis.png';
+import costillascerdo from '../assets/costillascerdo.png';
+import costillas from '../assets/costillas.png';
+import guiso from '../assets/guiso.png';
 
 const Home = () => {
   return (
