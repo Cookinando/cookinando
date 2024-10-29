@@ -11,7 +11,9 @@ export const createPost = async (req: AuthRequest, res: Response): Promise<void>
       res.status(401).json({ message: 'Unauthorized' });
       return;
     }
-    const { title, numPeople, ingredients, instructions, imageUrl } = req.body;
+    const { title, numPeople, ingredients, instructions } = req.body;
+    const imageUrl = req.file?.path; // Obtén la URL de la imagen del archivo cargado
+    
     const newPost = await Post.create({
       title,
       numPeople,
