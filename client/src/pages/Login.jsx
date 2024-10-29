@@ -20,14 +20,14 @@ export const Login = () => {
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm font-normal flex flex-col justify-center items-center">
         <form id="formlogin" className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <div>
-            <label htmlFor="username" className="text-sm text-2xl leading-6">Correo electrónico:</label>
+            <label htmlFor="email" className="text-xl leading-6">Correo electrónico:</label>
             <div className="mt-2">
               <input type="text" {...register('email',{required:true})} className="w-[20rem] h-[3.25rem] px-4 text-black bg-primarylight"></input>
               {errors.name?.type === 'required' && <p>Es necesario ingresar un nombre de ususario</p>}
             </div>
           </div>
           <div>
-            <label htmlFor="password" className="text-sm text-2xl leading-6">Contraseña:</label>
+            <label htmlFor="password" className="text-xl leading-6">Contraseña:</label>
             <div className="mt-2">
               <input type="password" {...register('password',{required:true})} className="w-[20rem] h-[3.25rem] px-4 text-black bg-primarylight mb-4"></input>
               {errors.tags?.type === 'required' && <p>Es necesario ingresar una contraseña</p>}
