@@ -11,6 +11,11 @@ export const createPost = async (req: AuthRequest, res: Response): Promise<void>
       res.status(401).json({ message: 'Unauthorized' });
       return;
     }
+    
+    if (req.user?.role !== 'admin') {
+      res.status(403).json({ message: 'Access denied. Only admins can create posts' });
+      return;
+    }
     const { title, numPeople, ingredients, instructions, imageUrl } = req.body;
     const newPost = await Post.create({
       title,
