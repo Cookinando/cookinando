@@ -16,7 +16,7 @@ export const validateCreatePost = [
             .isArray().withMessage('🚨Los ingredientes deben ser una lista🚨'),
         body('instructions')
             .notEmpty().withMessage('🚨Las instrucciones de preparación son obligatorias🚨')
-            .isLength({ min: 50, max: 3000 }).withMessage('🚨Las instrucciones deben tener como mínimo 10 caracteres y como máximo 3000 caracteres.🚨'),
+            .isLength({ min: 10, max: 3000 }).withMessage('🚨Las instrucciones deben tener como mínimo 10 caracteres y como máximo 3000 caracteres.🚨'),
         body('imageUrl')
             .notEmpty().withMessage('🚨La imagen es obligatoria🚨')
             .isString().withMessage('🚨Debes añadir la dirección URL de la imagen que deseas añadir🚨'),
@@ -37,7 +37,7 @@ export const validateUpdatePost = [
         .isArray().withMessage('🚨Los ingredientes deben ser una lista🚨'),
     body('instructions')
         .notEmpty().withMessage('🚨Las instrucciones de preparación son obligatorias🚨')
-        .isLength({ min: 50, max: 3000 }).withMessage('🚨Las instrucciones deben tener como mínimo 10 caracteres y como máximo 3000 caracteres.🚨'),
+        .isLength({ min: 10, max: 3000 }).withMessage('🚨Las instrucciones deben tener como mínimo 10 caracteres y como máximo 3000 caracteres.🚨'),
     body('imageUrl')
         .notEmpty().withMessage('🚨La imagen es obligatoria🚨')
         .isString().withMessage('🚨Debes añadir la dirección URL de la imagen que deseas añadir🚨'),
