@@ -39,13 +39,13 @@ export const getUser = async (req: Request, res: Response): Promise<void> => {
 export const createUser = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { username, password, email } = req.body;
-    let { isAdmin } = req.body;
+    let { role } = req.body;
 
-    if (isAdmin === undefined) {
-      isAdmin = false;
+    if (role === undefined) {
+      role = 'user';
     } else {
       const authUser = req.user;
-      if (isAdmin && !authUser?.isAdmin) {
+      if (role === 'admin' && authUser?.role !== 'admin') {
         res.status(403).json({ error: "Access denied. Only admins can create other admins." });
         return;
       }
@@ -59,7 +59,7 @@ export const createUser = async (req: AuthRequest, res: Response): Promise<void>
       username,
       password: hashedPassword,
       email,
-      isAdmin,
+      role,
     });
 
     res.status(201).json(newUser);
@@ -74,12 +74,24 @@ export const createUser = async (req: AuthRequest, res: Response): Promise<void>
   }
 };
 
-export const editUser = async (req: Request, res: Response): Promise<void> => {
+export const editUser = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
-    const { username, password, email, isAdmin } = req.body;
+    const { username, password, email } = req.body;
+    let { role } = req.body;
+
+    if (role === undefined) {
+      role = 'user';
+    } else {
+      const authUser = req.user;
+      if (role === 'admin' && authUser?.role !== 'admin') {
+        res.status(403).json({ error: "Access denied. Only admins can update user role." });
+        return;
+      }
+    }
+
     const [updated] = await User.update(
-      { username, password, email, isAdmin },
+      { username, password, email, role },
       { where: { id } }
     );
     if (updated) {

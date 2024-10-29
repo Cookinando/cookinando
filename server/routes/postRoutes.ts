@@ -1,14 +1,15 @@
 import express, { Router } from "express";
 import { createPost, getAllPosts, getPostById, updatePost, deletePost } from "../controllers/postController";
-import { authenticateToken, isAdmin } from "../middlewares/authMiddleware";
+import { authenticateToken } from "../middlewares/authMiddleware";
+import { validateCreatePost, validateUpdatePost, } from "../middlewares/validators/postValidator";
 import upload from "../middlewares/uploadMiddleware";
 
 const postRouter: Router = express.Router();
 
-postRouter.post('/', authenticateToken, isAdmin,  upload.single('image'), createPost);
+postRouter.post('/', authenticateToken, validateCreatePost,  upload.single('image'), createPost);
 postRouter.get('/', getAllPosts);
 postRouter.get('/:id', authenticateToken, getPostById);
-postRouter.put('/:id', authenticateToken, isAdmin, updatePost);
-postRouter.delete('/:id', authenticateToken, isAdmin, deletePost);
+postRouter.put('/:id', authenticateToken, validateUpdatePost, updatePost);
+postRouter.delete('/:id', authenticateToken, deletePost);
 
 export default postRouter;

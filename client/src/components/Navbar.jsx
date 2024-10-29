@@ -10,7 +10,7 @@ import closeIcon from '../assets/images/close_icon.svg';
 export const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false); 
     const auth = useAuth();
-    const isAuthenticated = auth ? auth.isAuthenticated : false;
+    const isAuthenticated = auth;
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -20,7 +20,6 @@ export const Navbar = () => {
     };
 
     const toggleMenu = () => setMenuOpen(!menuOpen);
-    console.log(menuOpen);
     return (
         <nav className={`navbar flex justify-between lg:flex-row lg:px-8 items-start ${menuOpen ? 'bg-transparent fixed inset-0' : ''}`} aria-label="Global">
             <div className={`lg:w-48 lg:h-48 w-32 h-32 ${menuOpen ? 'hidden' : 'block'}`}>
@@ -47,7 +46,7 @@ export const Navbar = () => {
                         {/* Página Principal sin logar*/}
                         {location.pathname === "/" && (
                             <>
-                                 <li className= "pointer-events-auto w-screen flex justify-center lg:hidden"> <a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/")}> <img className= "h-5" src={closeIcon} alt="Profile icon" /></a></li>
+                                <li className= "pointer-events-auto w-screen flex justify-center lg:hidden"> <a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/")}> <img className= "h-5" src={closeIcon} alt="Profile icon" /></a></li>
                                 <li className= "text-light pointer-events-auto"><a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/login")}>Iniciar sesión</a></li>
                                 <li className= "text-light pointer-events-auto"><a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/signup")}>Registrase</a></li>
                             </>

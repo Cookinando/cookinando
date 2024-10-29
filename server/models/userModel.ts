@@ -14,6 +14,7 @@ User.init(
     username: {
       type: new DataTypes.STRING(50),
       allowNull: false,
+      unique: true,
     },
     password: {
       type: new DataTypes.STRING(255),
@@ -24,9 +25,9 @@ User.init(
       allowNull: false,
       unique: true,
     },
-    isAdmin: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
+    role: {
+      type: new DataTypes.STRING(20),
+      allowNull: true,
     },
   },
   {

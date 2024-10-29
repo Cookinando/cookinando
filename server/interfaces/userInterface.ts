@@ -10,7 +10,7 @@ export interface UserAttributes {
     username: string;
     password: string;
     email: string;
-    isAdmin: boolean;
+    role: string;
   }
   
   interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
@@ -20,7 +20,7 @@ export interface UserAttributes {
     public username!: string;
     public password!: string;
     public email!: string;
-    public isAdmin!: boolean;
+    public role!: string;
   
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
