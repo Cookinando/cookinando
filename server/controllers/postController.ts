@@ -16,8 +16,9 @@ export const createPost = async (req: AuthRequest, res: Response): Promise<void>
       res.status(403).json({ message: 'Access denied. Only admins can create posts' });
       return;
     }
+
     const { title, numPeople, ingredients, instructions } = req.body;
-    const imageUrl = req.file?.path; // Obtén la URL de la imagen del archivo cargado
+    const imageUrl = req.file?.path; // Obtiene la URL de la imagen subida a Cloudinary
     
     const newPost = await Post.create({
       title,
@@ -25,7 +26,7 @@ export const createPost = async (req: AuthRequest, res: Response): Promise<void>
       ingredients: joinItems(ingredients),
       instructions: joinItems(instructions),
       imageUrl,
-      authorId: userId, // Aquí vinculamos el post al usuario logueado
+      authorId: userId,
     });
     console.log("✅ Post created successfully");
     res.status(201).json(newPost);

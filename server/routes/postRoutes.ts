@@ -6,10 +6,10 @@ import upload from "../middlewares/uploadMiddleware";
 
 const postRouter: Router = express.Router();
 
-postRouter.post('/', authenticateToken, validateCreatePost,  upload.single('image'), createPost);
+postRouter.post('/', authenticateToken, upload.single('image'), validateCreatePost, createPost);
 postRouter.get('/', getAllPosts);
 postRouter.get('/:id', authenticateToken, getPostById);
-postRouter.put('/:id', authenticateToken, validateUpdatePost, updatePost);
+postRouter.put('/:id', authenticateToken, upload.single('image'), validateUpdatePost, updatePost);
 postRouter.delete('/:id', authenticateToken, deletePost);
 
 export default postRouter;
