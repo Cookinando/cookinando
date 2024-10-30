@@ -82,8 +82,21 @@ export const getPostById = async (req: AuthRequest, res: Response): Promise<void
 
 export const updatePost = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
+    const userId = req.user!.id; // El ID del usuario extraído del token JWT
+
+    if (!userId) {
+      res.status(401).json({ message: 'Unauthorized' });
+      return;
+    }
+    
+    if (req.user?.role !== 'admin') {
+      res.status(403).json({ message: 'Access denied. Only admins can update posts' });
+      return;
+    }
+
     const { id } = req.params;
-    const { title, numPeople, ingredients, instructions, imageUrl } = req.body;
+    const { title, numPeople, ingredients, instructions } = req.body;
+    const imageUrl = req.file?.path ? req.file.path : req.body.imageUrl;
     const updatedPost = await Post.update({
       title,
       numPeople,
