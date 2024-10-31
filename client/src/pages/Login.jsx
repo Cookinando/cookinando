@@ -22,7 +22,6 @@ export const Login = () => {
   const onSubmit = async (data) =>{ 
     const result = await loginUser(data);   
     if (result.success) {
-      console.log(result)
       login(result.token)
       navigate("/"); // Redirige solo si es exitoso
     } else {

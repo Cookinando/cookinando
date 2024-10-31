@@ -38,27 +38,24 @@ export const Navbar = () => {
                 } lg:flex lg:space-x-6 lg:mt-10 flex flex-col lg:flex-row space-y-4 lg:space-y-0`}
             >
                 {!isAuthenticated && (
-                            <>
-                                <li className= "pointer-events-auto w-screen flex justify-center lg:hidden"> <a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/")}> <img className= "h-5" src={closeIcon} alt="Profile icon" /></a></li>
-                                <li className= "text-light pointer-events-auto"><a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/")}>Recetas</a></li>
-                                <li className= "text-light pointer-events-auto"><a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/login")}>Iniciar sesión</a></li>
-                                <li className= "text-light pointer-events-auto"><a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/signup")}>Registrase</a></li>
-                            </>
+                    <>
+                        <li className= "pointer-events-auto w-screen flex justify-center lg:hidden"> <a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/")}> <img className= "h-5" src={closeIcon} alt="Profile icon" /></a></li>
+                        <li className= "text-light pointer-events-auto"><a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/")}>Recetas</a></li>
+                        <li className= "text-light pointer-events-auto"><a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/login")}>Iniciar sesión</a></li>
+                        <li className= "text-light pointer-events-auto"><a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/signup")}>Registrase</a></li>
+                    </>
                 )}
                 {isAuthenticated && (
-                    
-                        
-                        
-                            <>
-                                <li className= "pointer-events-auto w-screen flex justify-center lg:hidden"> <a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/")}> <img className= "h-5" src={closeIcon} alt="Profile icon" /></a></li>
-                                <li className= "text-light pointer-events-auto"><a className="cursor-pointer hover:text-gray-300" 
-                                onClick={() => {
-                                    logout();
-                                   
-                                handleNavigation("/login")}}>Cerrar Sesión</a></li>
-                                <li className= "pointer-events-auto"> <a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/profile")}> <img className= "h-5" src={profile} alt="Profile icon" /></a></li>
-                            </>
-                        )}
+
+                    <>
+                        <li className= "pointer-events-auto w-screen flex justify-center lg:hidden"> <a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/")}> <img className= "h-5" src={closeIcon} alt="Profile icon" /></a></li>
+                        <li className= "text-light pointer-events-auto"><a className="cursor-pointer hover:text-gray-300" 
+                            onClick={() => {
+                            logout();     
+                            handleNavigation("/login")}}>Cerrar Sesión</a></li>
+                        <li className= "pointer-events-auto"> <a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/profile")}> <img className= "h-5" src={profile} alt="Profile icon" /></a></li>
+                    </>
+                )}
             </ul> 
         </nav>
     );

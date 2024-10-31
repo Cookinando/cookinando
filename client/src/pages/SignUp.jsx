@@ -3,18 +3,29 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 import  { signUpNewUser } from '../services/authService.js'
 import Input from "../components/Input";
+import { useAuth } from "../context/AuthContext.jsx"
 
 export const SignUp = () => {
+  const { login } = useAuth()
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
+
   const navigate = useNavigate();
-  const onSubmit = (data) =>{    
-    signUpNewUser({...data})
-    navigate("/") 
-  }
+
+  const onSubmit = async (data) => {    
+    try {
+      const response = await signUpNewUser({ ...data }); // Espera a que la solicitud se complete
+      if (response && response.token) {
+        await login(response.token); // Llama a login con el token obtenido
+        navigate("/"); // Redirige después de iniciar sesión
+      }
+    } catch (error) {
+      console.error('Error durante el registro:', error); // Manejo de errores opcional
+    }
+  };
 
   return (
     <div className="flex min-h-full flex-col justify-center items-center lg:px-8 bg-primary text-light-dark">
@@ -53,7 +64,7 @@ export const SignUp = () => {
             placeholder="Ingrese su contraseña"
           />
           <div>
-            <Button type="submit" handleSubmit="handleSubmit" text="Enviar" />
+            <Button type="submit" text="Enviar" />
           </div>
         </form>
       </div>
