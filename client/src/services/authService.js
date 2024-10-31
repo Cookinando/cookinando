@@ -25,6 +25,12 @@ export const loginUser = async (data) => {
     });
 
     const userData = response.data;
+
+    // Guarda el token o el dato necesario en localStorage
+    if (userData.token) {
+      localStorage.setItem("authToken", userData.token);
+    }
+    
     return { success: true, userData };
 
   } catch (error) {
