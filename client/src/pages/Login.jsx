@@ -1,5 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import { loginUser } from '../services/authService.js';
 import Button from "../components/Button";
 import Input from "../components/Input";
 
@@ -9,11 +11,19 @@ export const Login = () => {
     formState: { errors },
     handleSubmit,
   } = useForm();
+
   const navigate = useNavigate();
-  const onSubmit = (data) =>{    
-    loginUser({...data})
-    navigate("/") 
-  }
+
+  const [loginError, setLoginError] = useState(null); //esta constante almacena el error de login
+
+  const onSubmit = async (data) =>{ 
+    const result = await loginUser(data);   
+    if (result.success) {
+      navigate("/"); // Redirige solo si es exitoso
+    } else {
+      setLoginError(result.message); // Muestra el mensaje de error en caso de fallo
+    }
+  };
 
   return (
     <div className="flex min-h-full flex-col justify-center items-center lg:px-8 bg-primary text-light-dark">
@@ -44,7 +54,19 @@ export const Login = () => {
             placeholder="Ingrese su contraseña"
           />
           <div>
-            <Button type="submit" handleSubmit="handleSubmit" text="Enviar" />
+            {loginError && 
+            <p 
+              style={{ color: 'red' }}
+            >
+              {loginError}
+            </p>} {/* Mostrar el mensaje de error */}
+          </div>
+          <div>
+            <Button 
+              type="submit" 
+              handleSubmit="handleSubmit" 
+              text="Enviar" 
+            />
           </div>
         </form>
       </div>
