@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-
+import { loginUser } from "../services/authService.js"
 export const AuthContext = createContext();
 
 export const useAuth = () => {
@@ -14,7 +14,6 @@ export const AuthProvider = ({ children }) => {
     const login = async (token) => {
         localStorage.setItem("authToken", token); // Guarda el token en localStorage
         setIsAuthenticated(true);
-        await fetchUser(); // Carga los datos del usuario
     };
 
     // Función para cerrar sesión
@@ -24,22 +23,10 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
     };
 
-    // Función para obtener los datos del usuario
-    const fetchUser = async () => {
-        // Aquí puedes hacer una llamada a la API para obtener los datos del usuario autenticado
-        const userData = {
-            username: "testuser",
-            email: "testuser@example.com",
-            isAdmin: true,
-        };
-        setUser(userData);
-    };
-
     useEffect(() => {
         const token = localStorage.getItem("authToken");
         if (token) {
             setIsAuthenticated(true); // Verifica si hay un token y establece la autenticación
-            fetchUser(); // Carga los datos del usuario
         }
     }, []);
 

@@ -4,8 +4,11 @@ import { useState } from 'react';
 import { loginUser } from '../services/authService.js';
 import Button from "../components/Button";
 import Input from "../components/Input";
+import { useAuth } from "../context/AuthContext.jsx"
+
 
 export const Login = () => {
+  const { login } = useAuth()
   const {
     register,
     formState: { errors },
@@ -19,6 +22,8 @@ export const Login = () => {
   const onSubmit = async (data) =>{ 
     const result = await loginUser(data);   
     if (result.success) {
+      console.log(result)
+      login(result.token)
       navigate("/"); // Redirige solo si es exitoso
     } else {
       setLoginError(result.message); // Muestra el mensaje de error en caso de fallo
