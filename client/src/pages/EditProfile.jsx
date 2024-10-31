@@ -7,7 +7,6 @@ import Input from '../components/Input';
 
 const EditProfile = () => {
   const { user, setUser } = useContext(AuthContext);
-  const { user, setUser } = useContext(AuthContext);
   const { register, formState:{errors}, handleSubmit } = useForm({
     defaultValues: {
       username: user?.username,
