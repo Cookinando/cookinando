@@ -1,0 +1,27 @@
+[
+    {
+      "image": "https://example.com/imagenes/ensalada.jpg",
+      "title": "Ensalada fresca"
+    },
+    {
+      "image": "https://example.com/imagenes/noodles.jpg",
+      "title": "Noodles con gambas"
+    },
+    {
+      "image": "https://example.com/imagenes/raviolis.jpg",
+      "title": "Raviolis de espinacas"
+    },
+    {
+      "image": "https://example.com/imagenes/costillas_cerdo.jpg",
+      "title": "Costillas de cerdo"
+    },
+    {
+      "image": "https://example.com/imagenes/costillas_bbq.jpg",
+      "title": "Costillas BBQ"
+    },
+    {
+      "image": "https://example.com/imagenes/guiso.jpg",
+      "title": "Guiso de carne"
+    }
+  ]
+  
