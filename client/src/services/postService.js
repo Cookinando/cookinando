@@ -38,15 +38,20 @@ export const deletePost = async (id) => {
 }
 
 //CREATE - metodo POST
-export const postNewPost = async (data) => {
+export const postNewPost = async (formData) => {
   try {
-      const response = await axios.post(URL, data);
-      return response.data
+    const response = await axios.post(URL, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data;
   } catch (error) {
-      console.error('Error al crear el nuevo post:', error);
-      throw error;
+    console.error("Error al crear el nuevo post:", error);
+    throw error;
   }
-}
+};
+
 
 //UPDATE . metodo put
 
