@@ -15,6 +15,7 @@ const EditAdmi = () => {
     );
   };
 
+  
   return (
     <div className="bg-[url('./assets/fondo.png')] bg-cover bg-center min-h-screen text-white">
       <section className="p-10">
