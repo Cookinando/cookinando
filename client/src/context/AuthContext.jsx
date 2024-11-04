@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { jwtDecode } from 'jwt-decode';
+
 export const AuthContext = createContext();
 
 export const useAuth = () => {
@@ -9,28 +11,43 @@ export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [user, setUser] = useState(null);
 
-    // Función para iniciar sesión
     const login = async (token) => {
-        localStorage.setItem("authToken", token); // Guarda el token en localStorage
+        localStorage.setItem("authToken", token);
         setIsAuthenticated(true);
+        decodeTokenAndSetUser(token);
     };
 
-    // Función para cerrar sesión
     const logout = () => {
-        localStorage.removeItem("authToken"); // Elimina el token de localStorage
+        localStorage.removeItem("authToken"); 
         setIsAuthenticated(false);
         setUser(null);
+    };
+
+    const decodeTokenAndSetUser = (token) => {
+        try {
+            const decoded = jwtDecode(token);
+            setUser({
+                id: decoded.id,
+                username: decoded.username,
+                email: decoded.email,
+                role: decoded.role, 
+            });
+        } catch (error) {
+            console.error("Error decoding token", error);
+            logout(); 
+        }
     };
 
     useEffect(() => {
         const token = localStorage.getItem("authToken");
         if (token) {
-            setIsAuthenticated(true); // Verifica si hay un token y establece la autenticación
+            setIsAuthenticated(true);
+            decodeTokenAndSetUser(token); 
         }
     }, []);
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+        <AuthContext.Provider value={{ isAuthenticated, user, login, logout, setUser }}>
             {children}
         </AuthContext.Provider>
     );

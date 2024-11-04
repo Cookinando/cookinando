@@ -4,11 +4,10 @@ import { useState } from 'react';
 import { loginUser } from '../services/authService.js';
 import Button from "../components/Button";
 import Input from "../components/Input";
-import { useAuth } from "../context/AuthContext.jsx"
-
+import { useAuth } from "../context/AuthContext.jsx";
 
 export const Login = () => {
-  const { login } = useAuth()
+  const { login } = useAuth();
   const {
     register,
     formState: { errors },
@@ -16,16 +15,16 @@ export const Login = () => {
   } = useForm();
 
   const navigate = useNavigate();
+  const [loginError, setLoginError] = useState(null);
 
-  const [loginError, setLoginError] = useState(null); //esta constante almacena el error de login
+  const onSubmit = async (data) => {
+    const result = await loginUser(data);
 
-  const onSubmit = async (data) =>{ 
-    const result = await loginUser(data);   
     if (result.success) {
-      login(result.token)
-      navigate("/"); // Redirige solo si es exitoso
+      login(result.userData.token);
+      navigate("/");
     } else {
-      setLoginError(result.message); // Muestra el mensaje de error en caso de fallo
+      setLoginError(result.message);
     }
   };
 
@@ -44,6 +43,7 @@ export const Login = () => {
           <Input
             label="Correo electrónico"
             name="email"
+            type="text"
             register={register}
             errors={errors}
             rules={{ required: true }}
@@ -52,6 +52,7 @@ export const Login = () => {
           <Input
             label="Contraseña"
             name="password"
+            type="password"
             register={register}
             errors={errors}
             rules={{ required: true }}
@@ -68,7 +69,6 @@ export const Login = () => {
           <div>
             <Button 
               type="submit" 
-              handleSubmit="handleSubmit" 
               text="Enviar" 
             />
           </div>

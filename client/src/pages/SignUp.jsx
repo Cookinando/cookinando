@@ -42,6 +42,7 @@ export const SignUp = () => {
           <Input
             label="Nombre de usuario:"
             name="username"
+            type="text"
             register={register}
             errors={errors}
             rules={{ required: true }}
@@ -50,6 +51,7 @@ export const SignUp = () => {
           <Input
             label="Correo electrónico:"
             name="email"
+            type="text"
             register={register}
             errors={errors}
             rules={{ required: true }}
@@ -58,6 +60,7 @@ export const SignUp = () => {
           <Input
             label="Contraseña:"
             name="password"
+            type="password"
             register={register}
             errors={errors}
             rules={{ required: true }}

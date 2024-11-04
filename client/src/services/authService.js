@@ -19,12 +19,11 @@ export const signUpNewUser = async (data) => {
 
 export const loginUser = async (data) => {
   try {
-    console.log(data);
     const response = await axios.post(`${URL}/login`, data, {
       headers: { 'Content-Type': 'application/json' },
     });
 
-    const userData = response.data;
+    const userData = response.data.sessionData;
 
     // Guarda el token o el dato necesario en localStorage
     if (userData.token) {
