@@ -1,44 +1,79 @@
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import Button from '../components/Button';
-
-
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import { loginUser } from '../services/authService.js';
+import Button from "../components/Button";
+import Input from "../components/Input";
+import { useAuth } from "../context/AuthContext.jsx";
 
 export const Login = () => {
-  const {register, formState:{errors},handleSubmit} = useForm();
-  const navigate = useNavigate();
-  const onSubmit = (data) =>{    
-    login({...data})
-    navigate("/") 
-  }
+  const { login } = useAuth();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
 
-    return (
-      <div className="flex min-h-full flex-col justify-center items-center lg:px-8 bg-primary text-light-dark">
+  const navigate = useNavigate();
+  const [loginError, setLoginError] = useState(null);
+
+  const onSubmit = async (data) => {
+    const result = await loginUser(data);
+
+    if (result.success) {
+      login(result.userData.token);
+      navigate("/");
+    } else {
+      setLoginError(result.message);
+    }
+  };
+
+  return (
+    <div className="flex min-h-full flex-col justify-center items-center lg:px-8 bg-primary text-light-dark">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <h2 className="mt-10 text-center text-4xl">Iniciar Sesión</h2>
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm font-normal flex flex-col justify-center items-center">
-        <form id="formlogin" className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+        <form
+          id="formlogin"
+          className="space-y-6"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <Input
+            label="Correo electrónico"
+            name="email"
+            type="text"
+            register={register}
+            errors={errors}
+            rules={{ required: true }}
+            placeholder="Ingrese su correo electrónico"
+          />
+          <Input
+            label="Contraseña"
+            name="password"
+            type="password"
+            register={register}
+            errors={errors}
+            rules={{ required: true }}
+            placeholder="Ingrese su contraseña"
+          />
           <div>
-            <label htmlFor="username" className="text-sm text-2xl leading-6">Correo electrónico:</label>
-            <div className="mt-2">
-              <input type="text" {...register('email',{required:true})} className="w-[20rem] h-[3.25rem] px-4 text-black bg-primarylight"></input>
-              {errors.name?.type === 'required' && <p>Es necesario ingresar un nombre de ususario</p>}
-            </div>
+            {loginError && 
+            <p 
+              style={{ color: 'red' }}
+            >
+              {loginError}
+            </p>} {/* Mostrar el mensaje de error */}
           </div>
           <div>
-            <label htmlFor="password" className="text-sm text-2xl leading-6">Contraseña:</label>
-            <div className="mt-2">
-              <input type="password" {...register('password',{required:true})} className="w-[20rem] h-[3.25rem] px-4 text-black bg-primarylight mb-4"></input>
-              {errors.tags?.type === 'required' && <p>Es necesario ingresar una contraseña</p>}
-            </div>
-          </div>
-          <div>
-            <Button type="submit" handleSubmit="handleSubmit" text="Enviar" />
+            <Button 
+              type="submit" 
+              text="Enviar" 
+            />
           </div>
         </form>
       </div>
     </div>
-    );
-  };
+  );
+};
