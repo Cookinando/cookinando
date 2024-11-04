@@ -14,6 +14,10 @@ const CreateRecipe = () => {
       return;
     }
     try {
+      if (user.role !== "admin") {
+        console.error("User does not have the required role");
+        return;
+      }
       const response = await postNewPost(formData);
       console.log("Form submitted:", response);
       navigate("/");
