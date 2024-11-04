@@ -23,6 +23,9 @@ const EditProfile = () => {
 
   return (
     <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm font-normal flex flex-col justify-center items-center text-light-dark">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm mb-8">
+            <h2 className="mt-10 text-center text-4xl text-light-dark">Editar perfil</h2>
+          </div>
         <form id="formlogin" className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
         <Input
             label="Nombre de usuario:"
