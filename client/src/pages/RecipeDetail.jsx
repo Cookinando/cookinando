@@ -10,23 +10,24 @@ const RecipeDetail = () => {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     const fetchPost = async () => {
-      if (!isAuthenticated) return;
       try {
-        const data = await getPostById(id);
-        setPost(data);
+        if (isAuthenticated) {
+          const data = await getPostById(id);
+          setPost(data);
+        }
       } catch (error) {
         console.error('Error fetching post:', error);
       } finally {
-        setLoading(false);
+        return setLoading(false);
       }
     };
 
     fetchPost();
   }, [id, isAuthenticated]);
-
+  
   const handleEditButton = () => navigate(`/recipe/${id}/edit`);
 
   const handleDeleteButton = async () => {
@@ -40,9 +41,9 @@ const RecipeDetail = () => {
       }
     }
   };
-
+  
   if (loading) return <div className='text-light'>Cargando...</div>;
-
+  
   if (!isAuthenticated) {
     return (
       <div className='bg-light text-dark w-5/6 mx-auto p-4 text-xl text-center'>
