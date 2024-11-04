@@ -1,6 +1,6 @@
 import React from "react";
 
-function Input({ label, name, register, errors, rules = {}, ...rest }) {
+function Input({ label, type, name, register, errors, rules = {}, ...rest }) {
   return (
     <div>
       {label && (
@@ -11,7 +11,7 @@ function Input({ label, name, register, errors, rules = {}, ...rest }) {
       <div className="mt-2">
         <input
           id={name}
-          type="text"
+          type={type}
           {...register(name, rules)}
           className="w-[20rem] h-[3.25rem] px-4 text-black bg-primarylight"
           {...rest}

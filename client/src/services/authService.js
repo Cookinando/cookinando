@@ -24,7 +24,7 @@ export const loginUser = async (data) => {
       headers: { 'Content-Type': 'application/json' },
     });
 
-    const userData = response.data;
+    const userData = response.data.sessionData;
 
     // Guarda el token o el dato necesario en localStorage
     if (userData.token) {

@@ -27,6 +27,7 @@ const EditProfile = () => {
         <Input
             label="Nombre de usuario:"
             name="username"
+            type="text"
             register={register}
             errors={errors}
             rules={{ required: true }}
@@ -35,6 +36,7 @@ const EditProfile = () => {
           <Input
             label="Correo electrónico:"
             name="email"
+            type="text"
             register={register}
             errors={errors}
             rules={{ required: true }}
@@ -43,6 +45,7 @@ const EditProfile = () => {
           <Input
             label="Contraseña:"
             name="password"
+            type="password"
             register={register}
             errors={errors}
             rules={{ required: true }}
