@@ -4,9 +4,9 @@ import  Home  from "../pages/Home.jsx";
 import { Login } from "../pages/Login.jsx";
 import { SignUp } from "../pages/SignUp.jsx";
 import RecipeDetail from "../pages/RecipeDetail.jsx";
-import EditAdmi from "../pages/EditAdmi.jsx";
 import Profile from "../pages/Profile.jsx";
 import EditProfile from "../pages/EditProfile.jsx";
+import EditAdmi from "../pages/EditAdmi.jsx"
 
 export const router = createBrowserRouter([{
     
@@ -38,10 +38,17 @@ export const router = createBrowserRouter([{
                 element: <RecipeDetail />
             },
             {
-                path:'editadmin',
-                element: <EditAdmi />
+                path: 'profile',
+                element: <Profile />
+            },
+            {
+              path: "/editprofile",
+              element: <EditProfile />,
+            },
+            {
+              path: "editadmin",
+              element: <EditAdmi />
             }
-           
     ]
 
 }])
