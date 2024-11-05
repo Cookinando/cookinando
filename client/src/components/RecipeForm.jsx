@@ -74,6 +74,7 @@ const RecipeForm = ({ onSubmit, initialData = {}, isEditing = false }) => {
           <input
             id="numPeople"
             type="number"
+            min="1"
             {...register("numPeople", { required: "El número de personas es requerido. Mínimo 1.", min: 1 })}
             placeholder="¿Para cuántas personas es la receta?"
             className="w-full h-[3.25rem] px-4 text-black"
@@ -85,13 +86,13 @@ const RecipeForm = ({ onSubmit, initialData = {}, isEditing = false }) => {
           <label className="text-xl leading-6 text-light">Ingredientes</label>
           {ingredientFields.map((field, index) => (
             <div key={field.id} className="mt-2">
-              <div className="flex gap-1 items-center mb-2">
+              <div className="flex gap-1 items-center mb-2 bg-white">
                 <input
                   {...register(`ingredients.${index}`, { required: `El campo ingrediente ${index + 1} es requerido.` })}
                   placeholder={`Ingrediente ${index + 1}`}
                   className="w-full h-[2.25rem] px-4 text-black"
                 />
-                <button type="button" onClick={() => removeIngredient (index)} className="flex gap-1 items-center text-3xl text-red-700 mr-1"><FaSquareMinus /></button>
+                <button type="button" onClick={() => removeIngredient (index)} className="flex gap-1 items-center text-xs text-red-700 mr-1">Eliminar<FaSquareMinus className="text-3xl" /></button>
               </div>
               {errors.ingredients && errors.ingredients[index] && <span className="text-red-500 text-sm mt-1">{errors.ingredients[index].message}</span>}
             </div>

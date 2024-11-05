@@ -32,6 +32,10 @@ export const router = createBrowserRouter([{
             element: <PrivateLayout/>,
             children: [
                 {
+                    path: 'newrecipe',
+                    element: <CreateRecipe />
+                },
+                {
                     path: 'recipe/:id',
                     element: <RecipeDetail />
                 },
