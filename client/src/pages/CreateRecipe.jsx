@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import RecipeForm from "../components/RecipeForm";
-import { AuthContext } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 import { postNewPost } from "../services/postService";
 import { useNavigate } from "react-router-dom";
 
 const CreateRecipe = () => {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (formData) => {
@@ -20,7 +20,7 @@ const CreateRecipe = () => {
       }
       const response = await postNewPost(formData);
       console.log("Form submitted:", response);
-      navigate("/");
+      navigate(`/auth/recipe/${response.id}`);
     } catch (error) {
       console.error("Error submitting form:", error);
     }

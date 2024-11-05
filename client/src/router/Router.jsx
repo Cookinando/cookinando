@@ -8,6 +8,7 @@ import Profile from "../pages/Profile.jsx";
 import EditProfile from "../pages/EditProfile.jsx";
 import EditAdmi from "../pages/EditAdmi.jsx"
 import CreateRecipe from "../pages/CreateRecipe.jsx";
+import EditRecipe from "../pages/EditRecipe.jsx";
 import { PrivateLayout } from "../layout/PrivateLayout.jsx";
 
 export const router = createBrowserRouter([{
@@ -37,7 +38,16 @@ export const router = createBrowserRouter([{
                 },
                 {
                     path: 'recipe/:id',
-                    element: <RecipeDetail />
+                    children:[
+                        {
+                            index: true,
+                            element: <RecipeDetail />
+                        },
+                        {
+                            path: "edit",
+                            element: <EditRecipe />
+                        }
+                    ]
                 },
                 {
                     path: 'profile',
