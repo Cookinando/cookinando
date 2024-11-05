@@ -53,7 +53,7 @@ export const Navbar = () => {
                             onClick={() => {
                             logout();     
                             handleNavigation("/login")}}>Cerrar Sesión</Link></li>
-                        <li className= "pointer-events-auto"> <Link to="/profile" className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/profile")}> <img className= "h-5" src={profile} alt="Profile icon" /></Link></li>
+                        <li className= "pointer-events-auto"> <Link to="auth/profile" className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("auth/profile")}> <img className= "h-5" src={profile} alt="Profile icon" /></Link></li>
                     </>
                 )}
             </ul> 
