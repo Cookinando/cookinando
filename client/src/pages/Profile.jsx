@@ -12,7 +12,7 @@ const Profile = () => {
   };
 
   const handlePostRecipe = () => {
-    navigate('postrecipe')
+    navigate('/auth/newrecipe');
   }
 
   const handleEditUsersRole = () => {
