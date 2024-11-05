@@ -8,15 +8,15 @@ const Profile = () => {
   const navigate = useNavigate();
 
   const handleEditClick = () => {
-    navigate('/editprofile');
+    navigate('edit');
   };
 
   const handlePostRecipe = () => {
-    navigate('/postrecipe')
+    navigate('postrecipe')
   }
 
   const handleEditUsersRole = () => {
-    navigate('/editusers')
+    navigate('editusers')
   }
 
   return (

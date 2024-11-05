@@ -1,24 +1,24 @@
 import { createBrowserRouter } from "react-router-dom";
 import { Login } from "../pages/Login.jsx";
 import { SignUp } from "../pages/SignUp.jsx";
-import Layout from "../layout/Layout";
+import  PublicLayout from "../layout/PublicLayout.jsx";
 import  Home  from "../pages/Home.jsx";
 import RecipeDetail from "../pages/RecipeDetail.jsx";
 import Profile from "../pages/Profile.jsx";
 import EditProfile from "../pages/EditProfile.jsx";
 import EditAdmi from "../pages/EditAdmi.jsx"
 import CreateRecipe from "../pages/CreateRecipe.jsx";
-import { ProtectedRoute } from "../context/ProtectedRoute.jsx";
+import { PrivateLayout } from "../layout/PrivateLayout.jsx";
 
 export const router = createBrowserRouter([{
     
     path : '/',
-    element: <Layout/>,
+    element: <PublicLayout/>,
     children: [
-        {
-            index: true,
-            element: <Home/>
-        },
+            {
+                index: true,
+                element: <Home/>
+            },
             {
                 path:'login',
                 element: <Login/>
@@ -28,46 +28,34 @@ export const router = createBrowserRouter([{
                 element: <SignUp/>
             },
             {
-                path: 'recipe/:id',
-                element: (
-                    <ProtectedRoute>
-                        <RecipeDetail />
-                    </ProtectedRoute>
-                ),
-            },
-            {
-                path: 'newrecipe',
-                element: (
-                    <ProtectedRoute>
-                        <CreateRecipe />
-                    </ProtectedRoute>
-                )
-            },
-            {
-                path: 'profile',
-                element: (
-                    <ProtectedRoute>
-                        <Profile />
-                    </ProtectedRoute>
-                ),
-            },
-            {
-              path: "/editprofile",
-              element: (
-                <ProtectedRoute>
-                    <EditProfile />
-                </ProtectedRoute>
-            ),
-            },
-            {
-              path: "editadmin",
-              element: (
-                <ProtectedRoute>
-                    <EditAdmi />
-                </ProtectedRoute>
-              )
+            path : 'auth',
+            element: <PrivateLayout/>,
+            children: [
+                {
+                    path: 'recipe/:id',
+                    element: <RecipeDetail />
+                },
+                {
+                    path: 'profile',
+                    children:[
+                        {
+                            index: true,
+                            element: <Profile />
+                        },
+                        {
+                            path: "edit",
+                            element: <EditProfile />
+                        },
+                        {
+                            path: "editadmin",
+                            element: <EditAdmi />
+                        }
+                    ]
+                },
+            
+                
+            ]
             }
-    ]
-
+        ]
 }])
 

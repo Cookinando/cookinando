@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import logo from '../assets/images/cookinando_logo.png';
-import hamburguer from '../assets/images/icon_hamburger_menu.svg';
+import { Link } from 'react-router-dom';
 import  { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import profile from '../assets/images/icon_profile.svg';
 import closeIcon from '../assets/images/close_icon.svg';
+import logo from '../assets/images/cookinando_logo.png';
+import hamburguer from '../assets/images/icon_hamburger_menu.svg';
 
 
 export const Navbar = () => {
@@ -31,7 +32,7 @@ export const Navbar = () => {
             <img src={hamburguer} alt=""/>
             </button>
 
-            {/* Menú */}
+           
             <ul
                 className={`${
                     menuOpen ? 'bg-dark w-scree fixed inset-0 flex flex-col justify-center items-center z-50' : 'hidden'
@@ -39,21 +40,20 @@ export const Navbar = () => {
             >
                 {!isAuthenticated && (
                     <>
-                        <li className= "pointer-events-auto w-screen flex justify-center lg:hidden"> <a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("#")}> <img className= "h-5" src={closeIcon} alt="Profile icon" /></a></li>
-                        <li className= "text-light pointer-events-auto"><a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/")}>Recetas</a></li>
-                        <li className= "text-light pointer-events-auto"><a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/login")}>Iniciar sesión</a></li>
-                        <li className= "text-light pointer-events-auto"><a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/signup")}>Registrase</a></li>
+                        <li className= "pointer-events-auto w-screen flex justify-center lg:hidden"> <Link to="#" className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("#")}> <img className= "h-5" src={closeIcon} alt="Profile icon" /></Link></li>
+                        <li className= "text-light pointer-events-auto"><Link to="/"className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/")}>Recetas</Link></li>
+                        <li className= "text-light pointer-events-auto"><Link to="/login" className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/login")}>Iniciar sesión</Link></li>
+                        <li className= "text-light pointer-events-auto"><Link to="/signup" className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/signup")}>Registrarse</Link></li>
                     </>
                 )}
                 {isAuthenticated && (
-
                     <>
-                        <li className= "pointer-events-auto w-screen flex justify-center lg:hidden"> <a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("#")}> <img className= "h-5" src={closeIcon} alt="Profile icon" /></a></li>
-                        <li className= "text-light pointer-events-auto"><a className="cursor-pointer hover:text-gray-300" 
+                        <li className= "pointer-events-auto w-screen flex justify-center lg:hidden"> <Link to="#" className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("#")}> <img className= "h-5" src={closeIcon} alt="Profile icon" /></Link></li>
+                        <li className= "text-light pointer-events-auto"><Link to= "/login" className="cursor-pointer hover:text-gray-300" 
                             onClick={() => {
                             logout();     
-                            handleNavigation("/login")}}>Cerrar Sesión</a></li>
-                        <li className= "pointer-events-auto"> <a className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/profile")}> <img className= "h-5" src={profile} alt="Profile icon" /></a></li>
+                            handleNavigation("/login")}}>Cerrar Sesión</Link></li>
+                        <li className= "pointer-events-auto"> <Link to="auth/profile" className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("auth/profile")}> <img className= "h-5" src={profile} alt="Profile icon" /></Link></li>
                     </>
                 )}
             </ul> 
