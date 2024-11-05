@@ -40,7 +40,7 @@ export const Navbar = () => {
             >
                 {!isAuthenticated && (
                     <>
-                        <li className= "pointer-events-auto w-screen flex justify-center lg:hidden"> <Link to="/" className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/")}> <img className= "h-5" src={closeIcon} alt="Profile icon" /></Link></li>
+                        <li className= "pointer-events-auto w-screen flex justify-center lg:hidden"> <Link to="#" className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("#")}> <img className= "h-5" src={closeIcon} alt="Profile icon" /></Link></li>
                         <li className= "text-light pointer-events-auto"><Link to="/"className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/")}>Recetas</Link></li>
                         <li className= "text-light pointer-events-auto"><Link to="/login" className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/login")}>Iniciar sesión</Link></li>
                         <li className= "text-light pointer-events-auto"><Link to="/signup" className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/signup")}>Registrase</Link></li>
@@ -48,7 +48,7 @@ export const Navbar = () => {
                 )}
                 {isAuthenticated && (
                     <>
-                        <li className= "pointer-events-auto w-screen flex justify-center lg:hidden"> <Link to="/" className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/")}> <img className= "h-5" src={closeIcon} alt="Profile icon" /></Link></li>
+                        <li className= "pointer-events-auto w-screen flex justify-center lg:hidden"> <Link to="#" className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("#")}> <img className= "h-5" src={closeIcon} alt="Profile icon" /></Link></li>
                         <li className= "text-light pointer-events-auto"><Link to= "/login" className="cursor-pointer hover:text-gray-300" 
                             onClick={() => {
                             logout();     

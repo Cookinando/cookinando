@@ -17,7 +17,14 @@ export const getPost = async () => {
 //READ-metodo get pero por ID
 export const getPostById = async (id) => {
   try {
-    const response = await axios.get(`${URL}/${id}`);
+    const token = localStorage.getItem('authToken');
+    const response = await axios.get(`${URL}/${id}`
+      , {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return response.data;
   } catch (error) {
     console.error('Error al obtener el post:', error);
@@ -29,7 +36,14 @@ export const getPostById = async (id) => {
 
 export const deletePost = async (id) => {
   try {
-      const response = await axios.delete(`${URL}/${id}`);
+    const token = localStorage.getItem('authToken');
+    const response = await axios.delete(`${URL}/${id}`
+      , {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
       return response.data
   } catch (error) {
       console.error('Error al borrar el post:', error);
@@ -40,8 +54,15 @@ export const deletePost = async (id) => {
 //CREATE - metodo POST
 export const postNewPost = async (data) => {
   try {
-      const response = await axios.post(URL, data);
-      return response.data
+    const token = localStorage.getItem('authToken');
+    const response = await axios.post(URL, data,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+      return response.data;
   } catch (error) {
       console.error('Error al crear el nuevo post:', error);
       throw error;
@@ -52,7 +73,14 @@ export const postNewPost = async (data) => {
 
 export const putPost = async (id, data) => {
   try {
-      const response = await axios.put(`${URL}/${id}`, data);
+    const token = localStorage.getItem('authToken');
+    const response = await axios.put(`${URL}/${id}`, data
+      , {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
       return response.data
   } catch (error) {
       console.error('Error al actualizar el post:', error);
