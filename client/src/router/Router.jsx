@@ -1,11 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
-import Layout from "../layout/Layout";
-import  Home  from "../pages/Home.jsx";
 import { Login } from "../pages/Login.jsx";
 import { SignUp } from "../pages/SignUp.jsx";
+import Layout from "../layout/Layout";
+import  Home  from "../pages/Home.jsx";
 import RecipeDetail from "../pages/RecipeDetail.jsx";
 import Profile from "../pages/Profile.jsx";
 import EditProfile from "../pages/EditProfile.jsx";
+import { ProtectedRoute } from "../context/ProtectedRoute.jsx";
 
 export const router = createBrowserRouter([{
     
@@ -26,15 +27,27 @@ export const router = createBrowserRouter([{
             },
             {
                 path: 'recipe/:id',
-                element: <RecipeDetail />
+                element: (
+                    <ProtectedRoute>
+                        <RecipeDetail />
+                    </ProtectedRoute>
+                ),
             },
             {
                 path: 'profile',
-                element: <Profile />
+                element: (
+                    <ProtectedRoute>
+                        <Profile />
+                    </ProtectedRoute>
+                ),
             },
             {
               path: "/editprofile",
-              element: <EditProfile />,
+              element: (
+                <ProtectedRoute>
+                    <EditProfile />
+                </ProtectedRoute>
+            ),
             }      
     ]
 
