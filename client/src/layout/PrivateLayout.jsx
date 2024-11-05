@@ -7,3 +7,8 @@ export const PrivateLayout = () => {
     return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
 };
 
+export const PrivateAdminLayout = () => {
+    const { isAdmin } = useAuth();
+    return isAdmin ? <Outlet /> : <Navigate to="/login" />;
+};
+
