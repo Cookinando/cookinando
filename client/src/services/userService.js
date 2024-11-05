@@ -50,12 +50,26 @@ export const postNewUser = async (data) => {
 
 //UPDATE . metodo put
 
-export const putUser = async (id, data) => {
+export const updateUserProfile = async (id, data) => {
+  const token = localStorage.getItem('authToken');
+
+  if (!token) {
+      throw new Error('No se encontró el token en localStorage');
+  }
+
+  console.log('Datos enviados:', data);
+  console.log('Token:', token);
+
   try {
-      const response = await axios.put(`${URL}/${id}`, data);
-      return response.data
+      const response = await axios.put(`${URL}/${id}`, data, {
+          headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+          }
+      });
+      return response.data;
   } catch (error) {
-      console.error('Error al actualizar el usuario:', error);
+      console.error('Error al actualizar el usuario:', error.response?.data || error.message);
       throw error;
   }
-}
+};

@@ -11,46 +11,43 @@ export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [user, setUser] = useState(null);
 
-    // Función para iniciar sesión
     const login = async (token) => {
-        localStorage.setItem("authToken", token); // Guarda el token en localStorage
+        localStorage.setItem("authToken", token);
         setIsAuthenticated(true);
-        decodeTokenAndSetUser(token); // Decodifica el token y establece el usuario
+        decodeTokenAndSetUser(token);
     };
 
-    // Función para cerrar sesión
     const logout = () => {
-        localStorage.removeItem("authToken"); // Elimina el token de localStorage
+        localStorage.removeItem("authToken"); 
         setIsAuthenticated(false);
         setUser(null);
     };
 
-    // Decodifica el token para extraer los datos del usuario
     const decodeTokenAndSetUser = (token) => {
         try {
-            const decoded = jwtDecode(token); // Decodifica el token
+            const decoded = jwtDecode(token);
             setUser({
+                id: decoded.id,
                 username: decoded.username,
                 email: decoded.email,
-                role: decoded.role, // Asegúrate de que el token incluya el rol
+                role: decoded.role, 
             });
         } catch (error) {
             console.error("Error decoding token", error);
-            logout(); // Cierra sesión si el token no es válido
+            logout(); 
         }
     };
 
-    // Efecto para verificar si hay un token al cargar la aplicación
     useEffect(() => {
         const token = localStorage.getItem("authToken");
         if (token) {
             setIsAuthenticated(true);
-            decodeTokenAndSetUser(token); // Decodifica el token y establece el usuario
+            decodeTokenAndSetUser(token); 
         }
     }, []);
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+        <AuthContext.Provider value={{ isAuthenticated, user, login, logout, setUser }}>
             {children}
         </AuthContext.Provider>
     );

@@ -11,7 +11,7 @@ userRouter.get("/:id", getUser);
 
 userRouter.post("/", validateSignUp, createUser);
 
-userRouter.put("/:id", validateUpdateProfile, authenticateToken, editUser);
+userRouter.put("/:id", authenticateToken, editUser);
 
 userRouter.delete("/:id", deleteUser);
 

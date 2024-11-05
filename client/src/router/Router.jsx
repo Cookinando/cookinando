@@ -6,6 +6,7 @@ import  Home  from "../pages/Home.jsx";
 import RecipeDetail from "../pages/RecipeDetail.jsx";
 import Profile from "../pages/Profile.jsx";
 import EditProfile from "../pages/EditProfile.jsx";
+import EditAdmi from "../pages/EditAdmi.jsx"
 import { ProtectedRoute } from "../context/ProtectedRoute.jsx";
 
 export const router = createBrowserRouter([{
@@ -48,7 +49,14 @@ export const router = createBrowserRouter([{
                     <EditProfile />
                 </ProtectedRoute>
             ),
-            }      
+            },
+            {   
+              element: <EditProfile />,
+            },
+            {
+              path: "editadmin",
+              element: <EditAdmi />
+            }
     ]
 
 }])

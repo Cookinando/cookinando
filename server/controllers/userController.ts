@@ -90,8 +90,9 @@ export const editUser = async (req: AuthRequest, res: Response): Promise<void> =
       }
     }
 
+    const hashedPassword = await bcrypt.hash(password, 10);
     const [updated] = await User.update(
-      { username, password, email, role },
+      { username, ...(hashedPassword && { password: hashedPassword }) , email, role },
       { where: { id } }
     );
     if (updated) {
