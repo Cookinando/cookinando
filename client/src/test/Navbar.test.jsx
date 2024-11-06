@@ -15,18 +15,26 @@
 //importar test y expect de vitest
 //importar componente que se va a testear
 
-// import { expect, test } from 'vitest'
-// import { render, screen } from '@testing-library/react'
-// import { beforeEach, describe } from 'vitest'
-// import Home from  '../pages/Home.jsx'
+import { expect, test } from 'vitest'
+import { render, screen } from '@testing-library/react'
+import { beforeEach, describe } from 'vitest'
+import { Navbar } from  '../components/Navbar.jsx'
+import { useContext } from '../context/AuthContext.jsx'
 
-// describe('Navbar component', ()=> {
-//     beforeEach(()=>{
-//         render(<Navbar/>)
-//     })
-//     test("Should show the web logo", () => {
-//         const logo = screen.getByAltText('logo')
-//         expect(logo).toBeInTheDocument();
-//     })
-// })
+vi.mock('../context/AuthContext.jsx', () => ({
+    useAuth: () => ({
+      isAuthenticated: true,  // o false, según lo que quieras probar
+      logout: vi.fn(),
+    }),
+  }));
+
+describe('Navbar component', ()=> {
+    beforeEach(()=>{
+        render(<Navbar/>)
+    })
+    test("Should show the web logo", () => {
+        const logo = screen.getByAltText('logo')
+        expect(logo).toBeInTheDocument();
+    })
+})
 
