@@ -16,7 +16,7 @@ const Profile = () => {
   }
 
   const handleEditUsersRole = () => {
-    navigate('editusers')
+    navigate('/auth/profile/editadmin')
   }
 
   return (

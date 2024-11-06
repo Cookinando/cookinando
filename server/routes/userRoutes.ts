@@ -5,7 +5,7 @@ import { validateUpdateProfile } from "../middlewares/validators/userValidator";
 
 const userRouter = Router();
 
-userRouter.get("/", getUsers);
+userRouter.get("/", authenticateToken, getUsers);
 
 userRouter.get("/:id", getUser);
 
