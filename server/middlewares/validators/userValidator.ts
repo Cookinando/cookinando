@@ -54,7 +54,7 @@ export const validateSignUp = [
 export const validateUpdateProfile = [
 
     body('username')
-        .notEmpty().withMessage('🚨El nombre es obligatorio🚨')
+        .optional()
         .isString().withMessage('🚨El nombre debe ser un texto🚨')
         .custom(async (value, { req }) => {
             const userId = req.params?.id;
@@ -74,7 +74,7 @@ export const validateUpdateProfile = [
             }),
 
     body('email')
-        .notEmpty().withMessage('🚨El email es obligatorio🚨')
+        .optional()
         .isString().withMessage('🚨El email debe ser un texto🚨')
         .isEmail().withMessage('🚨El email debe ser un correo válido🚨')
         .normalizeEmail()
@@ -96,9 +96,8 @@ export const validateUpdateProfile = [
             }),
 
     body('password')
-            .notEmpty().withMessage('🚨La contraseña es obligatoria🚨')
-            .isString().withMessage('🚨La contraseña debe ser un texto🚨')
-            .isLength({ min: 8 }).withMessage('🚨La contraseña debe tener al menos 8 caracteres🚨'),
+            .optional()
+            .isString().withMessage('🚨La contraseña debe ser un texto🚨'),
             
     (req: Request, res: Response, next: NextFunction) => validate(req, res, next)
   ];
