@@ -1,11 +1,11 @@
 import { Router } from "express";
 import { getUsers, getUser, editUser, deleteUser } from "../controllers/userController";
-import { authenticateToken } from "../middlewares/authMiddleware";
+import { authenticateToken, authorizeAdmin } from "../middlewares/authMiddleware";
 import { validateUpdateProfile } from "../middlewares/validators/userValidator";
 
 const userRouter = Router();
 
-userRouter.get("/", authenticateToken, getUsers);
+userRouter.get("/", authenticateToken, authorizeAdmin, getUsers);
 
 userRouter.get("/:id", getUser);
 
