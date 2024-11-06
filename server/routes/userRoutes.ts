@@ -7,10 +7,10 @@ const userRouter = Router();
 
 userRouter.get("/", authenticateToken, getUsers);
 
-userRouter.get("/:id", getUser);
+userRouter.get("/:id", authenticateToken, getUser);
 
 userRouter.put("/:id", authenticateToken, validateUpdateProfile, editUser);
 
-userRouter.delete("/:id", deleteUser);
+userRouter.delete("/:id",authenticateToken, deleteUser);
 
 export default userRouter;

@@ -17,9 +17,6 @@ export const validateCreatePost = [
         body('instructions')
             .notEmpty().withMessage('🚨Las instrucciones de preparación son obligatorias🚨')
             .isLength({ min: 10, max: 3000 }).withMessage('🚨Las instrucciones deben tener como mínimo 10 caracteres y como máximo 3000 caracteres.🚨'),
-        body('imageUrl')
-            .notEmpty().withMessage('🚨La imagen es obligatoria🚨')
-            .isString().withMessage('🚨Debes añadir la dirección URL de la imagen que deseas añadir🚨'),
         (req: Request, res: Response, next: NextFunction) => validate(req, res, next)
 ];   
 
@@ -38,8 +35,5 @@ export const validateUpdatePost = [
     body('instructions')
         .notEmpty().withMessage('🚨Las instrucciones de preparación son obligatorias🚨')
         .isLength({ min: 10, max: 3000 }).withMessage('🚨Las instrucciones deben tener como mínimo 10 caracteres y como máximo 3000 caracteres.🚨'),
-    body('imageUrl')
-        .notEmpty().withMessage('🚨La imagen es obligatoria🚨')
-        .isString().withMessage('🚨Debes añadir la dirección URL de la imagen que deseas añadir🚨'),
         (req: Request, res: Response, next: NextFunction) => validate(req, res, next)
 ];

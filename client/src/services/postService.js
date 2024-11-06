@@ -57,13 +57,12 @@ export const postNewPost = async (formData) => {
     const token = localStorage.getItem('authToken');
     const response = await axios.post(URL, formData, {
       headers: {
-        "Content-Type": "multipart/form-data",
         "Authorization": `Bearer ${token}`,
       },
     });
     return response.data;
   } catch (error) {
-    console.error("Error al crear el nuevo post:", error);
+    console.error("Error al crear el nuevo post:", error.response?.data || error.message);
     throw error;
   }
 };
@@ -77,14 +76,13 @@ export const putPost = async (id, data) => {
     const response = await axios.put(`${URL}/${id}`, data
       , {
         headers: {
-          "Content-Type": "multipart/form-data",
           "Authorization": `Bearer ${token}`,
         },
       }
     );
       return response.data
   } catch (error) {
-      console.error('Error al actualizar el post:', error);
+      console.error('Error al actualizar el post:', error.response?.data || error.message);
       throw error;
   }
 }
