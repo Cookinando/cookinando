@@ -11,4 +11,22 @@
 //importar beforeEach
 //importar render
 //importar vi
+//importar it
+//importar test y expect de vitest
 //importar componente que se va a testear
+
+// import { expect, test } from 'vitest'
+// import { render, screen } from '@testing-library/react'
+// import { beforeEach, describe } from 'vitest'
+// import Home from  '../pages/Home.jsx'
+
+// describe('Navbar component', ()=> {
+//     beforeEach(()=>{
+//         render(<Navbar/>)
+//     })
+//     test("Should show the web logo", () => {
+//         const logo = screen.getByAltText('logo')
+//         expect(logo).toBeInTheDocument();
+//     })
+// })
+
