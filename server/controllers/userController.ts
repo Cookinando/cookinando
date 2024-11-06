@@ -90,11 +90,19 @@ export const editUser = async (req: AuthRequest, res: Response): Promise<void> =
       }
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const [updated] = await User.update(
-      { username, ...(hashedPassword && { password: hashedPassword }) , email, role },
-      { where: { id } }
-    );
+    const updatedData: { username?: string, email?: string, role: string, password?: string } = {
+      username,
+      email,
+      role
+    };
+
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      updatedData.password = hashedPassword;
+    }
+
+    const [updated] = await User.update(updatedData, { where: { id } });
+
     if (updated) {
       const updatedUser = await User.findOne({ where: { id } });
       res.status(200).json(updatedUser);
@@ -111,6 +119,7 @@ export const editUser = async (req: AuthRequest, res: Response): Promise<void> =
     }
   }
 };
+
 
 export const deleteUser = async (req: Request, res: Response): Promise<void> => {
   try {
