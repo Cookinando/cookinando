@@ -3,7 +3,12 @@ import User from "../models/userModel";
 import { AuthRequest } from "../interfaces/userInterface";
 import bcrypt from "bcrypt";
 
-export const getUsers = async (req: Request, res: Response): Promise<void> => {
+export const getUsers = async (req: AuthRequest, res: Response): Promise<void> => {
+  const authUser = req.user;
+  if (authUser?.role !== 'admin') {
+    res.status(403).json({ error: 'Access denied. Only admins can view the users.' });
+    return;
+  }
   try {
     const users = await User.findAll();
     res.json(users);
