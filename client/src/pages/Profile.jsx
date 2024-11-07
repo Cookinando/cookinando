@@ -12,11 +12,11 @@ const Profile = () => {
   };
 
   const handlePostRecipe = () => {
-    navigate('/auth/newrecipe');
+    navigate('/auth/admin/newrecipe');
   }
 
   const handleEditUsersRole = () => {
-    navigate('/auth/profile/editadmin')
+    navigate('/auth/admin/editadmin')
   }
 
   return (

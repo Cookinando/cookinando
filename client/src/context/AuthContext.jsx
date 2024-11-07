@@ -15,27 +15,26 @@ export const AuthProvider = ({ children }) => {
     
     const [user, setUser] = useState(null);
 
-    const [userRole, setUserRole] = useState(null);
-
-    const [ isAdmin, setIsAdmin] = useState(() => {
-        return Boolean(localStorage.getItem('role'));
+    const [ isAdmin, setIsAdmin ] = useState(() => {
+        return Boolean(localStorage.getItem('isAdmin'));
     });
 
     const login = async (token, role) => {
         localStorage.setItem("authToken", token);
-        localStorage.setItem("role", role);
+        if (role === 'admin') {
+            localStorage.setItem("isAdmin", true);
+            setIsAdmin(true)
+        }
         setIsAuthenticated(true);
         decodeTokenAndSetUser(token);
-        setUserRole(role);
     };
 
-    // const isAdmin = userRole === 'admin';
-
     const logout = () => {
-        localStorage.removeItem("authToken"); 
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("isAdmin")
         setIsAuthenticated(false);
         setUser(null);
-        setUserRole(null);
+        setIsAdmin(false)
     };
 
     const decodeTokenAndSetUser = (token) => {
@@ -56,16 +55,14 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const token = localStorage.getItem("authToken");
-        const role = localStorage.getItem("role");
+        const isAdmin = localStorage.getItem("isAdmin");
         if (token) {
             setIsAuthenticated(true);
             decodeTokenAndSetUser(token); 
-            if (role === 'admin') {
+            if (isAdmin) {
                 setIsAdmin(true);
             }
         }
-       
-        
     }, []);
 
     return (

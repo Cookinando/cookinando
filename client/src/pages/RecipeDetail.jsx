@@ -28,7 +28,7 @@ const RecipeDetail = () => {
     fetchPost();
   }, [id, isAuthenticated]);
   
-  const handleEditButton = () => navigate(`edit`);
+  const handleEditButton = () => navigate(`/auth/admin/recipe/${id}/edit`);
 
   const handleDeleteButton = async () => {
     if (confirm('¿Estas seguro de que quieres eliminar esta receta?')) {
