@@ -1,18 +1,21 @@
 import { createBrowserRouter } from "react-router-dom";
 import { Login } from "../pages/Login.jsx";
 import { SignUp } from "../pages/SignUp.jsx";
-import  PublicLayout from "../layout/PublicLayout.jsx";
-import  Home  from "../pages/Home.jsx";
+import { Layout } from "../layout/Layout.jsx";
+import { PrivateRoutes } from "../layout/PrivateRoutes.jsx";
+import Home from "../pages/Home.jsx";
 import RecipeDetail from "../pages/RecipeDetail.jsx";
 import Profile from "../pages/Profile.jsx";
 import EditProfile from "../pages/EditProfile.jsx";
 import EditAdmi from "../pages/EditAdmi.jsx"
-import { PrivateLayout } from "../layout/PrivateLayout.jsx";
+import CreateRecipe from "../pages/CreateRecipe.jsx";
+import EditRecipe from "../pages/EditRecipe.jsx";
+
 
 export const router = createBrowserRouter([{
     
     path : '/',
-    element: <PublicLayout/>,
+    element: <Layout/>,
     children: [
             {
                 index: true,
@@ -28,11 +31,24 @@ export const router = createBrowserRouter([{
             },
             {
             path : 'auth',
-            element: <PrivateLayout/>,
+            element: <PrivateRoutes/>,
             children: [
                 {
+                    path: 'newrecipe',
+                    element: <CreateRecipe />
+                },
+                {
                     path: 'recipe/:id',
-                    element: <RecipeDetail />
+                    children:[
+                        {
+                            index: true,
+                            element: <RecipeDetail />
+                        },
+                        {
+                            path: "edit",
+                            element: <EditRecipe />
+                        }
+                    ]
                 },
                 {
                     path: 'profile',

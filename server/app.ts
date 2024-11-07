@@ -20,7 +20,7 @@ const startServer = async () => {
     await db.authenticate();
     console.log("👍Connection has been established successfully.");
 
-    await db.sync({ alter: true });
+    await db.sync();
     console.log("✅ Database synced successfully.");
   } catch (error) {
     console.error("❌ Unable to connect to Database", error);

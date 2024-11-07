@@ -12,3 +12,4 @@ export const PrivateAdminLayout = () => {
     return isAdmin ? <Outlet /> : <Navigate to="/login" />;
 };
 
+

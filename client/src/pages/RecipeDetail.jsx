@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { getPostById, deletePost } from '../services/postService';
-import { AuthContext } from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import Button from '../components/Button';
 
 const RecipeDetail = () => {
-  const { user, isAuthenticated } = useContext(AuthContext);
+  const { user, isAuthenticated } = useAuth();
   const { id } = useParams();
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -28,7 +28,7 @@ const RecipeDetail = () => {
     fetchPost();
   }, [id, isAuthenticated]);
   
-  const handleEditButton = () => navigate(`auth/recipe/${id}/edit`);
+  const handleEditButton = () => navigate(`edit`);
 
   const handleDeleteButton = async () => {
     if (confirm('¿Estas seguro de que quieres eliminar esta receta?')) {

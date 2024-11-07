@@ -8,7 +8,11 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    const [isAuthenticated, setIsAuthenticated] = useState(() => {
+      return Boolean(localStorage.getItem('authToken'));
+    });
+    
     const [user, setUser] = useState(null);
 
     const login = async (token) => {

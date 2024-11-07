@@ -21,7 +21,7 @@ export const getPostById = async (id) => {
     const response = await axios.get(`${URL}/${id}`
       , {
         headers: {
-          Authorization: `Bearer ${token}`,
+          "Authorization": `Bearer ${token}`,
         },
       }
     );
@@ -40,7 +40,7 @@ export const deletePost = async (id) => {
     const response = await axios.delete(`${URL}/${id}`
       , {
         headers: {
-          Authorization: `Bearer ${token}`,
+          "Authorization": `Bearer ${token}`,
         },
       }
     );
@@ -52,22 +52,21 @@ export const deletePost = async (id) => {
 }
 
 //CREATE - metodo POST
-export const postNewPost = async (data) => {
+export const postNewPost = async (formData) => {
   try {
     const token = localStorage.getItem('authToken');
-    const response = await axios.post(URL, data,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-      return response.data;
+    const response = await axios.post(URL, formData, {
+      headers: {
+        "Authorization": `Bearer ${token}`,
+      },
+    });
+    return response.data;
   } catch (error) {
-      console.error('Error al crear el nuevo post:', error);
-      throw error;
+    console.error("Error al crear el nuevo post:", error.response?.data || error.message);
+    throw error;
   }
-}
+};
+
 
 //UPDATE . metodo put
 
@@ -77,13 +76,13 @@ export const putPost = async (id, data) => {
     const response = await axios.put(`${URL}/${id}`, data
       , {
         headers: {
-          Authorization: `Bearer ${token}`,
+          "Authorization": `Bearer ${token}`,
         },
       }
     );
       return response.data
   } catch (error) {
-      console.error('Error al actualizar el post:', error);
+      console.error('Error al actualizar el post:', error.response?.data || error.message);
       throw error;
   }
 }

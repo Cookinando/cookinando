@@ -22,7 +22,7 @@ const EditProfile = () => {
         console.log('Datos enviados:', data); 
         await updateUserProfile(user.id, data); 
         setUser({ ...user, ...data });
-        navigate('/editprofile');
+        navigate('/auth/profile');
     } catch (error) {
         console.error('Error en la actualización del perfil:', error.message);
     }

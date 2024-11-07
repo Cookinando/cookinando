@@ -1,18 +1,16 @@
 import { Router } from "express";
-import { getUsers, getUser, editUser, deleteUser, createUser } from "../controllers/userController";
-import { authenticateToken } from "../middlewares/authMiddleware";
-import { validateSignUp, validateUpdateProfile } from "../middlewares/validators/userValidator";
+import { getUsers, getUser, editUser, deleteUser } from "../controllers/userController";
+import { authenticateToken, authorizeAdmin } from "../middlewares/authMiddleware";
+import { validateUpdateProfile } from "../middlewares/validators/userValidator";
 
 const userRouter = Router();
 
-userRouter.get("/", getUsers);
+userRouter.get("/", authenticateToken, authorizeAdmin, getUsers);
 
-userRouter.get("/:id", getUser);
+userRouter.get("/:id", authenticateToken, getUser);
 
-userRouter.post("/", validateSignUp, createUser);
+userRouter.put("/:id", authenticateToken, validateUpdateProfile, editUser);
 
-userRouter.put("/:id", authenticateToken, editUser);
-
-userRouter.delete("/:id", deleteUser);
+userRouter.delete("/:id",authenticateToken, deleteUser);
 
 export default userRouter;
