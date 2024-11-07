@@ -1,27 +1,21 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import  { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import profile from '../assets/images/icon_profile.svg';
 import closeIcon from '../assets/images/close_icon.svg';
-import logo from '../assets/images/cookinando_logo.png';
+import logo from '../assets/images/cookindando_logo2.png';
 import hamburguer from '../assets/images/icon_hamburger_menu.svg';
 
 
 export const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false); 
     const { isAuthenticated, logout } = useAuth();
-    const navigate = useNavigate();
-
-    const handleNavigation = (path) => {
-        navigate(path);
-        setMenuOpen(false); 
-    };
+    
 
     const toggleMenu = () => setMenuOpen(!menuOpen);
     return (
         <nav className={`navbar flex justify-between lg:flex-row lg:px-8 items-start ${menuOpen ? 'bg-transparent fixed inset-0' : ''}`} aria-label="Global">
-            <div className={`lg:w-48 lg:h-48 w-32 h-32 ${menuOpen ? 'hidden' : 'block'}`}>
+            <div className={`w-36 h-36 p-5 lg:mt-8 lg:p-0 ${menuOpen ? 'hidden' : 'block'}`}>
                 <img src={logo} alt='logo'/> 
             </div>
             <button
@@ -35,26 +29,25 @@ export const Navbar = () => {
            
             <ul
                 className={`${
-                    menuOpen ? 'bg-dark w-scree fixed inset-0 flex flex-col justify-center items-center z-50' : 'hidden'
+                    menuOpen ? 'lg:bg-transparent bg-dark w-scree fixed inset-0 flex flex-col lg:flex-row justify-center lg:justify-end items-center lg:items-start lg:mb-5  z-50' : 'hidden'
                 } lg:flex lg:space-x-6 lg:mt-10 flex flex-col lg:flex-row space-y-4 lg:space-y-0`}
             >
                 {!isAuthenticated && (
                     <>
-                        <li className= "pointer-events-auto w-screen flex justify-center lg:hidden"> <Link to="#" className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("#")}> <img className= "h-5" src={closeIcon} alt="Profile icon" /></Link></li>
-                        <li className= "text-light pointer-events-auto"><Link to="/"className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/")}>Recetas</Link></li>
-                        <li className= "text-light pointer-events-auto"><Link to="/login" className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/login")}>Iniciar sesión</Link></li>
-                        <li className= "text-light pointer-events-auto"><Link to="/signup" className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/signup")}>Registrarse</Link></li>
+                        <li className= "pointer-events-auto w-screen flex justify-center lg:hidden"> <Link to="#" className="cursor-pointer hover:text-gray-300" onClick={() => setMenuOpen(false)}> <img className= "h-5" src={closeIcon} alt="Profile icon" /></Link></li>
+                        <li className= "text-light pointer-events-auto"><Link to="/"className="cursor-pointer hover:text-gray-300" onClick={() => setMenuOpen(false)}>Recetas</Link></li>
+                        <li className= "text-light pointer-events-auto"><Link to="/login" className="cursor-pointer hover:text-gray-300" onClick={() => setMenuOpen(false)}>Iniciar sesión</Link></li>
+                        <li className= "text-light pointer-events-auto"><Link to="/signup" className="cursor-pointer hover:text-gray-300" onClick={() => setMenuOpen(false)}>Registrarse</Link></li>
                     </>
                 )}
                 {isAuthenticated && (
                     <>
-                        <li className= "pointer-events-auto w-screen flex justify-center lg:hidden"> <Link to="#" className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("#")}> <img className= "h-5" src={closeIcon} alt="Profile icon" /></Link></li>
-                        <li className= "text-light pointer-events-auto"> <Link to="/" className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("/")}>Recetas</Link></li>
+                        <li className= "pointer-events-auto w-screen flex justify-center lg:hidden"> <Link to="#" className="cursor-pointer hover:text-gray-300" onClick={() => setMenuOpen(false)}> <img className= "h-5" src={closeIcon} alt="Profile icon" /></Link></li>
                         <li className= "text-light pointer-events-auto"><Link to= "/login" className="cursor-pointer hover:text-gray-300" 
                             onClick={() => {
                             logout();     
-                            handleNavigation("/login")}}>Cerrar Sesión</Link></li>
-                        <li className= "pointer-events-auto"> <Link to="auth/profile" className="cursor-pointer hover:text-gray-300" onClick={() => handleNavigation("auth/profile")}> <img className= "h-5" src={profile} alt="Profile icon" /></Link></li>
+                            setMenuOpen(false)}}>Cerrar Sesión</Link></li>
+                        <li className= "pointer-events-auto"> <Link to="auth/profile" className="cursor-pointer hover:text-gray-300" onClick={() => setMenuOpen(false)}> <img className= "h-5" src={profile} alt="Profile icon" /></Link></li>
                     </>
                 )}
             </ul> 
