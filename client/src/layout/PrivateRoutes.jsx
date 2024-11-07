@@ -7,3 +7,9 @@ export const PrivateRoutes = ({children}) => {
     return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
 
+
+export const PrivateAdminRoutes = () => {
+    const { isAdmin } = useAuth();
+    return isAdmin ? <Outlet /> : <Navigate to="/login" />;
+};
+
