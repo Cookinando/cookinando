@@ -5,7 +5,7 @@ import { getPostById, putPost } from "../services/postService";
 import { useNavigate, useParams } from "react-router-dom";
 
 const EditRecipe = () => {
-  const { user } = useAuth();
+  const { user, isAdmin } = useAuth();
   const navigate = useNavigate();
   const { id } = useParams();
   const [recipe, setRecipe] = useState(null);
@@ -28,7 +28,7 @@ const EditRecipe = () => {
       return;
     }
     try {
-      if (user.role !== "admin") {
+      if (!isAdmin) {
         console.error("User does not have the required role");
         return;
       }

@@ -5,7 +5,7 @@ import { postNewPost } from "../services/postService";
 import { useNavigate } from "react-router-dom";
 
 const CreateRecipe = () => {
-  const { user } = useAuth();
+  const { user, isAdmin } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (formData) => {
@@ -14,7 +14,7 @@ const CreateRecipe = () => {
       return;
     }
     try {
-      if (user.role !== "admin") {
+      if (!isAdmin) {
         console.error("User does not have the required role");
         return;
       }

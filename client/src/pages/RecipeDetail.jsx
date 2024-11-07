@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import Button from '../components/Button';
 
 const RecipeDetail = () => {
-  const { user, isAuthenticated } = useAuth();
+  const { isAuthenticated, isAdmin } = useAuth();
   const { id } = useParams();
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -78,7 +78,7 @@ const RecipeDetail = () => {
           </ol>
         </div>
       </div>
-      {user?.role === 'admin' && (
+      {isAdmin && (
         <div className='flex justify-between py-12 gap-48 max-md:gap-4 max-lg:gap-24'>
           <Button text='Editar Receta' type='button' handleClick={handleEditButton} />
           <Button text='Eliminar Receta' type='button' handleClick={handleDeleteButton} />
