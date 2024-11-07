@@ -3,6 +3,7 @@ import { Login } from "../pages/Login.jsx";
 import { SignUp } from "../pages/SignUp.jsx";
 import { Layout } from "../layout/Layout.jsx";
 import { PrivateRoutes } from "../layout/PrivateRoutes.jsx";
+import { PrivateAdminRoutes } from "../layout/PrivateRoutes.jsx"
 import Home from "../pages/Home.jsx";
 import RecipeDetail from "../pages/RecipeDetail.jsx";
 import Profile from "../pages/Profile.jsx";
@@ -34,8 +35,24 @@ export const router = createBrowserRouter([{
             element: <PrivateRoutes/>,
             children: [
                 {
-                    path: 'newrecipe',
-                    element: <CreateRecipe />
+                    path: 'admin',
+                    element: <PrivateAdminRoutes/>,
+                    children: [
+                        {
+                            path: "editadmin",
+                            element: <EditAdmi />
+                        },
+                        {
+                            path: "recipe/:id/edit",
+                            element: <EditRecipe />
+                        },
+                        {
+                            path: 'newrecipe',
+                            element: <CreateRecipe />
+                        },
+
+                    ]
+
                 },
                 {
                     path: 'recipe/:id',
@@ -44,10 +61,6 @@ export const router = createBrowserRouter([{
                             index: true,
                             element: <RecipeDetail />
                         },
-                        {
-                            path: "edit",
-                            element: <EditRecipe />
-                        }
                     ]
                 },
                 {
@@ -61,12 +74,9 @@ export const router = createBrowserRouter([{
                             path: "edit",
                             element: <EditProfile />
                         },
-                        {
-                            path: "editadmin",
-                            element: <EditAdmi />
-                        }
                     ]
                 },
+            
             
                 
             ]

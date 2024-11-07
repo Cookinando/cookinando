@@ -21,7 +21,7 @@ export const Login = () => {
     const result = await loginUser(data);
 
     if (result.success) {
-      login(result.userData.token);
+      login(result.userData.token, result.userData.user.role);
       navigate("/");
     } else {
       setLoginError(result.message);

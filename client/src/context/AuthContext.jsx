@@ -15,16 +15,27 @@ export const AuthProvider = ({ children }) => {
     
     const [user, setUser] = useState(null);
 
-    const login = async (token) => {
+    const [userRole, setUserRole] = useState(null);
+
+    const [ isAdmin, setIsAdmin] = useState(() => {
+        return Boolean(localStorage.getItem('role'));
+    });
+
+    const login = async (token, role) => {
         localStorage.setItem("authToken", token);
+        localStorage.setItem("role", role);
         setIsAuthenticated(true);
         decodeTokenAndSetUser(token);
+        setUserRole(role);
     };
+
+    // const isAdmin = userRole === 'admin';
 
     const logout = () => {
         localStorage.removeItem("authToken"); 
         setIsAuthenticated(false);
         setUser(null);
+        setUserRole(null);
     };
 
     const decodeTokenAndSetUser = (token) => {
@@ -40,18 +51,25 @@ export const AuthProvider = ({ children }) => {
             console.error("Error decoding token", error);
             logout(); 
         }
+
     };
 
     useEffect(() => {
         const token = localStorage.getItem("authToken");
+        const role = localStorage.getItem("role");
         if (token) {
             setIsAuthenticated(true);
             decodeTokenAndSetUser(token); 
+            if (role === 'admin') {
+                setIsAdmin(true);
+            }
         }
+       
+        
     }, []);
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, user, login, logout, setUser }}>
+        <AuthContext.Provider value={{ isAuthenticated, user, login, logout, isAdmin }}>
             {children}
         </AuthContext.Provider>
     );

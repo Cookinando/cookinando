@@ -9,7 +9,8 @@ export const PrivateRoutes = ({children}) => {
 
 
 export const PrivateAdminRoutes = () => {
-    const { isAdmin } = useAuth();
-    return isAdmin ? <Outlet /> : <Navigate to="/login" />;
+    const { isAuthenticated, isAdmin } = useAuth();
+
+    return isAuthenticated && isAdmin ? <Outlet /> : <Navigate to="/" />;
 };
 
