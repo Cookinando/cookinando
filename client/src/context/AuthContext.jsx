@@ -20,7 +20,9 @@ export const AuthProvider = ({ children }) => {
     });
 
     const login = async (token, role) => {
+        const expirationTime = (new Date().getTime() + 7200000).toString();
         localStorage.setItem("authToken", token);
+        localStorage.setItem("tokenExpiration", expirationTime);
         if (role === 'admin') {
             localStorage.setItem("isAdmin", true);
             setIsAdmin(true)
@@ -31,7 +33,8 @@ export const AuthProvider = ({ children }) => {
 
     const logout = () => {
         localStorage.removeItem("authToken");
-        localStorage.removeItem("isAdmin")
+        localStorage.removeItem("isAdmin");
+        localStorage.removeItem("tokenExpiration");
         setIsAuthenticated(false);
         setUser(null);
         setIsAdmin(false)
@@ -53,10 +56,26 @@ export const AuthProvider = ({ children }) => {
 
     };
 
+    const checkTokenExpiration = () => {
+        const token = localStorage.getItem("authToken");
+        if (!token) return; 
+    
+        const tokenExpiration = localStorage.getItem("tokenExpiration");
+        const currentTime = new Date().getTime().toString();
+    
+        if (tokenExpiration && currentTime > tokenExpiration) {
+            console.log('Token expired during check'); 
+            logout();
+        } else {
+            console.log('Token still valid during check'); 
+        }
+    };
+
     useEffect(() => {
         const token = localStorage.getItem("authToken");
         const isAdmin = localStorage.getItem("isAdmin");
         if (token) {
+            checkTokenExpiration();
             setIsAuthenticated(true);
             decodeTokenAndSetUser(token); 
             if (isAdmin) {
@@ -66,7 +85,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, user, setUser, login, logout, isAdmin }}>
+        <AuthContext.Provider value={{ isAuthenticated, user, setUser, login, logout, isAdmin, checkTokenExpiration }}>
             {children}
         </AuthContext.Provider>
     );

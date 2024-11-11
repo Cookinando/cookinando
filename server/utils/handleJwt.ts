@@ -16,7 +16,7 @@ export const tokenSign = async (user: Partial<User>): Promise<string> => {
     },
     JWT_SECRET as string,
     {
-      expiresIn: "1h",
+      expiresIn: "2h",
     }
   );
   return sign;
