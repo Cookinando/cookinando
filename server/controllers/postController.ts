@@ -5,18 +5,6 @@ import { AuthRequest } from "../interfaces/userInterface";
 
 export const createPost = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
-    const userId = req.user!.id; // El ID del usuario extraído del token JWT
-
-    if (!userId) {
-      res.status(401).json({ message: 'Unauthorized' });
-      return;
-    }
-    
-    if (req.user?.role !== 'admin') {
-      res.status(403).json({ message: 'Access denied. Only admins can create posts' });
-      return;
-    }
-
     const { title, numPeople, ingredients, instructions } = req.body;
     const imageUrl = req.file?.path; // Obtiene la URL de la imagen subida a Cloudinary
     
@@ -26,7 +14,7 @@ export const createPost = async (req: AuthRequest, res: Response): Promise<void>
       ingredients: joinItems(ingredients),
       instructions: joinItems(instructions),
       imageUrl,
-      authorId: userId,
+      authorId: req.user!.id,
     });
     console.log("✅ Post created successfully");
     res.status(201).json(newPost);
@@ -82,18 +70,6 @@ export const getPostById = async (req: AuthRequest, res: Response): Promise<void
 
 export const updatePost = async (req: AuthRequest, res: Response): Promise<void> => {
   try {
-    const userId = req.user!.id; // El ID del usuario extraído del token JWT
-
-    if (!userId) {
-      res.status(401).json({ message: 'Unauthorized' });
-      return;
-    }
-    
-    if (req.user?.role !== 'admin') {
-      res.status(403).json({ message: 'Access denied. Only admins can update posts' });
-      return;
-    }
-
     const { id } = req.params;
     const { title, numPeople, ingredients, instructions } = req.body;
     const imageUrl = req.file?.path ? req.file.path : req.body.imageUrl;

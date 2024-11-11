@@ -33,7 +33,7 @@ export const authorizeAdmin = (
 ): void => {
   if (req.user?.role !== "admin") {
     res.status(403).json({
-      error: "Acceso denegado. Solo los administradores pueden acceder.",
+      message: "Access denied. Only admins can perform this action",
     });
     return;
   }
