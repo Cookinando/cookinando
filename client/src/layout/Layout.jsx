@@ -4,19 +4,23 @@ import { Navbar } from "../components/Navbar.jsx";
 import backgroundImage from '../assets/images/fondo_layout.svg';
 import { useAuth } from '../context/AuthContext.jsx'; 
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const Layout = () => {
   const { checkTokenExpiration, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isAuthenticated) {
       const intervalId = setInterval(() => {
         checkTokenExpiration();
-      }, 5000);
+      }, 600000);
 
       return () => clearInterval(intervalId);
+    } else {
+      navigate('/login');
     }
-  }, [checkTokenExpiration, isAuthenticated]);
+  }, [checkTokenExpiration, isAuthenticated, navigate]);
 
   return (
     <div

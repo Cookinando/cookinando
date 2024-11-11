@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
     });
 
     const login = async (token, role) => {
-        const expirationTime = (new Date().getTime() + 10000).toString();
+        const expirationTime = (new Date().getTime() + 7200000).toString();
         localStorage.setItem("authToken", token);
         localStorage.setItem("tokenExpiration", expirationTime);
         if (role === 'admin') {
