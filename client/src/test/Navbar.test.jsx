@@ -1,50 +1,68 @@
-//vídeo de referencia: https://www.youtube.com/watch?v=sshsoHlNdyY
-
-import { expect, test, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
-import { beforeEach, describe } from 'vitest'
-import { Navbar } from  '../components/Navbar.jsx'
+import { expect, test, vi } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { beforeEach, describe } from 'vitest';
+import { Navbar } from '../components/Navbar.jsx';
 import { BrowserRouter } from 'react-router-dom';
-import { AuthProvider } from '../context/AuthContext.jsx'
+import { AuthProvider, useAuth } from '../context/AuthContext.jsx';
 import '@testing-library/jest-dom';
 
-vi.mock('../context/AuthContext.jsx', async (importOriginal) => {
-  const actual = await importOriginal();
-  return {
-    ...actual,
-    useAuth: () => ({
-      isAuthenticated: true,  // true o false según lo que quieras probar
+vi.mock('../context/AuthContext.jsx', () => ({
+  useAuth: vi.fn(),
+  AuthProvider: ({ children }) => <div>{children}</div>,
+}));
+
+
+describe('Navbar component authenticated', () => {
+  beforeEach(() => {
+    vi.resetAllMocks(); // resetear mocks antes de cada test
+    useAuth.mockReturnValue({
+      isAuthenticated: true,
       logout: vi.fn(),
-    }),
-  };
+    });
+    render(
+      <AuthProvider>
+        <BrowserRouter>
+          <Navbar />
+        </BrowserRouter>
+      </AuthProvider>
+    );
+  });
+
+  test("Should render the web logo", () => {
+    const logo = screen.getByAltText('logo');
+    expect(logo).toHaveAttribute('alt', 'logo');
+  });
+
+  test('Should render "cerrar sesión" when user is authenticated', () => {
+    expect(screen.getByText('Cerrar Sesión')).toBeInTheDocument();
+  });
 });
 
-  // const mockUser = { 
-  //   id: 1, 
-  //   name: 'Laura', 
-  //   email: 'laura@gmail.com', 
-  //   isAuthenticated: true 
-  // };
-
-describe('Navbar component', ()=> {
-    beforeEach(()=>{
-        render(
-        <AuthProvider>
-          <BrowserRouter>
-            <Navbar />
-          </BrowserRouter>
-        </AuthProvider>
+describe('Navbar component not authenticated', () => {
+  beforeEach(() => {
+    vi.resetAllMocks(); // resetear mocks antes de cada test
+    useAuth.mockReturnValue({
+      isAuthenticated: false,
+      logout: vi.fn(),
+    });
+    render(
+      <AuthProvider>
+        <BrowserRouter>
+          <Navbar />
+        </BrowserRouter>
+      </AuthProvider>
     );
-    });
-    test("Should render the web logo", () => {
-        const logo = screen.getByAltText('logo')
-        expect(logo).toHaveAttribute('alt', 'logo');
-    });
+  });
 
-    test('Should render "cerrar sesión" when user is authenticated', () => {
+  test('Should not render "cerrar sesión" when user is not authenticated', () => {
+    const cerrarSesionButton = screen.queryByText('Cerrar Sesión');
+    expect(cerrarSesionButton).not.toBeInTheDocument();
+  });
 
-      expect(screen.getByText('Cerrar Sesión')).toBeInTheDocument();
-    
-    }); 
-})
+  test("Should not render the profile logo", () => {
+    screen.debug();
+    const logoProfile = screen.queryByAltText('Profile icon');
+    expect(logoProfile).not.toBeInTheDocument();
+  })
 
+});
