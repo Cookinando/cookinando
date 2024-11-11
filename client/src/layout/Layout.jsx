@@ -14,7 +14,7 @@ export const Layout = () => {
     if (isAuthenticated) {
       const intervalId = setInterval(() => {
         checkTokenExpiration();
-      }, 1000);
+      }, 600000);
 
       return () => clearInterval(intervalId);
     }

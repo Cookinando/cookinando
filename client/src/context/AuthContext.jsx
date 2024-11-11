@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
   const [sessionExpired, setSessionExpired] = useState(false);
 
   const login = async (token, role) => {
-    const expirationTime = (new Date().getTime() + 5000).toString();
+    const expirationTime = (new Date().getTime() + 7200000).toString();
     localStorage.setItem("authToken", token);
     localStorage.setItem("tokenExpiration", expirationTime);
     if (role === "admin") {
