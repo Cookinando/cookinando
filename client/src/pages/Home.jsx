@@ -3,6 +3,7 @@ import { getPost } from '../services/postService';
 import ContactForm from '../components/ContactForm';
 import logo from '../assets/images/cookindando_logo2.png';
 import img from '../assets/images/img1home.png';
+import iconplato from '../assets/images/iconplato.svg';
 import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
@@ -66,11 +67,13 @@ const Home = () => {
             <div key={index} className="text-center transform transition duration-300 ease-in-out hover:scale-105"
             onClick={() => onClickRecipe(post.id)}
             >
-              <img 
-                src={post.imageUrl} // Usa la URL de la imagen de cada receta
-                alt={post.title} 
-                className="w-full h-auto inline object-cover rounded-lg shadow sm:h-full sm:w-auto" 
-              />
+              <div>
+                <img 
+                  src={post.imageUrl ? post.imageUrl : iconplato} // Usa la URL de la imagen de cada receta
+                  alt={post.title} 
+                  className="w-full h-auto inline object-cover rounded-lg shadow sm:h-full sm:w-auto" 
+                />
+              </div>
               <p className="mt-4 text-light text-lg">{post.title}</p>
             </div>
           ))}
