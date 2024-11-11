@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { updateUserProfile, getUsers } from "../services/userService.js";
 
+
 const EditAdmi = () => {
   const [users, setUsers] = useState([]);
 
@@ -49,9 +50,10 @@ const EditAdmi = () => {
                 users.map((user, index) => (
                   <li
                     key={user.id}
-                    className="flex items-center gap-x-4 text-lg justify-center"
+                    className="flex items-center gap-x-20 text-lg justify-center"
                   >
                     <span className="text-xl">{user.username}</span>
+                    <span className="text-md text-gray-300">{user.email}</span>
                     <input
                       type="checkbox"
                       checked={user.role === "admin"}
