@@ -37,9 +37,23 @@ export const getUserById = async (id) => {
 //DELETE- metodo delete
 
 export const deleteUser = async (id) => {
+  // Obtén el token del almacenamiento local
+  const token = localStorage.getItem("authToken");
+
+  if (!token) {
+    throw new Error("No se encontró el token en localStorage");
+  }
+
   try {
-    const response = await axios.delete(`${URL}/${id}`);
-    return response.data;
+    // Realiza la solicitud DELETE incluyendo el token en los headers
+    const response = await axios.delete(`${URL}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Enviando el token al backend
+        "Content-Type": "application/json",
+      },
+    });
+    
+    return response.data; // Retorna la respuesta si es exitosa
   } catch (error) {
     console.error("Error al borrar el usuario:", error);
     throw error;
