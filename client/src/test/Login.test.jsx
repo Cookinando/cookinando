@@ -6,17 +6,18 @@ import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider, useAuth } from '../context/AuthContext.jsx';
 import '@testing-library/jest-dom';
 
-
 vi.mock('../context/AuthContext.jsx', () => ({
-  useAuth: vi.fn(() => ({
-    login: vi.fn(), 
-  })),
-  AuthProvider: ({ children }) => <div>{children}</div>,
-}));
+    useAuth: vi.fn(),
+    AuthProvider: ({ children }) => <div>{children}</div>,
+  }));
 
 describe('Login component', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
+    vi.clearAllMocks(); // resetear mocks antes de cada test
+
+    useAuth.mockReturnValue({
+      login: vi.fn(),
+    });
 
     render(
       

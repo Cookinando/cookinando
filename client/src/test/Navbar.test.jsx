@@ -14,12 +14,12 @@ vi.mock('../context/AuthContext.jsx', () => ({
 
 describe('Navbar component authenticated', () => {
   beforeEach(() => {
-    vi.resetAllMocks(); // resetear mocks antes de cada test
+    vi.clearAllMocks(); // resetear mocks antes de cada test
     useAuth.mockReturnValue({
       isAuthenticated: true,
       logout: vi.fn(),
     });
-    
+
     render(
       <AuthProvider>
         <BrowserRouter>
