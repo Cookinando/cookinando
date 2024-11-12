@@ -3,10 +3,15 @@ import User from "../models/userModel";
 import { AuthRequest } from "../interfaces/userInterface";
 import bcrypt from "bcrypt";
 
-export const getUsers = async (req: AuthRequest, res: Response): Promise<void> => {
+export const getUsers = async (
+  req: AuthRequest,
+  res: Response
+): Promise<void> => {
   const authUser = req.user;
-  if (authUser?.role !== 'admin') {
-    res.status(403).json({ error: 'Access denied. Only admins can view the users.' });
+  if (authUser?.role !== "admin") {
+    res
+      .status(403)
+      .json({ error: "Access denied. Only admins can view the users." });
     return;
   }
   try {
@@ -16,7 +21,8 @@ export const getUsers = async (req: AuthRequest, res: Response): Promise<void> =
     if (error instanceof Error) {
       console.error("Error retrieving users:", error.message);
       res.status(500).json({
-        error: "An error occurred while retrieving the users. Please try again later.",
+        error:
+          "An error occurred while retrieving the users. Please try again later.",
       });
     }
   }
@@ -35,23 +41,31 @@ export const getUser = async (req: Request, res: Response): Promise<void> => {
     if (error instanceof Error) {
       console.error("Error retrieving user:", error.message);
       res.status(500).json({
-        error: "An error occurred while retrieving the user. Please try again later.",
+        error:
+          "An error occurred while retrieving the user. Please try again later.",
       });
     }
   }
 };
 
-export const createUser = async (req: AuthRequest, res: Response): Promise<void> => {
+export const createUser = async (
+  req: AuthRequest,
+  res: Response
+): Promise<void> => {
   try {
     const { username, password, email } = req.body;
     let { role } = req.body;
 
     if (role === undefined) {
-      role = 'user';
+      role = "user";
     } else {
       const authUser = req.user;
-      if (role === 'admin' && authUser?.role !== 'admin') {
-        res.status(403).json({ error: "Access denied. Only admins can create other admins." });
+      if (role === "admin" && authUser?.role !== "admin") {
+        res
+          .status(403)
+          .json({
+            error: "Access denied. Only admins can create other admins.",
+          });
         return;
       }
     }
@@ -72,34 +86,43 @@ export const createUser = async (req: AuthRequest, res: Response): Promise<void>
     if (error instanceof Error) {
       console.error("Error creating user:", error.message);
       res.status(500).json({
-        error: "An error occurred while creating the user. Please try again later.",
+        error:
+          "An error occurred while creating the user. Please try again later.",
         details: error.message,
       });
     }
   }
 };
 
-export const editUser = async (req: AuthRequest, res: Response): Promise<void> => {
+export const editUser = async (
+  req: AuthRequest,
+  res: Response
+): Promise<void> => {
   try {
     const { id } = req.params;
-    const { username, password, email } = req.body;
-    let { role } = req.body;
+    const { username, password, email, role } = req.body;
 
-    if (role === undefined) {
-      role = 'user';
-    } else {
-      const authUser = req.user;
-      if (role === 'admin' && authUser?.role !== 'admin') {
-        res.status(403).json({ error: "Access denied. Only admins can update user role." });
-        return;
-      }
-    }
-
-    const updatedData: { username?: string, email?: string, role: string, password?: string } = {
+    let updatedData: {
+      username?: string;
+      email?: string;
+      role?: string;
+      password?: string;
+    } = {
       username,
       email,
-      role
     };
+
+    if (role !== undefined) {
+      const authUser = req.user;
+      if (role === "admin" && authUser?.role !== "admin") {
+        res
+          .status(403)
+          .json({ error: "Access denied. Only admins can update user role." });
+        return;
+      }
+
+      updatedData.role = role;
+    }
 
     if (password) {
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -118,15 +141,18 @@ export const editUser = async (req: AuthRequest, res: Response): Promise<void> =
     if (error instanceof Error) {
       console.error("Error updating user:", error.message);
       res.status(500).json({
-        error: "An error occurred while updating the user. Please try again later.",
+        error:
+          "An error occurred while updating the user. Please try again later.",
         details: error.message,
       });
     }
   }
 };
 
-
-export const deleteUser = async (req: Request, res: Response): Promise<void> => {
+export const deleteUser = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     const { id } = req.params;
     const deleted = await User.destroy({ where: { id } });
@@ -139,7 +165,8 @@ export const deleteUser = async (req: Request, res: Response): Promise<void> => 
     if (error instanceof Error) {
       console.error("Error deleting user:", error.message);
       res.status(500).json({
-        error: "An error occurred while deleting the user. Please try again later.",
+        error:
+          "An error occurred while deleting the user. Please try again later.",
         details: error.message,
       });
     }
