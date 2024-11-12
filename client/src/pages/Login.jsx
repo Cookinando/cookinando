@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { useState } from 'react';
-import { loginUser } from '../services/authService.js';
+import { useNavigate, Link } from "react-router-dom";
+import { useState } from "react";
+import { loginUser } from "../services/authService.js";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import { useAuth } from "../context/AuthContext.jsx";
@@ -46,31 +46,48 @@ export const Login = () => {
             type="text"
             register={register}
             errors={errors}
-            rules={{ required: true }}
+            rules={{
+              required: "El correo electrónico es obligatorio",
+              pattern: {
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                message: "El formato de correo electrónico no es válido",
+              },
+            }}
             placeholder="Ingrese su correo electrónico"
           />
+
           <Input
             label="Contraseña"
             name="password"
             type="password"
             register={register}
             errors={errors}
-            rules={{ required: true }}
+            rules={{
+              required: "La contraseña es obligatoria",
+              minLength: {
+                value: 6,
+                message: "La contraseña debe tener al menos 6 caracteres",
+              },
+            }}
             placeholder="Ingrese su contraseña"
           />
+
           <div>
-            {loginError && 
-            <p 
-              style={{ color: 'red' }}
-            >
-              {loginError}
-            </p>} {/* Mostrar el mensaje de error */}
+            {loginError && (
+              <p className="text-red-500 text-sm mt-1">{loginError}</p>
+            )}
           </div>
+
           <div>
-            <Button 
-              type="submit" 
-              text="Enviar" 
-            />
+            <Button type="submit" text="Enviar" />
+          </div>
+
+          <div>
+            <Link to="/signup">
+              <p className="text-light-dark hover:text-light hover:underline underline-offset-4 decoration-2 decoration-light transition duration-300 ease-in-out transform hover:scale-105">
+                ¿Eres nuevo en Cookinando?. Regístrate
+              </p>
+            </Link>
           </div>
         </form>
       </div>

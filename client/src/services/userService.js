@@ -37,7 +37,6 @@ export const getUserById = async (id) => {
 //DELETE- metodo delete
 
 export const deleteUser = async (id) => {
-  // Obtén el token del almacenamiento local
   const token = localStorage.getItem("authToken");
 
   if (!token) {
@@ -45,15 +44,14 @@ export const deleteUser = async (id) => {
   }
 
   try {
-    // Realiza la solicitud DELETE incluyendo el token en los headers
     const response = await axios.delete(`${URL}/${id}`, {
       headers: {
-        Authorization: `Bearer ${token}`, // Enviando el token al backend
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     });
-    
-    return response.data; // Retorna la respuesta si es exitosa
+
+    return response.data;
   } catch (error) {
     console.error("Error al borrar el usuario:", error);
     throw error;
@@ -72,7 +70,6 @@ export const postNewUser = async (data) => {
 };
 
 //UPDATE . metodo put
-
 export const updateUserProfile = async (id, data) => {
   const token = localStorage.getItem("authToken");
 
@@ -80,8 +77,12 @@ export const updateUserProfile = async (id, data) => {
     throw new Error("No se encontró el token en localStorage");
   }
 
-  console.log("Datos enviados:", data);
   console.log("Token:", token);
+
+  if (!data.password) {
+    delete data.password;
+    delete data.confirmNewPassword;
+  }
 
   try {
     const response = await axios.put(`${URL}/${id}`, data, {
@@ -96,6 +97,11 @@ export const updateUserProfile = async (id, data) => {
       "Error al actualizar el usuario:",
       error.response?.data || error.message
     );
-    throw error;
+
+    if (error.response && error.response.data && error.response.data.message) {
+      return { error: error.response.data.message };
+    } else {
+      return { error: error.message };
+    }
   }
 };

@@ -10,8 +10,13 @@ export const registerController = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, confirmPassword } = req.body;
     let { role } = req.body;
+
+    if (password !== confirmPassword) {
+      res.status(400).json({ message: "Las contraseñas no coinciden" });
+      return;
+    }
 
     if (role === undefined) {
       role = "user";
@@ -26,8 +31,10 @@ export const registerController = async (
     }
 
     const passwordHashed = await encrypt(password);
+
     const lastUser = await User.findOne({ order: [["id", "DESC"]] });
     const newId = lastUser ? lastUser.id + 1 : 1;
+
     const newUser = {
       id: newId,
       username,
@@ -41,7 +48,6 @@ export const registerController = async (
       res.status(409).json({ message: "Email already in use" });
       return;
     }
-
     const existingUserByName = await User.findOne({ where: { username } });
     if (existingUserByName) {
       res.status(409).json({ message: "Name already in use" });
@@ -49,6 +55,7 @@ export const registerController = async (
     }
 
     await User.create(newUser);
+
     const token = await tokenSign({
       id: newUser.id,
       username: newUser.username,

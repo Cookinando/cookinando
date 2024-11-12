@@ -16,10 +16,9 @@ function Input({ label, type, name, register, errors, rules = {}, ...rest }) {
           className="w-[20rem] h-[3.25rem] px-4 text-black bg-primarylight"
           {...rest}
         />
-        {errors[name]?.type === "required" && (
-          <p className="text-red-500 text-sm mt-1">
-            Es necesario ingresar su {label.toLowerCase()}
-          </p>
+
+        {errors[name]?.message && (
+          <p className="text-red-500 text-sm mt-1">{errors[name].message}</p>
         )}
       </div>
     </div>
