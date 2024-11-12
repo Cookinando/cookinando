@@ -28,8 +28,8 @@ const Home = () => {
   };
 
   return (
-    <div className="bg-cover bg-center min-h-screen text-white">
-      <section className="p-10">
+    <div className="bg-cover bg-center min-h-screen text-white mb-8">
+      <section className="px-10 pt-10 md:p-10">
         <h1 className="text-4xl font-bold"></h1>
         <div className="flex justify-center items-center w-full h-500">
           <img src={logo} alt="logo" className="w-[600px] h-auto" />
@@ -60,11 +60,11 @@ const Home = () => {
       </section>
 
       {/* Sección de Recetas */}
-      <section className="p-10 bg-dark rounded-lg">
+      <section className="p-10 pt-16 bg-dark rounded-lg my-12 sm:p-16 md:mt-20 lg:px-20">
         <h2 className="text-4xl font-bold text-center text-light-dark mb-6">Recetas</h2>
-        <div className="grid grid-cols-1 w-4/5 mx-auto sm:grid-cols-2 md:grid-cols-3 gap-6 my-8 sm:w-full">
+        <div className="grid grid-cols-1 w-4/5 mx-auto sm:grid-cols-2 md:grid-cols-3 gap-6 my-8 mt-14 sm:w-full">
           {posts.map((post, index) => (
-            <div key={index} className="text-center transform transition duration-300 ease-in-out hover:scale-105"
+            <div key={index} className="text-center transform transition duration-300 ease-in-out hover:scale-105 xl:mx-6"
             onClick={() => onClickRecipe(post.id)}
             >
               <div>

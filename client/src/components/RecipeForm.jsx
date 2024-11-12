@@ -53,7 +53,7 @@ const RecipeForm = ({ onSubmit, initialData = {}, isEditing = false }) => {
   };
 
   return (
-    <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm font-normal flex flex-col justify-center items-center">
+    <div className="mt-10 mb-12 mx-16 font-normal flex flex-col justify-center items-center sm:my-14">
       <form
         id="recipeForm"
         className="space-y-6 flex flex-col gap-4"
@@ -122,7 +122,7 @@ const RecipeForm = ({ onSubmit, initialData = {}, isEditing = false }) => {
 
         <div>
           <label className="text-xl leading-6 text-light">Subir imagen</label>
-          <input type="file" accept="image/*" onChange={handleImageChange} />
+          <input type="file" accept="image/*" onChange={handleImageChange} className="w-full" />
         </div>
 
         <Button type="submit" text={isEditing ? "Actualizar Receta" : "Crear Receta"} handleClick={handleSubmit(handleFormSubmit)} />

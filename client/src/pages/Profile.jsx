@@ -79,7 +79,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="flex min-h-full flex-col justify-center items-center lg:px-8 bg-primary p-4">
+    <div className="flex min-h-full flex-col justify-center items-center lg:px-8 bg-primary p-4 pb-10">
   {user?.role === 'admin' ? (
     <div className="w-full max-w-lg flex flex-col items-center">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm mb-8">
@@ -106,7 +106,7 @@ const Profile = () => {
           </ul>
         </div>
       </div>
-      <div className="w-full max-w-lg flex justify-center gap-4 sm:gap-8">
+      <div className="w-full max-w-lg flex justify-center gap-4 sm:gap-8 px-4">
         <Button type="submit" handleClick={handleEditClick} text="Editar perfil" />
         <Button type="submit" handleClick={handleDeleteAccount} text="Eliminar cuenta" />
       </div>

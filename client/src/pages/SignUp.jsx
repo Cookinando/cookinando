@@ -31,7 +31,7 @@ export const SignUp = () => {
   };
 
   return (
-    <div className="flex min-h-full flex-col justify-center items-center lg:px-8 bg-primary text-light-dark">
+    <div className="flex min-h-full flex-col justify-center items-center pb-10 lg:px-8 bg-primary text-light-dark">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <h2 className="mt-10 text-center text-4xl">Crear usuario</h2>
       </div>
@@ -95,7 +95,7 @@ export const SignUp = () => {
           </div>
           <div>
             <Link to="/login">
-              <p className="text-light-dark text-center hover:text-light hover:underline underline-offset-4 decoration-2 decoration-light transition duration-300 ease-in-out transform hover:scale-105">
+              <p className="text-light-dark text-center hover:text-light hover:underline underline-offset-4 decoration-2 decoration-light transition duration-300 ease-in-out hover:scale-105">
                 ¿Tienes una cuenta? Inicia sesión
               </p>
             </Link>
