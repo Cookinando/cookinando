@@ -19,6 +19,7 @@ describe('Navbar component authenticated', () => {
       isAuthenticated: true,
       logout: vi.fn(),
     });
+    
     render(
       <AuthProvider>
         <BrowserRouter>
