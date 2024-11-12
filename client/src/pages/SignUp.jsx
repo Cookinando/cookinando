@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Button from "../components/Button";
 import { signUpNewUser } from "../services/authService.js";
 import Input from "../components/Input";
