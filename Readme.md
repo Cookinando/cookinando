@@ -1,6 +1,6 @@
 # COOKINANDO (PROYECTO FULLSTACK)
 
-![](src/assets/images/readme/home_desktop.png)
+![](./client/src/assets/images/readme/home_desktop.png)
 
 
 Este es nuestro primer proyecto fullstack, una página de recetas con un diseño minimalista y atractivo que prioriza la experiencia del usuario. Hemos implementado funcionalidades avanzadas de autenticación y gestión de usuarios. Los usuarios pueden registrarse, iniciar sesión y navegar por las recetas disponibles en la página principal, y aquellos registrados pueden acceder a los detalles de cada receta.
