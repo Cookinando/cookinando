@@ -94,9 +94,9 @@ export const SignUp = () => {
             <Button type="submit" text="Enviar" />
           </div>
           <div>
-            <Link to="/signup">
-              <p className="text-light-dark hover:text-light hover:underline underline-offset-4 decoration-2 decoration-light transition duration-300 ease-in-out transform hover:scale-105">
-                ¿Tienes una cuenta?. Inicia sesión
+            <Link to="/login">
+              <p className="text-light-dark text-center hover:text-light hover:underline underline-offset-4 decoration-2 decoration-light transition duration-300 ease-in-out transform hover:scale-105">
+                ¿Tienes una cuenta? Inicia sesión
               </p>
             </Link>
           </div>
