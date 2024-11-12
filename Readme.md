@@ -1,4 +1,4 @@
-# COOKINANDO (PROYECTO FULLSTACK)
+# COOKINANDO (PROYECTO FULLSTACK) 🍽️
 
 ![](./client/src/assets/images/readme/home_desktop.png)
 
@@ -13,12 +13,14 @@ El proyecto sigue los principios de Green Code, aplicando buenas prácticas de e
 
 Este proyecto representa un paso importante en nuestro aprendizaje, al integrar el frontend y el backend en una sola aplicación, aplicar medidas de seguridad para proteger los datos y contribuir al desarrollo sostenible.
 
-## Estructura del Proyecto
+## Estructura del proyecto
 
 - **client/**: Contiene el código del frontend.
 - **server/**: Contiene el código del backend.
 
-### Frontend
+## Herramientas utilizadas 🛠️
+
+### Frontend 👀
 
 - **React**: Biblioteca de JavaScript para construir interfaces de usuario interactivas.
 - **Vite**: Herramienta de desarrollo y construcción rápida para aplicaciones web.
@@ -30,7 +32,7 @@ Este proyecto representa un paso importante en nuestro aprendizaje, al integrar 
 - **Cloudinary**: Servicio de gestión y optimización de imágenes y videos en la nube.
 - **JWT Decode**: Decodificación de JSON Web Tokens para autenticación en el frontend.
   
-### Backend
+### Backend 🫀
 
 - **Express**: Framework para Node.js para construir aplicaciones web y APIs.
 - **Sequelize**: ORM para interactuar con la base de datos MySQL.
@@ -42,7 +44,7 @@ Este proyecto representa un paso importante en nuestro aprendizaje, al integrar 
 - **Express Validator**: Validación de datos en las rutas.
 - **Cors**: Para habilitar CORS en el backend.
 
-## Puertos
+## Puertos 🛣️
 
 - **Frontend**: http://localhost:5173/
 - **Backend**: http://localhost:8000
@@ -50,7 +52,7 @@ Este proyecto representa un paso importante en nuestro aprendizaje, al integrar 
 > Nota: Asegúrate de que los puertos configurados no entren en conflicto con otras aplicaciones en tu sistema. Si necesitas cambiarlos, puedes modificar las configuraciones en los archivos correspondientes.
 
 
-## Configuración
+## Configuración ⚙️
 
 Para configurar y ejecutar el proyecto, sigue estos pasos:
 
@@ -112,7 +114,7 @@ Para configurar y ejecutar el proyecto, sigue estos pasos:
      ```bash	
     npm run test
     
-## Licencia
+## Licencia 📃
 
 Este proyecto está bajo la Licencia MIT. Consulta el archivo LICENSE para más detalles.
 
