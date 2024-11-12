@@ -13,7 +13,7 @@ vi.mock('../context/AuthContext.jsx', () => ({
 
 describe('Login component', () => {
   beforeEach(() => {
-    vi.clearAllMocks(); // resetear mocks antes de cada test
+    vi.clearAllMocks();
 
     useAuth.mockReturnValue({
       login: vi.fn(),
