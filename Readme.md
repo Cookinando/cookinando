@@ -1,5 +1,8 @@
 # COOKINANDO (PROYECTO FULLSTACK)
 
+![](src/assets/images/readme/home_desktop.png)
+
+
 Este es nuestro primer proyecto fullstack, una página de recetas con un diseño minimalista y atractivo que prioriza la experiencia del usuario. Hemos implementado funcionalidades avanzadas de autenticación y gestión de usuarios. Los usuarios pueden registrarse, iniciar sesión y navegar por las recetas disponibles en la página principal, y aquellos registrados pueden acceder a los detalles de cada receta.
 
 La aplicación cuenta con un sistema de manejo de roles. Los administradores tienen permisos especiales que les permiten subir, editar y eliminar recetas, además de gestionar otros usuarios (crear nuevos usuarios y cambiar sus roles). La autenticación se realiza mediante JWT (JSON Web Tokens) con expiración, y las contraseñas se almacenan de forma segura utilizando bcrypt para encriptación.
