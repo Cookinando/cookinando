@@ -29,4 +29,23 @@ describe("Post Service", () => {
     });
   });
 
+  describe("getPostById", () => {
+    test("should return data when GET request by ID is successful", async () => {
+      axios.get.mockResolvedValueOnce(mockResponse);
+
+      const result = await getPostById(mockId);
+      expect(result).toEqual(mockData);
+      expect(axios.get).toHaveBeenCalledWith(`http://localhost:8000/api/posts/${mockId}`, {
+        headers: { Authorization: `Bearer ${mockToken}` },
+      });
+    });
+
+    test("should throw an error when GET request by ID fails", async () => {
+      axios.get.mockRejectedValueOnce(new Error("Error fetching post by ID"));
+
+      await expect(getPostById(mockId)).rejects.toThrow("Error fetching post by ID");
+    });
+  });
+
+  
 });
