@@ -99,6 +99,24 @@ describe("Post Service", () => {
     });
   });
 
- 
+  describe("putPost", () => {
+    test("should return data when PUT request is successful", async () => {
+      axios.put.mockResolvedValueOnce(mockResponse);
+
+      const result = await putPost(mockId, mockData);
+      expect(result).toEqual(mockData);
+      expect(axios.put).toHaveBeenCalledWith(`http://localhost:8000/api/posts/${mockId}`, mockData, {
+        headers: { Authorization: `Bearer ${mockToken}` },
+      });
+    });
+
+    test("should throw an error when PUT request fails", async () => {
+      axios.put.mockRejectedValueOnce(new Error("Error updating post"));
+
+      await expect(putPost(mockId, mockData)).rejects.toThrow("Error updating post");
+    });
+  });
+
+  
   
 });
