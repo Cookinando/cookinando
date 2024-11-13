@@ -1,3 +1,4 @@
+// Layout.jsx
 import { Outlet, useNavigate } from "react-router-dom";
 import { Footer } from "../components/Footer.jsx";
 import { Navbar } from "../components/Navbar.jsx";
@@ -7,7 +8,8 @@ import { useEffect } from "react";
 import Swal from "sweetalert2";
 
 export const Layout = () => {
-  const { checkTokenExpiration, isAuthenticated, sessionExpired } = useAuth();
+  const { checkTokenExpiration, isAuthenticated, sessionExpired, loading } =
+    useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,7 +25,7 @@ export const Layout = () => {
   }, [checkTokenExpiration, isAuthenticated]);
 
   useEffect(() => {
-    if (!isAuthenticated && sessionExpired) {
+    if (!loading && !isAuthenticated && sessionExpired) {
       Swal.fire({
         title: "Su sesión ha expirado",
         text: "Por favor inicie sesión",
@@ -40,7 +42,9 @@ export const Layout = () => {
         navigate("/login");
       });
     }
-  }, [isAuthenticated, sessionExpired, navigate]);
+  }, [loading, isAuthenticated, sessionExpired, navigate]);
+
+  if (loading) return null;
 
   return (
     <div

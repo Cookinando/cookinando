@@ -59,7 +59,7 @@ export const loginUser = async (data) => {
       if (error.response.status === 404) {
         errorMessage = "Ups... Parece que no estás registrado.";
       } else if (error.response.status === 401) {
-        errorMessage = "Usuario o contraseña incorrectos.";
+        errorMessage = "Contraseña incorrecta.";
       } else {
         errorMessage = "Ocurrió un error en el servidor. Inténtalo nuevamente.";
       }

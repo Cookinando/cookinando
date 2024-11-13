@@ -76,6 +76,11 @@ export const loginController = async (req: Request, res: Response) => {
     const userEmail = req.body.email;
     const loginPassword = req.body.password;
 
+    if (!userEmail || !loginPassword) {
+      handleHttpError(res, "❌ EMAIL_OR_PASSWORD_MISSING", 400);
+      return;
+    }
+
     const user = await User.findOne({ where: { email: userEmail } });
     if (!user) {
       handleHttpError(res, "❌ USER_NOT_EXISTS", 404);
@@ -84,7 +89,6 @@ export const loginController = async (req: Request, res: Response) => {
 
     const passwordHashed = user.password;
     const checkPassword = await compare(loginPassword, passwordHashed);
-
     if (!checkPassword) {
       handleHttpError(res, "❌ PASSWORD_INVALID", 401);
       return;
@@ -92,12 +96,24 @@ export const loginController = async (req: Request, res: Response) => {
 
     const sessionData = {
       token: await tokenSign(user),
-      user: user,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.username,
+        role: user.role,
+      },
     };
 
-    res.send({ sessionData });
-  } catch (error) {
-    console.log(error);
-    handleHttpError(res, "❌ ERROR_LOGIN_USER");
+    res.status(200).send({ sessionData });
+  } catch (error: any) {
+    console.error("❌ Error in login process:", error.message || error);
+
+    if (error.name === "SequelizeConnectionError") {
+      handleHttpError(res, "❌ DATABASE_CONNECTION_ERROR", 500);
+    } else if (error.name === "SequelizeValidationError") {
+      handleHttpError(res, "❌ DATABASE_VALIDATION_ERROR", 400);
+    } else {
+      handleHttpError(res, "❌ ERROR_LOGIN_USER", 500);
+    }
   }
 };
