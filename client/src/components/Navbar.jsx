@@ -69,7 +69,7 @@ export const Navbar = () => {
 								<img
 									className="h-5"
 									src={closeIcon}
-									alt="Profile icon"
+									alt="Close icon"
 								/>
 							</Link>
 						</li>
