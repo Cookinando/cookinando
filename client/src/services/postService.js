@@ -1,7 +1,7 @@
 import axios from "axios"; 
 
 
-const URL = 'http://localhost:8000/api/posts';
+const URL = 'https://cookinando.onrender.com/api/posts';
 
 //READ-metodo get
 export const getPost = async () => {
