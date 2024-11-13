@@ -1,24 +1,34 @@
 import request from 'supertest';
-import User from '../models/userModel';
 import db from '../database/db';
 import { app, server } from '../app';
+import User from '../models/userModel';
+import { tokenSign } from '../utils/handleJwt';
+import bcrypt from "bcrypt";
 
-jest.mock('../utils/handlePassword', () => ({
-  encrypt: jest.fn().mockResolvedValue("mockedEncryptedPassword"),
-  compare: jest.fn((plain, hashed) => plain === "correctPassword" && hashed === "mockedEncryptedPassword")
-}));
-
-jest.mock('../utils/handleJwt', () => ({
-  tokenSign: jest.fn().mockResolvedValue("mockedJwtToken")
-}));
-
+let adminToken: string, userToken: string;
 
 beforeAll(async () => {
   await db.sync();
-});
 
-afterEach(async () => {
-  await User.destroy({ where: {} });
+  const hashedPasswordAdmin = await bcrypt.hash('hashedPassword', 10);
+  const hashedPasswordUser = await bcrypt.hash('hashedPassword', 10);
+
+
+  const adminUser = await User.create({
+    username: 'adminUser',
+    email: 'admin@example.com',
+    password: hashedPasswordAdmin,
+    role: 'admin',
+  });
+  adminToken = await tokenSign(adminUser);
+
+  const regularUser = await User.create({
+    username: 'regularUser',
+    email: 'user@example.com',
+    password: hashedPasswordUser,
+    role: 'user',
+  });
+  userToken = await tokenSign(regularUser);
 });
 
 afterAll(async () => {
@@ -27,125 +37,119 @@ afterAll(async () => {
   server.close();
 });
 
-describe('Auth Controller', () => {
-  describe('POST /signup', () => {
-    it('should register a new user and return a token', async () => {
-      const newUser = {
-        username: 'testUser',
-        email: 'test@example.com',
-        password: 'testpassword',
-        role: 'user',
+describe('POST /api/users/login', () => {
+    it('should return 200 and sessionData if user login is correct', async () => {
+      const loginData = {
+        email: 'admin@example.com',
+        password: 'hashedPassword',
       };
-
-      const response = await request(app).post('/api/users/signup').send(newUser);
-
-      expect(response.status).toBe(201);
-      expect(response.body).toHaveProperty('message', '✅ User created successfully');
-      expect(response.body).toHaveProperty('token', "mockedJwtToken");
-      
-      const user = await User.findOne({ where: { username: newUser.username, email: newUser.email } });
-
-      expect(user).not.toBeNull();
-      expect(user?.username).toBe(newUser.username);
-      expect(user?.email).toBe(newUser.email);
-    });
-
-    describe('Error Handling signup', () => {
-      it('should return a 409 status code if the username is already in use', async () => {
-        const existingUser = {
-          username: 'testUser',
-          email: 'test@example.com',
-          password: 'testpassword',
-          role: 'user',
-        };
-        await User.create(existingUser);
   
-        const newUser = {
-          username: 'testUser',
-          email: 'newemail@example.com',
-          password: 'newpassword',
-          role: 'user',
-        };
+      const response = await request(app)
+        .post('/api/users/login')
+        .send(loginData);
   
-        const response = await request(app).post('/api/users/signup').send(newUser);
-  
-        expect(response.status).toBe(409);
-        expect(response.body).toHaveProperty('message', 'Name already in use');
-      });
-      
-      it('should return a 400 status code if the email is already in use', async () => {
-        const existingUser = {
-          username: 'testUser',
-          email: 'test@example.com',
-          password: 'testpassword',
-          role: 'user',
-        };
-        await User.create(existingUser);
-        
-        const newUser = {
-          username: 'newUser',
-          email: 'test@example.com',
-          password: 'newpassword',
-          role: 'user',
-        };
-  
-        const response = await request(app).post('/api/users/signup').send(newUser);
-  
-        expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty('errors');
-        expect(response.body.errors[0].msg).toBe('🚨Este email ya está en uso🚨');
-      });
-    });
-  });
-
-  describe('POST /login', () => {
-    it('should log in a user and return a token', async () => {
-      const existingUser = {
-        username: 'testUser',
-        email: 'test@example.com',
-        password: 'mockedEncryptedPassword',
-        role: 'user',
-      };
-      await User.create(existingUser);
-
-
-      const response = await request(app).post('/api/users/login').send({
-        email: 'test@example.com',
-        password: 'correctPassword',
-      });
-
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty('sessionData');
-      expect(response.body.sessionData).toHaveProperty("token", "mockedJwtToken");
+      expect(response.body.sessionData).toHaveProperty('token');
+      expect(response.body.sessionData.user).toHaveProperty('id');
+      expect(response.body.sessionData.user).toHaveProperty('email');
+      expect(response.body.sessionData.user).toHaveProperty('name');
+      expect(response.body.sessionData.user).toHaveProperty('role');
     });
 
-    describe('Error Handling login', () => {
-      it('should return a 400 status code if the user is not found', async () => {
-        const response = await request(app).post('/api/users/login').send({
-          email: 'nonexistent@example.com',
-          password: 'password',
-        });
-      expect(response.status).toBe(400);
-      expect(response.body).toHaveProperty('errors');
-      expect(response.body.errors[0].msg).toBe('🚨El usuario no existe🚨');
-      });
-  
-      it('should return a 400 status code if the password is incorrect', async () => {
-        const existingUser = {
-          username: 'testUser',
-          email: 'test@example.com',
-          password: 'mockedEncryptedPassword',
-          role: 'user',
-        };
-        await User.create(existingUser);
-  
-        const response = await request(app).post('/api/users/login').send({
-          email: 'test@example.com',
-          password: 'incorrectPassword',
-        });
-        expect(response.status).toBe(401);
-        expect(response.body).toHaveProperty('error', '❌ PASSWORD_INVALID');
-      });
-    });
+  it('should return 401 if password is incorrect', async () => {
+    const loginData = {
+      email: 'admin@example.com',
+      password: 'incorrectPassword',
+    };
+    
+    const response = await request(app)
+    .post('/api/users/login')
+    .send(loginData);
+    
+    expect(response.status).toBe(401);
+    expect(response.body).toHaveProperty('error', '❌ PASSWORD_INVALID');
   });
-})
+  
+  it('should return 404 if user does not exist', async () => {
+    const loginData = {
+      email: 'nonexistent@example.com',
+      password: 'password123',
+    };
+  
+    const response = await request(app)
+      .post('/api/users/login')
+      .send(loginData);
+  
+    expect(response.status).toBe(404);
+    expect(response.body).toHaveProperty('error', '❌ USER_NOT_EXISTS'); 
+  });
+});
+
+describe('POST /api/users/signup', () => {
+  it('should return 201 if user signup is correct', async () => {
+    const signupData = {
+      username: 'User',
+      email: 'testuser@example.com',
+      password: 'hashedPassword',
+      confirmPassword: 'hashedPassword',
+    };
+
+    const response = await request(app)
+      .post('/api/users/signup')
+      .send(signupData);
+
+    expect(response.status).toBe(201);
+    expect(response.body.message).toBe('✅ User created successfully');
+    expect(response.body).toHaveProperty('token');
+  });
+
+  it('should return 400 if passwords do not match', async () => {
+    const signupData = {
+      username: 'User',
+      email: 'testuser@example.com',
+      password: 'password1',
+      confirmPassword: 'password2',
+    };
+
+    const response = await request(app)
+      .post('/api/users/signup')
+      .send(signupData);
+
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe("Las contraseñas no coinciden");
+  });
+
+  it('should return 409 if email is already in use', async () => {
+    const signupData = {
+      username: 'User1',
+      email: 'testuser@example.com',
+      password: 'hashedPassword',
+      confirmPassword: 'hashedPassword',
+    };
+
+    const response = await request(app)
+      .post('/api/users/signup')
+      .send(signupData);
+
+    expect(response.status).toBe(409);
+    expect(response.body.message).toBe("Email already in use");
+  });
+
+  it('should return 403 if non-admin user tries to assign admin role', async () => {
+    const signupData = {
+      username: 'User2',
+      email: 'user2@example.com',
+      password: 'hashedPassword',
+      confirmPassword: 'hashedPassword',
+      role: 'admin',
+    };
+
+    const response = await request(app)
+      .post('/api/users/signup')
+      .set('Authorization', 'Bearer nonAdminToken') 
+      .send(signupData);
+
+    expect(response.status).toBe(403);
+    expect(response.body.error).toBe("Access denied. Only admins can create other admins.");
+  });
+});

@@ -9,14 +9,11 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-	const [isAuthenticated, setIsAuthenticated] = useState(() => {
-		return Boolean(localStorage.getItem("authToken"));
-	});
-	const [user, setUser] = useState(null);
-	const [isAdmin, setIsAdmin] = useState(() => {
-		return Boolean(localStorage.getItem("isAdmin"));
-	});
-	const [sessionExpired, setSessionExpired] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [sessionExpired, setSessionExpired] = useState(false);
+  const [loading, setLoading] = useState(true);
 
 	const login = async (token, role) => {
 		const expirationTime = (new Date().getTime() + 7200000).toString();
@@ -60,40 +57,44 @@ export const AuthProvider = ({ children }) => {
 		const tokenExpiration = localStorage.getItem("tokenExpiration");
 		const currentTime = new Date().getTime().toString();
 
-		if (tokenExpiration && currentTime > tokenExpiration) {
-			console.log("Token expired during check");
-			logout(true);
-		} else {
-			console.log("Token still valid during check");
-		}
-	};
+    if (tokenExpiration && currentTime > tokenExpiration) {
+      logout(true);
+    }
+  };
 
-	useEffect(() => {
-		const token = localStorage.getItem("authToken");
-		const isAdmin = localStorage.getItem("isAdmin");
-		if (token) {
-			checkTokenExpiration();
-			setIsAuthenticated(true);
-			decodeTokenAndSetUser(token);
-			if (isAdmin) {
-				setIsAdmin(true);
-			}
-		}
-	}, []);
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    const isAdmin = localStorage.getItem("isAdmin");
 
-	return (
-		<AuthContext.Provider
-			value={{
-				isAuthenticated,
-				user,
-				setUser,
-				login,
-				logout,
-				isAdmin,
-				checkTokenExpiration,
-				sessionExpired,
-			}}>
-			{children}
-		</AuthContext.Provider>
-	);
+    if (token) {
+      checkTokenExpiration();
+      setIsAuthenticated(true);
+      decodeTokenAndSetUser(token);
+      if (isAdmin) {
+        setIsAdmin(true);
+      }
+    } else {
+      logout();
+    }
+
+    setLoading(false);
+  }, []);
+
+  return (
+    <AuthContext.Provider
+      value={{
+        isAuthenticated,
+        user,
+        setUser,
+        login,
+        logout,
+        isAdmin,
+        checkTokenExpiration,
+        sessionExpired,
+        loading,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };

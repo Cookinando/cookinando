@@ -48,52 +48,6 @@ export const getUser = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export const createUser = async (
-  req: AuthRequest,
-  res: Response
-): Promise<void> => {
-  try {
-    const { username, password, email } = req.body;
-    let { role } = req.body;
-
-    if (role === undefined) {
-      role = "user";
-    } else {
-      const authUser = req.user;
-      if (role === "admin" && authUser?.role !== "admin") {
-        res
-          .status(403)
-          .json({
-            error: "Access denied. Only admins can create other admins.",
-          });
-        return;
-      }
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const lastUser = await User.findOne({ order: [["id", "DESC"]] });
-    const newId = lastUser ? lastUser.id + 1 : 1;
-    const newUser = await User.create({
-      id: newId,
-      username,
-      password: hashedPassword,
-      email,
-      role,
-    });
-
-    res.status(201).json(newUser);
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error("Error creating user:", error.message);
-      res.status(500).json({
-        error:
-          "An error occurred while creating the user. Please try again later.",
-        details: error.message,
-      });
-    }
-  }
-};
-
 export const editUser = async (
   req: AuthRequest,
   res: Response
