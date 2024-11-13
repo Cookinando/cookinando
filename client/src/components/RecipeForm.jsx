@@ -3,21 +3,41 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { FaSquarePlus } from "react-icons/fa6";
 import { FaSquareMinus } from "react-icons/fa6";
 import Button from "./Button";
+import { useNavigate } from "react-router-dom";
 
 const RecipeForm = ({ onSubmit, initialData = {}, isEditing = false }) => {
-  const { register, handleSubmit, setValue, control, formState: { errors } } = useForm({
+  const navigate = useNavigate();
+  const handleCancelClick = () => {
+    navigate("/auth/profile");
+  };
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    control,
+    formState: { errors },
+  } = useForm({
     defaultValues: initialData,
   });
 
   const [imageFile, setImageFile] = useState(null);
   const [submitted, setSubmitted] = useState(false);
-  
-  const { fields: ingredientFields, append: addIngredient, remove: removeIngredient } = useFieldArray({
+
+  const {
+    fields: ingredientFields,
+    append: addIngredient,
+    remove: removeIngredient,
+  } = useFieldArray({
     control,
     name: "ingredients",
   });
-  
-  const { fields: instructionFields, append: addInstruction, remove: removeInstruction } = useFieldArray({
+
+  const {
+    fields: instructionFields,
+    append: addInstruction,
+    remove: removeInstruction,
+  } = useFieldArray({
     control,
     name: "instructions",
   });
@@ -41,8 +61,12 @@ const RecipeForm = ({ onSubmit, initialData = {}, isEditing = false }) => {
       const formData = new FormData();
       formData.append("title", data.title);
       formData.append("numPeople", data.numPeople);
-      data.ingredients.forEach((ingredient, index) => formData.append(`ingredients[${index}]`, ingredient));
-      data.instructions.forEach((instruction, index) => formData.append(`instructions[${index}]`, instruction));
+      data.ingredients.forEach((ingredient, index) =>
+        formData.append(`ingredients[${index}]`, ingredient)
+      );
+      data.instructions.forEach((instruction, index) =>
+        formData.append(`instructions[${index}]`, instruction)
+      );
       if (imageFile) {
         formData.append("image", imageFile);
       }
@@ -57,29 +81,48 @@ const RecipeForm = ({ onSubmit, initialData = {}, isEditing = false }) => {
       <form
         id="recipeForm"
         className="space-y-6 flex flex-col gap-4"
-        onSubmit={handleSubmit(handleFormSubmit)} encType="multipart/form-data">
+        onSubmit={handleSubmit(handleFormSubmit)}
+        encType="multipart/form-data"
+      >
         <div>
-          <label className="text-xl leading-6 text-light">Nombre de la receta</label>
+          <label className="text-xl leading-6 text-light">
+            Nombre de la receta
+          </label>
           <input
             id="title"
-            {...register("title", { required: "El nombre de la receta es requerido." })}
+            {...register("title", {
+              required: "El nombre de la receta es requerido.",
+            })}
             placeholder="Ingrese el nombre de la receta"
             className="w-full h-[3.25rem] px-4 text-black"
           />
-          {errors.title && <span className="text-red-500 text-sm mt-1">{errors.title.message}</span>}
+          {errors.title && (
+            <span className="text-red-500 text-sm mt-1">
+              {errors.title.message}
+            </span>
+          )}
         </div>
 
         <div>
-          <label className="text-xl leading-6 text-light">Número de personas</label>
+          <label className="text-xl leading-6 text-light">
+            Número de personas
+          </label>
           <input
             id="numPeople"
             type="number"
             min="1"
-            {...register("numPeople", { required: "El número de personas es requerido. Mínimo 1.", min: 1 })}
+            {...register("numPeople", {
+              required: "El número de personas es requerido. Mínimo 1.",
+              min: 1,
+            })}
             placeholder="¿Para cuántas personas es la receta?"
             className="w-full h-[3.25rem] px-4 text-black"
           />
-          {errors.numPeople && <span className="text-red-500 text-sm mt-1">{errors.numPeople.message}</span>}
+          {errors.numPeople && (
+            <span className="text-red-500 text-sm mt-1">
+              {errors.numPeople.message}
+            </span>
+          )}
         </div>
 
         <div>
@@ -88,17 +131,40 @@ const RecipeForm = ({ onSubmit, initialData = {}, isEditing = false }) => {
             <div key={field.id} className="mt-2">
               <div className="flex gap-1 items-center mb-2 bg-white">
                 <input
-                  {...register(`ingredients.${index}`, { required: `El campo ingrediente ${index + 1} es requerido.` })}
+                  {...register(`ingredients.${index}`, {
+                    required: `El campo ingrediente ${index + 1} es requerido.`,
+                  })}
                   placeholder={`Ingrediente ${index + 1}`}
                   className="w-full h-[2.25rem] px-4 text-black"
                 />
-                <button type="button" onClick={() => removeIngredient (index)} className="flex gap-1 items-center text-xs text-red-700 mr-1">Eliminar<FaSquareMinus className="text-3xl" /></button>
+                <button
+                  type="button"
+                  onClick={() => removeIngredient(index)}
+                  className="flex gap-1 items-center text-xs text-red-700 mr-1"
+                >
+                  Eliminar
+                  <FaSquareMinus className="text-3xl" />
+                </button>
               </div>
-              {errors.ingredients && errors.ingredients[index] && <span className="text-red-500 text-sm mt-1">{errors.ingredients[index].message}</span>}
+              {errors.ingredients && errors.ingredients[index] && (
+                <span className="text-red-500 text-sm mt-1">
+                  {errors.ingredients[index].message}
+                </span>
+              )}
             </div>
           ))}
-          <button type="button" onClick={() => addIngredient("")} className="flex gap-1 items-center mt-2"><FaSquarePlus /> Añadir Ingrediente</button>
-          {(ingredientFields.length === 0 && submitted) && <span className="text-red-500 text-sm mt-1">Debes añadir al menos un ingrediente</span>}
+          <button
+            type="button"
+            onClick={() => addIngredient("")}
+            className="flex gap-1 items-center mt-2"
+          >
+            <FaSquarePlus /> Añadir Ingrediente
+          </button>
+          {ingredientFields.length === 0 && submitted && (
+            <span className="text-red-500 text-sm mt-1">
+              Debes añadir al menos un ingrediente
+            </span>
+          )}
         </div>
 
         <div>
@@ -107,25 +173,63 @@ const RecipeForm = ({ onSubmit, initialData = {}, isEditing = false }) => {
             <div key={field.id} className="mt-2">
               <div className="flex gap-1 items-center mb-2 bg-white">
                 <input
-                  {...register(`instructions.${index}`, { required: `El campo instrucción ${index + 1} es requerido.` })}
+                  {...register(`instructions.${index}`, {
+                    required: `El campo instrucción ${index + 1} es requerido.`,
+                  })}
                   placeholder={`Instrucción ${index + 1}`}
                   className="w-full h-[2.25rem] px-4 text-black"
                 />
-                <button type="button" onClick={() => removeInstruction(index)} className="flex gap-1 items-center text-xs text-red-700 mr-1">Eliminar<FaSquareMinus className="text-3xl" /></button>
+                <button
+                  type="button"
+                  onClick={() => removeInstruction(index)}
+                  className="flex gap-1 items-center text-xs text-red-700 mr-1"
+                >
+                  Eliminar
+                  <FaSquareMinus className="text-3xl" />
+                </button>
               </div>
-              {errors.instructions && errors.instructions[index] && <span className="text-red-500 text-sm mt-1">{errors.instructions[index].message}</span>}
+              {errors.instructions && errors.instructions[index] && (
+                <span className="text-red-500 text-sm mt-1">
+                  {errors.instructions[index].message}
+                </span>
+              )}
             </div>
           ))}
-          <button type="button" onClick={() => addInstruction("")} className="flex gap-1 items-center mt-2"><FaSquarePlus /> Añadir Instrucción</button>
-          {(instructionFields.length === 0 && submitted) && <span className="text-red-500 text-sm mt-1">Debes añadir al menos una instrucción</span>}
+          <button
+            type="button"
+            onClick={() => addInstruction("")}
+            className="flex gap-1 items-center mt-2"
+          >
+            <FaSquarePlus /> Añadir Instrucción
+          </button>
+          {instructionFields.length === 0 && submitted && (
+            <span className="text-red-500 text-sm mt-1">
+              Debes añadir al menos una instrucción
+            </span>
+          )}
         </div>
 
         <div>
           <label className="text-xl leading-6 text-light">Subir imagen</label>
-          <input type="file" accept="image/*" onChange={handleImageChange} className="w-full" />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="w-full"
+          />
         </div>
-
-        <Button type="submit" text={isEditing ? "Actualizar Receta" : "Crear Receta"} handleClick={handleSubmit(handleFormSubmit)} />
+        <div className="w-full max-w-lg flex flex-col justify-center gap-3 sm:gap-4 mt-8">
+          <Button
+            type="submit"
+            text={isEditing ? "Actualizar Receta" : "Crear Receta"}
+            handleClick={handleSubmit(handleFormSubmit)}
+          />
+          <Button
+            type="cancel"
+            handleClick={handleCancelClick}
+            text="Cancelar"
+          />
+        </div>
       </form>
       {/* {submitted && <p>Receta enviada con éxito.</p>} */}
     </div>
