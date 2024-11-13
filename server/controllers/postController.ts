@@ -27,6 +27,7 @@ export const createPost = async (req: AuthRequest, res: Response): Promise<void>
     }
   }
 };
+
 export const getAllPosts = async (req: Request, res: Response): Promise<void> => {
   try {
     const allPosts = await Post.findAll();

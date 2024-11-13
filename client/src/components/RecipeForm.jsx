@@ -231,7 +231,6 @@ const RecipeForm = ({ onSubmit, initialData = {}, isEditing = false }) => {
           />
         </div>
       </form>
-      {/* {submitted && <p>Receta enviada con éxito.</p>} */}
     </div>
   );
 };

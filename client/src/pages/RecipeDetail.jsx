@@ -6,7 +6,7 @@ import Button from "../components/Button";
 import Swal from "sweetalert2";
 
 const RecipeDetail = () => {
-	const { isAuthenticated, isAdmin } = useAuth();
+	const { isAuthenticated, isAdmin, user } = useAuth();
 	const { id } = useParams();
 	const [post, setPost] = useState(null);
 	const [loading, setLoading] = useState(true);
@@ -94,7 +94,7 @@ const RecipeDetail = () => {
 	if (!post) return <div>No se encontró la receta.</div>;
 
 	return (
-		<div className="md:w-5/6 mx-auto sm:my-10">
+		<div className="md:w-5/6 mx-auto mt-10 mb-14">
 			<h2 className="text-light-dark font-semibold text-5xl sm:text-7xl text-center my-6">
 				{post.title}
 			</h2>
@@ -128,8 +128,8 @@ const RecipeDetail = () => {
 					</ol>
 				</div>
 			</div>
-			{isAdmin && (
-				<div className="flex flex-col justify-between w-4/5 mx-auto py-12 gap-48 max-md:gap-4 max-lg:gap-24 md:flex-row md:w-full">
+			{(isAdmin && user.id === post.authorId) && (
+				<div className="flex flex-col justify-between w-4/5 mx-auto pt-12 gap-48 max-md:gap-4 max-lg:gap-24 md:flex-row md:w-full">
 					<Button
 						text="Editar Receta"
 						type="button"
