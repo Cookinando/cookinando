@@ -61,7 +61,6 @@ describe('Navbar component not authenticated', () => {
   });
 
   test("Should not render the profile logo", () => {
-    screen.debug();
     const logoProfile = screen.queryByAltText('Profile icon');
     expect(logoProfile).not.toBeInTheDocument();
   })
