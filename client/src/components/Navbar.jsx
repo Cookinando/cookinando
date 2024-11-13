@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import profile from "../assets/images/icon_profile.svg";
 import closeIcon from "../assets/images/close_icon.svg";
-import logo from "../assets/images/cookindando_logo2.png";
+import logo from "../assets/images/cookindando_logo2.svg";
 import hamburguer from "../assets/images/icon_hamburger_menu.svg";
 
 export const Navbar = () => {
