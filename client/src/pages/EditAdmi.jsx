@@ -106,9 +106,9 @@ const EditAdmi = () => {
   };
 
   return (
-    <div className="min-h-screen text-white flex flex-col items-center justify-center px-4 sm:px-8">
+    <div className="min-h-full text-white flex flex-col items-center justify-center px-4 sm:px-8">
       <section className="w-full max-w-4xl mt-8">
-        <h1 className="text-[#C1A881] text-4xl font-bold text-center mb-10">
+        <h1 className="text-light-dark text-4xl font-bold text-center mb-10">
           Gestión de Usuarios - Administradores
         </h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -118,7 +118,7 @@ const EditAdmi = () => {
                 key={user.id}
                 className="bg-dark-light p-6 rounded-lg flex flex-col items-center text-center"
               >
-                <div className="text-xl font-semibold text-[#C1A881] mb-2">
+                <div className="text-xl font-semibold text-light-dark mb-2">
                   {user.username}
                 </div>
                 <p className="text-gray-300 text-sm mb-4">{user.email}</p>
@@ -134,7 +134,7 @@ const EditAdmi = () => {
                     htmlFor={`checkbox-${index}`}
                     className={`cursor-pointer w-8 h-8 flex items-center justify-center border-2 border-gray-300 rounded-full transition-colors duration-300 ${
                       tempUsers[index].role === "admin"
-                        ? "bg-[#C1A881]"
+                        ? "bg-light-dark"
                         : "bg-white"
                     }`}
                   >
