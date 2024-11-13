@@ -63,7 +63,42 @@ describe("Post Service", () => {
       await expect(deletePost(mockId)).rejects.toThrow("Error deleting post");
     });
   });
+  describe("deletePost", () => {
+    test("should return data when DELETE request is successful", async () => {
+      axios.delete.mockResolvedValueOnce(mockResponse);
 
-  
+      const result = await deletePost(mockId);
+      expect(result).toEqual(mockData);
+      expect(axios.delete).toHaveBeenCalledWith(`http://localhost:8000/api/posts/${mockId}`, {
+        headers: { Authorization: `Bearer ${mockToken}` },
+      });
+    });
+
+    test("should throw an error when DELETE request fails", async () => {
+      axios.delete.mockRejectedValueOnce(new Error("Error deleting post"));
+
+      await expect(deletePost(mockId)).rejects.toThrow("Error deleting post");
+    });
+  });
+
+  describe("postNewPost", () => {
+    test("should return data when POST request is successful", async () => {
+      axios.post.mockResolvedValueOnce(mockResponse);
+
+      const result = await postNewPost(mockData);
+      expect(result).toEqual(mockData);
+      expect(axios.post).toHaveBeenCalledWith("http://localhost:8000/api/posts", mockData, {
+        headers: { Authorization: `Bearer ${mockToken}` },
+      });
+    });
+
+    test("should throw an error when POST request fails", async () => {
+      axios.post.mockRejectedValueOnce(new Error("Error creating post"));
+
+      await expect(postNewPost(mockData)).rejects.toThrow("Error creating post");
+    });
+  });
+
+ 
   
 });
