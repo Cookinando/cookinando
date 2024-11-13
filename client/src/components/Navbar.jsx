@@ -120,7 +120,7 @@ export const Navbar = () => {
 								to="/"
 								className="cursor-pointer hover:text-gray-300"
 								onClick={() => setMenuOpen(false)}>
-								Recetas
+								Home
 							</Link>
 						</li>
 						<li className="text-light pointer-events-auto">
