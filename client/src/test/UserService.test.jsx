@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, expect, vi, beforeEach } from "vitest";
 import axios from "axios";
 import { getUsers, getUserById, deleteUser, postNewUser, updateUserProfile } from "../services/userService.js";
 
