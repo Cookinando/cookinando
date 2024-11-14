@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getPost } from '../services/postService';
 import ContactForm from '../components/ContactForm';
 import logo from '../assets/images/cookindando_logo2.svg';
-import img from '../assets/images/img1home.svg';
+import img from '../assets/images/img1home.webp';
 import iconplato from '../assets/images/iconplato.svg';
 import { useNavigate } from 'react-router-dom';
 

@@ -2,7 +2,7 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { Footer } from "../components/Footer.jsx";
 import { Navbar } from "../components/Navbar.jsx";
-import backgroundImage from "../assets/images/fondo_layout.svg";
+import backgroundImage from "../assets/images/fondo_layout.webp";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
