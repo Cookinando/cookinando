@@ -9,6 +9,7 @@ const EditRecipe = () => {
 	const navigate = useNavigate();
 	const { id } = useParams();
 	const [recipe, setRecipe] = useState(null);
+	const [errorMessage, setErrorMessage] = useState("");
 
 	useEffect(() => {
 		const loadData = async () => {
@@ -28,8 +29,9 @@ const EditRecipe = () => {
 			return;
 		}
 		try {
-			if (!isAdmin) {
-				console.error("User does not have the required role");
+			if (!isAdmin || user.id !== recipe.authorId) {
+				setErrorMessage("No tienes permisos para editar esta receta.");
+				console.error("User does not have the required permissions");
 				return;
 			}
 			const response = await putPost(id, formData);
@@ -50,6 +52,9 @@ const EditRecipe = () => {
 				onSubmit={handleUpdate}
 				isEditing={true}
 			/>
+			{errorMessage && (
+				<p className="text-red-500 text-center -mt-6 text-lg">{errorMessage}</p>
+			)}
 		</div>
 	);
 };
